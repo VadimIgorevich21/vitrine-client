@@ -18,7 +18,10 @@ export const useConfigStore = defineStore("config", () => {
     try {
       let configs: Configs;
 
-      const cached = localStorage.getItem("configs");
+      // При жёсткой перезагрузке store пустой — всегда запрашиваем свежие конфиги с API.
+      // При навигации внутри SPA используем кэш, чтобы не дергать API на каждый переход.
+      const isColdStart = mainConfigs.value === null;
+      const cached = !isColdStart ? localStorage.getItem("configs") : null;
 
       if (!cached) {
         const response = await configService.getConfigs();
