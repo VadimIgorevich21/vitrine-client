@@ -105,7 +105,11 @@ export const useAuthStore = defineStore('auth', () => {
   async function getAuthUser(): Promise<void> {
     try {
       loading.value = true
-      const cached = localStorage.getItem(USER_STORAGE_KEY)
+      // При жёсткой перезагрузке store пустой — всегда запрашиваем свежие данные пользователя с API.
+      // При навигации внутри SPA используем кэш.
+      const isColdStart = user.value === null
+      const cached =
+        !isColdStart ? localStorage.getItem(USER_STORAGE_KEY) : null
       const hasValidCache =
         cached &&
         cached !== 'undefined' &&
