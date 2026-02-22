@@ -1,0 +1,41 @@
+{
+  "name": "new",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "serve": "vite",
+    "build": "vue-tsc -b && vite build",
+    "build:stage": "vue-tsc --noEmit && vite build --mode stage",
+    "build:prod": "vue-tsc --noEmit && vite build --mode prod",
+    "build:archive:stage": "rm -rf build.tar.gz && npm run build:stage && tar -cvzf build.tar.gz dist",
+    "build:archive:prod": "rm -rf build.tar.gz && npm run build:prod && tar -cvzf build.tar.gz dist",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
+  },
+  "dependencies": {
+    "@kyvg/vue3-notification": "^3.4.2",
+    "axios": "^1.13.5",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.25",
+    "vue-i18n": "^11.2.8",
+    "vue-router": "^5.0.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.0",
+    "@types/node": "^24.10.13",
+    "@typescript-eslint/eslint-plugin": "^8.56.0",
+    "@typescript-eslint/parser": "^8.56.0",
+    "@vitejs/plugin-vue": "^6.0.2",
+    "@vue/tsconfig": "^0.8.1",
+    "autoprefixer": "^10.4.24",
+    "eslint": "^9.39.3",
+    "eslint-plugin-vue": "^10.8.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.2.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "vue-tsc": "^3.1.5"
+  }
+}
