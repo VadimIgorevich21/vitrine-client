@@ -18,10 +18,8 @@ export async function getConfigs(to: RouteLocationNormalized): Promise<void> {
     to.path !== '/logout' &&
     to.path !== '/maintenance'
   ) {
-    if (authStore.user) {
-      const configStore = useConfigStore()
-      await configStore.getMainConfigs()
-    }
+    const configStore = useConfigStore()
+    await configStore.getMainConfigs()
   }
 }
 
