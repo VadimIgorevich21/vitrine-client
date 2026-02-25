@@ -3,23 +3,19 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue';
 export function useWhiteBitRates(backendConfigs) {
   const rawMarketRates = reactive({});
   const clientRates = ref([]);
-  // Объект для хранения меток времени последнего обновления каждой пары
   const lastUpdateTs = reactive({});
 
+  // Маппинг внутренних имен в тикеры WhiteBIT (с учетом ваших условий для TRX и USDC)
   const exchangeMapping = {
-    'btc_eur': 'BTC_EUR',
-    'btc_usd': 'BTC_USD',
-    'eth_eur': 'ETH_EUR',
-    'eth_usd': 'ETH_USD',
-    'trx_eur': 'TRX_EUR',
-    'trx_usd': 'TRX_USDC',
-    'usdc_eur': 'USDC_EUR',
-    'usdc_usd': 'USDC_USDT'
+    'btc_eur': 'BTC_EUR',   'btc_usd': 'BTC_USD',
+    'eth_eur': 'ETH_EUR',   'eth_usd': 'ETH_USD',
+    'trx_eur': 'TRX_EUR',   'trx_usd': 'TRX_USDC',
+    'usdc_eur': 'USDC_EUR', 'usdc_usd': 'USDC_USDT'
   };
 
   const calculateRates = () => {
     const now = Date.now();
-    clientRates.value = backendConfigs.map((config, index) => {
+    clientRates.value = backendConfigs.map((config) => {
       const { main_currency, from_currency, to_currency, rate_adjustment_percent, precision } = config;
 
       const isDirect = from_currency.toLowerCase() === main_currency.toLowerCase();
@@ -30,31 +26,29 @@ export function useWhiteBitRates(backendConfigs) {
       const marketPrice = rawMarketRates[tickerName];
 
       let finalRate = 'Загрузка...';
-      let displayMarketPrice = '—';
       let mainUnitRate = '—';
 
       if (marketPrice && marketPrice > 0) {
-        displayMarketPrice = marketPrice.toString();
         const factor = 1 + (rate_adjustment_percent / 100);
 
-        // 1. Итоговый курс
+        // 1. Итоговый курс (Количество к получению клиентом)
         const calculated = isDirect ? marketPrice * factor : (1 / (marketPrice * factor));
         finalRate = calculated.toFixed(precision || 8);
 
-        // 2. Цена за 1 ед. крипты
+        // 2. Цена за 1 ед. крипты (Денежный эквивалент для наглядности)
         const unitPriceRaw = marketPrice * factor;
         const unitPrecision = marketPrice > 10 ? 2 : 6;
         mainUnitRate = unitPriceRaw.toFixed(unitPrecision);
       }
 
-      // Если обновление было меньше 500мс назад, активируем flash
+      // Флаг для анимации (активен 500мс после обновления)
       const isUpdating = (now - (lastUpdateTs[tickerName] || 0)) < 500;
 
       return {
         ...config,
         rate: finalRate,
-        marketRate: displayMarketPrice,
-        mainUnitRate: mainUnitRate,
+        marketRate: marketPrice ? marketPrice.toFixed(4) : '—',
+        mainUnitRate,
         isUpdating
       };
     });
@@ -77,10 +71,9 @@ export function useWhiteBitRates(backendConfigs) {
         const [ticker, details] = data.params;
         if (details?.last) {
           rawMarketRates[ticker] = parseFloat(details.last);
-          lastUpdateTs[ticker] = Date.now(); // Запоминаем время обновления
+          lastUpdateTs[ticker] = Date.now();
           calculateRates();
-
-          // Сбрасываем эффект через полсекунды
+          // Сбрасываем эффект через 550мс
           setTimeout(calculateRates, 550);
         }
       }
