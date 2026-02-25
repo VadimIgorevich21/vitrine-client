@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useCounterStore } from '@/stores/counter'
 import { useI18n } from 'vue-i18n'
+import CurrencyRates from "@/components/CurrencyRates.vue";
 
 const counterStore = useCounterStore()
 const { t, locale } = useI18n()
@@ -18,6 +19,11 @@ const toggleLocale = () => {
       </h1>
 
       <div class="space-y-6">
+        <div>
+          <div>---------</div>
+          <div><currency-rates></currency-rates></div>
+          <div>---------</div>
+        </div>
         <div class="text-center">
           <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4">
             {{ t('home.counter') }}
