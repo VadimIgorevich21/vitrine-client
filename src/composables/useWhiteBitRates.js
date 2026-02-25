@@ -3,29 +3,28 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue';
 export function useWhiteBitRates(backendConfigs) {
   const rawMarketRates = reactive({});
   const clientRates = ref([]);
+  // Объект для хранения меток времени последнего обновления каждой пары
+  const lastUpdateTs = reactive({});
 
-  // Учтены ваши специфические пары:
-  // TRX/USD берем из пары TRX_USDC
-  // USDC/USD берем из пары USDC_USDT
   const exchangeMapping = {
     'btc_eur': 'BTC_EUR',
     'btc_usd': 'BTC_USD',
     'eth_eur': 'ETH_EUR',
     'eth_usd': 'ETH_USD',
     'trx_eur': 'TRX_EUR',
-    'trx_usd': 'TRX_USDC', // Ваше условие
+    'trx_usd': 'TRX_USDC',
     'usdc_eur': 'USDC_EUR',
-    'usdc_usd': 'USDC_USDT' // Ваше условие
+    'usdc_usd': 'USDC_USDT'
   };
 
   const calculateRates = () => {
-    clientRates.value = backendConfigs.map(config => {
+    const now = Date.now();
+    clientRates.value = backendConfigs.map((config, index) => {
       const { main_currency, from_currency, to_currency, rate_adjustment_percent, precision } = config;
 
       const isDirect = from_currency.toLowerCase() === main_currency.toLowerCase();
       const secondCur = isDirect ? to_currency : from_currency;
 
-      // Ищем ключ в маппинге (например, 'trx_usd')
       const searchKey = `${main_currency}_${secondCur}`.toLowerCase();
       const tickerName = exchangeMapping[searchKey];
       const marketPrice = rawMarketRates[tickerName];
@@ -38,23 +37,25 @@ export function useWhiteBitRates(backendConfigs) {
         displayMarketPrice = marketPrice.toString();
         const factor = 1 + (rate_adjustment_percent / 100);
 
-        // 1. Итоговый курс (Количество к получению)
-        // Если EUR -> BTC, считаем 1 / (Цена * Наценка)
+        // 1. Итоговый курс
         const calculated = isDirect ? marketPrice * factor : (1 / (marketPrice * factor));
         finalRate = calculated.toFixed(precision || 8);
 
-        // 2. Цена за 1 ед. крипты (всегда в фиате/стейбле)
-        // Для прозрачности выводим цену монеты с вашей наценкой
+        // 2. Цена за 1 ед. крипты
         const unitPriceRaw = marketPrice * factor;
         const unitPrecision = marketPrice > 10 ? 2 : 6;
         mainUnitRate = unitPriceRaw.toFixed(unitPrecision);
       }
 
+      // Если обновление было меньше 500мс назад, активируем flash
+      const isUpdating = (now - (lastUpdateTs[tickerName] || 0)) < 500;
+
       return {
         ...config,
         rate: finalRate,
         marketRate: displayMarketPrice,
-        mainUnitRate: mainUnitRate
+        mainUnitRate: mainUnitRate,
+        isUpdating
       };
     });
   };
@@ -76,7 +77,11 @@ export function useWhiteBitRates(backendConfigs) {
         const [ticker, details] = data.params;
         if (details?.last) {
           rawMarketRates[ticker] = parseFloat(details.last);
+          lastUpdateTs[ticker] = Date.now(); // Запоминаем время обновления
           calculateRates();
+
+          // Сбрасываем эффект через полсекунды
+          setTimeout(calculateRates, 550);
         }
       }
     };
