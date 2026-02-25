@@ -4,16 +4,18 @@ export function useWhiteBitRates(backendConfigs) {
   const rawMarketRates = reactive({});
   const clientRates = ref([]);
 
-  // Карта соответствий для WhiteBIT API v4
+  // Учтены ваши специфические пары:
+  // TRX/USD берем из пары TRX_USDC
+  // USDC/USD берем из пары USDC_USDT
   const exchangeMapping = {
     'btc_eur': 'BTC_EUR',
     'btc_usd': 'BTC_USD',
     'eth_eur': 'ETH_EUR',
     'eth_usd': 'ETH_USD',
     'trx_eur': 'TRX_EUR',
-    'trx_usd': 'TRX_USDC',
+    'trx_usd': 'TRX_USDC', // Ваше условие
     'usdc_eur': 'USDC_EUR',
-    'usdc_usd': 'USDC_USDT'
+    'usdc_usd': 'USDC_USDT' // Ваше условие
   };
 
   const calculateRates = () => {
@@ -22,8 +24,9 @@ export function useWhiteBitRates(backendConfigs) {
 
       const isDirect = from_currency.toLowerCase() === main_currency.toLowerCase();
       const secondCur = isDirect ? to_currency : from_currency;
-      const searchKey = `${main_currency}_${secondCur}`.toLowerCase();
 
+      // Ищем ключ в маппинге (например, 'trx_usd')
+      const searchKey = `${main_currency}_${secondCur}`.toLowerCase();
       const tickerName = exchangeMapping[searchKey];
       const marketPrice = rawMarketRates[tickerName];
 
@@ -32,25 +35,19 @@ export function useWhiteBitRates(backendConfigs) {
       let mainUnitRate = '—';
 
       if (marketPrice && marketPrice > 0) {
-        // Рыночная цена (всегда с запасом точности для отладки)
-        displayMarketPrice = marketPrice.toFixed(6);
-
+        displayMarketPrice = marketPrice.toString();
         const factor = 1 + (rate_adjustment_percent / 100);
 
-        // 1. Итоговый курс (сколько BTC за 1 EUR или сколько EUR за 1 BTC)
-        const calculated = isDirect ? marketPrice * factor : (1 / marketPrice) * factor;
+        // 1. Итоговый курс (Количество к получению)
+        // Если EUR -> BTC, считаем 1 / (Цена * Наценка)
+        const calculated = isDirect ? marketPrice * factor : (1 / (marketPrice * factor));
+        finalRate = calculated.toFixed(precision || 8);
 
-        // Используем точность из конфига (или 8 по умолчанию)
-        const p = precision !== undefined ? precision : 8;
-        finalRate = calculated.toFixed(p);
-
-        // 2. Курс за 1 ед. крипты (для понятного сравнения с рынком)
-        if (isDirect) {
-          mainUnitRate = (marketPrice * factor).toFixed(p);
-        } else {
-          // Показываем цену, по которой клиент "покупает" 1 BTC за фиат
-          mainUnitRate = (marketPrice / (1 - (rate_adjustment_percent / 100))).toFixed(p);
-        }
+        // 2. Цена за 1 ед. крипты (всегда в фиате/стейбле)
+        // Для прозрачности выводим цену монеты с вашей наценкой
+        const unitPriceRaw = marketPrice * factor;
+        const unitPrecision = marketPrice > 10 ? 2 : 6;
+        mainUnitRate = unitPriceRaw.toFixed(unitPrecision);
       }
 
       return {
@@ -66,7 +63,6 @@ export function useWhiteBitRates(backendConfigs) {
     const socket = new WebSocket('wss://api.whitebit.com/ws');
 
     socket.onopen = () => {
-      console.log('WebSocket Connected ✅');
       socket.send(JSON.stringify({
         id: 1,
         method: "market_subscribe",
@@ -76,35 +72,22 @@ export function useWhiteBitRates(backendConfigs) {
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-
-      // Обновления в v4 приходят через market_update
       if (data.method === 'market_update' && data.params) {
-        const ticker = data.params[0];
-        const details = data.params[1];
-        if (details && details.last) {
+        const [ticker, details] = data.params;
+        if (details?.last) {
           rawMarketRates[ticker] = parseFloat(details.last);
           calculateRates();
         }
       }
     };
 
-    socket.onclose = () => {
-      console.log('WebSocket Closed. Reconnecting in 3s...');
-      setTimeout(connect, 3000);
-    };
-
+    socket.onclose = () => setTimeout(connect, 3000);
     return socket;
   };
 
   let ws = null;
-  onMounted(() => {
-    calculateRates();
-    ws = connect();
-  });
-
-  onUnmounted(() => {
-    if (ws) ws.close();
-  });
+  onMounted(() => { calculateRates(); ws = connect(); });
+  onUnmounted(() => ws?.close());
 
   return { clientRates };
 }
