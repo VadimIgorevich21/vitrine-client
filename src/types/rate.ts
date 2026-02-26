@@ -12,6 +12,7 @@ export interface CurrencyRate {
   updated_at: string;
 }
 
-export interface RatesPusherPayload {
+// Добавим интерфейс для события Pusher, чтобы всё было по фэншую
+export interface RatesUpdatedPayload {
   rates: CurrencyRate[];
 }
