@@ -95,28 +95,54 @@ const routes: RouteRecordRaw[] = [
   },
 ]
 
+
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   linkExactActiveClass: 'exact-active',
 })
 
-// 1) Проверка авторизации и редиректы для гостевых маршрутов
-router.beforeEach(async (to, _from, next) => {
-  const redirect = await authenticated(to)
-  if (redirect) next(redirect)
-  else next()
-})
+// Единый навигационный гард без использования next()
+router.beforeEach(async (to) => {
+  // 1) Проверка авторизации
+  // Твоя функция authenticated уже возвращает RouteLocationRaw или undefined — это идеально
+  const authRedirect = await authenticated(to)
+  if (authRedirect) return authRedirect
 
-// 2) Редиректы по ролям и document.title
-router.beforeEach((to, _from, next) => {
-  const redirect = roleRedirectAndTitle(to)
-  if (redirect) next(redirect)
-  else next()
-})
+  // 2) Редиректы по ролям и document.title
+  const roleRedirect = roleRedirectAndTitle(to)
+  if (roleRedirect) return roleRedirect
 
-// 3) Подгрузка конфигов для авторизованного пользователя
-router.beforeEach(async (to, _from, next) => {
+  // 3) Подгрузка конфигов для авторизованного пользователя
+  // Просто дожидаемся выполнения, возвращать здесь ничего не нужно
   await getConfigs(to)
-  next()
+
+  // Если мы дошли до сюда и ничего не вернули, роутер просто разрешит переход
+  return true
 })
+
+// export const router = createRouter({
+//   history: createWebHistory(import.meta.env.BASE_URL),
+//   routes,
+//   linkExactActiveClass: 'exact-active',
+// })
+//
+// // 1) Проверка авторизации и редиректы для гостевых маршрутов
+// router.beforeEach(async (to, _from, next) => {
+//   const redirect = await authenticated(to)
+//   if (redirect) next(redirect)
+//   else next()
+// })
+//
+// // 2) Редиректы по ролям и document.title
+// router.beforeEach((to, _from, next) => {
+//   const redirect = roleRedirectAndTitle(to)
+//   if (redirect) next(redirect)
+//   else next()
+// })
+//
+// // 3) Подгрузка конфигов для авторизованного пользователя
+// router.beforeEach(async (to, _from, next) => {
+//   await getConfigs(to)
+//   next()
+// })
