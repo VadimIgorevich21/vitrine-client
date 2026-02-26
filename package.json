@@ -18,6 +18,7 @@
     "@kyvg/vue3-notification": "^3.4.2",
     "axios": "^1.13.5",
     "pinia": "^3.0.4",
+    "pusher-js": "^8.4.0",
     "vue": "^3.5.25",
     "vue-i18n": "^11.2.8",
     "vue-router": "^5.0.3"

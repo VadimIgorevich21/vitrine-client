@@ -2,6 +2,8 @@
 import { useCounterStore } from '@/stores/counter'
 import { useI18n } from 'vue-i18n'
 import CurrencyRates from "@/components/CurrencyRates.vue";
+import RatesTable from '@/components/rates/RatesTable.vue';
+import RateTicker from '@/components/rates/RateTicker.vue';
 
 const counterStore = useCounterStore()
 const { t, locale } = useI18n()
@@ -20,6 +22,20 @@ const toggleLocale = () => {
 
       <div class="space-y-6">
         <div>
+          <div>---------</div>
+          <div class="flex gap-4 mb-8">
+            <RateTicker from="BTC" to="USD" />
+            <RateTicker from="ETH" to="USD" />
+          </div>
+
+          <section class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl mb-4">Все направления обмена</h2>
+            <RatesTable />
+          </section>
+          <div>---------</div>
+          <div>---------</div>
+          <div>---------</div>
+          <div>---------</div>
           <div>---------</div>
           <div><currency-rates></currency-rates></div>
           <div>---------</div>
