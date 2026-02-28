@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { reactive, computed, watch } from 'vue';
-import { useConfigStore } from './syncConfigs';
+import { useConfigStore } from '@/stores/syncConfigs';
 import { useRateStore } from './useRateStore';
 import { orderService } from '@/services/orderService';
 
@@ -12,7 +12,8 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     type: 'buy' as 'buy' | 'sell',
     from_currency: '',
     to_currency: '',
-    amount_from: 0,
+    amount_from: null as number | null,
+    amount_to: null as number | null,
     payment_method: '',
     wallet_type: '',
     wallet_address: '',
@@ -26,17 +27,31 @@ export const useOrderFormStore = defineStore('orderForm', () => {
   );
 
   const isAmountValid = computed(() => {
-    if (!currentRate.value || state.amount_from === 0) return true;
+    if (!currentRate.value || state.amount_from === null || state.amount_from === 0) return true;
     return state.amount_from >= currentRate.value.min_amount;
   });
 
-  const calculatedTotal = computed(() => {
+  // --- Actions: Пересчет ---
+  const calculateTo = () => {
     const rate = currentRate.value;
-    if (!rate || !state.amount_from) return '0.00';
-    return (state.amount_from * rate.final_rate).toFixed(rate.precision);
-  });
+    if (rate && state.amount_from !== null) {
+      const res = state.amount_from * rate.final_rate;
+      state.amount_to = Number(res.toFixed(rate.precision));
+    } else {
+      state.amount_to = null;
+    }
+  };
 
-  // --- Actions ---
+  const calculateFrom = () => {
+    const rate = currentRate.value;
+    if (rate && state.amount_to !== null && rate.final_rate > 0) {
+      const res = state.amount_to / rate.final_rate;
+      const precision = state.type === 'buy' ? 2 : 8;
+      state.amount_from = Number(res.toFixed(precision));
+    } else {
+      state.amount_from = null;
+    }
+  };
 
   const submitOrder = async () => {
     return await orderService.createOrder(state);
@@ -45,53 +60,47 @@ export const useOrderFormStore = defineStore('orderForm', () => {
   const initDefaultValues = () => {
     const saved = localStorage.getItem('order_draft');
     if (saved) {
-      const parsed = JSON.parse(saved);
-      Object.assign(state, parsed);
+      Object.assign(state, JSON.parse(saved));
       localStorage.removeItem('order_draft');
-      return;
-    }
-
-    // Установка валюты FROM
-    if (state.type === 'buy') {
-      state.from_currency = configStore.fiatCurrencies[0] ?? '';
     } else {
-      state.from_currency = configStore.cryptoCurrencies[0] ?? '';
+      state.from_currency = state.type === 'buy'
+        ? configStore.fiatCurrencies[0] ?? ''
+        : configStore.cryptoCurrencies[0] ?? '';
+
+      const available = configStore.directions[state.from_currency] ?? [];
+      state.to_currency = available[0] ?? '';
     }
-
-    selectFirstAvailableTo();
-  };
-
-  const selectFirstAvailableTo = () => {
-    // Безопасное получение массива направлений
-    const available: string[] = configStore.directions[state.from_currency] ?? [];
-
-    if (available.length > 0) {
-      // Если текущая to_currency не входит в список доступных для новой from_currency
-      if (!available.includes(state.to_currency)) {
-        state.to_currency = available[0] ?? ''; // Добавили ?? '' для TS
-      }
-    } else {
-      state.to_currency = '';
-    }
+    state.amount_from = null;
+    state.amount_to = null;
   };
 
   const persist = () => localStorage.setItem('order_draft', JSON.stringify(state));
 
   const resetForm = () => {
-    state.amount_from = 0;
+    state.amount_from = null;
+    state.amount_to = null;
     state.wallet_address = '';
     state.user_requisites = '';
   };
 
-  // Наблюдатели
+  // Следим за сменой типа (Buy/Sell)
   watch(() => state.type, () => initDefaultValues());
-  watch(() => state.from_currency, () => selectFirstAvailableTo());
+
+  // Следим за сменой валюты From
+  watch(() => state.from_currency, (newVal) => {
+    const available = configStore.directions[newVal] ?? [];
+    if (!available.includes(state.to_currency)) {
+      state.to_currency = available[0] ?? '';
+    }
+    calculateTo();
+  });
 
   return {
     state,
     currentRate,
     isAmountValid,
-    calculatedTotal,
+    calculateTo,
+    calculateFrom,
     initDefaultValues,
     persist,
     resetForm,
