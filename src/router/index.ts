@@ -16,6 +16,7 @@ import {
   getConfigs,
   roleRedirectAndTitle,
 } from './middleware'
+import Auth from "@/views/auth/Auth.vue";
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -26,6 +27,11 @@ declare module 'vue-router' {
 
 const routes: RouteRecordRaw[] = [
   // Публичные страницы — свой layout (хедер: имя + «Кабинет» или «Войти»)
+  {
+    path: '/auth-new',
+    name: 'auth-new',
+    component: Auth,
+  },
   {
     path: '/',
     component: PublicLayout,
