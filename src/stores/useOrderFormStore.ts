@@ -14,10 +14,10 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     to_currency: '',
     amount_from: null as number | null,
     amount_to: null as number | null,
-    payment_method: '',
-    wallet_type: '',
-    wallet_address: '',
-    user_requisites: '',
+    payment_method: '', // Ключ выбранного метода оплаты
+    wallet_type: '',    // Для покупки: сеть (ERC20 и т.д.)
+    wallet_address: '', // Для покупки: адрес
+    user_requisites: '', // Для продажи: карта/счет
     comment: ''
   });
 
@@ -26,12 +26,19 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     rateStore.getRate(state.from_currency, state.to_currency)
   );
 
+  // Новый геттер для получения актуального списка методов оплаты в зависимости от типа
+  const currentPaymentMethods = computed(() => {
+    return state.type === 'buy'
+      ? configStore.buyPaymentMethods
+      : configStore.sellPaymentMethods;
+  });
+
   const isAmountValid = computed(() => {
     if (!currentRate.value || state.amount_from === null || state.amount_from === 0) return true;
     return state.amount_from >= currentRate.value.min_amount;
   });
 
-  // --- Actions: Пересчет ---
+  // --- Actions ---
   const calculateTo = () => {
     const rate = currentRate.value;
     if (rate && state.amount_from !== null) {
@@ -53,8 +60,26 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     }
   };
 
+  // const submitOrder = async () => {
+  //   return await orderService.createOrder(state);
+  // };
+
   const submitOrder = async () => {
-    return await orderService.createOrder(state);
+    // Извлекаем поля, которые могут быть лишними
+    const { user_requisites, wallet_type, wallet_address, ...rest } = state;
+
+    const payload: any = { ...rest };
+
+    if (state.type === 'buy') {
+      // Для покупки добавляем только крипто-поля
+      payload.wallet_type = wallet_type;
+      payload.wallet_address = wallet_address;
+    } else {
+      // Для продажи добавляем только фиатные реквизиты
+      payload.user_requisites = user_requisites;
+    }
+
+    return await orderService.createOrder(payload);
   };
 
   const initDefaultValues = () => {
@@ -70,17 +95,22 @@ export const useOrderFormStore = defineStore('orderForm', () => {
       const available = configStore.directions[state.from_currency] ?? [];
       state.to_currency = available[0] ?? '';
     }
+
+    // ВАЖНО: Сбрасываем поля оплаты при смене Buy/Sell или инициализации,
+    // чтобы старые данные не улетели в новый заказ
     state.amount_from = null;
     state.amount_to = null;
+    state.payment_method = '';
+    state.wallet_type = '';
+    state.wallet_address = '';
+    state.user_requisites = '';
   };
 
   const persist = () => localStorage.setItem('order_draft', JSON.stringify(state));
 
   const resetForm = () => {
-    state.amount_from = null;
-    state.amount_to = null;
-    state.wallet_address = '';
-    state.user_requisites = '';
+    // Вызываем initDefaultValues, так как там уже прописан сброс всех полей
+    initDefaultValues();
   };
 
   // Следим за сменой типа (Buy/Sell)
@@ -98,6 +128,7 @@ export const useOrderFormStore = defineStore('orderForm', () => {
   return {
     state,
     currentRate,
+    currentPaymentMethods, // Не забудь вернуть новый геттер
     isAmountValid,
     calculateTo,
     calculateFrom,

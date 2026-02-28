@@ -26,6 +26,8 @@ export interface Configs {
     fiat_currencies: string[];
     crypto_currencies: string[];
     payment_methods: PaymentMethod[];
+    buy_payment_methods: PaymentMethod[];
+    sell_payment_methods: PaymentMethod[];
     wallet_types: WalletType[];
 
     // Остальные конфиги

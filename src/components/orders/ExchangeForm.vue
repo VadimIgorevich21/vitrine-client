@@ -1,6 +1,7 @@
 <template>
   <div class="max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-6 md:p-8 border border-gray-100 dark:border-gray-700">
     <div v-if="configStore.loading" class="h-14 bg-gray-100 dark:bg-gray-700 animate-pulse rounded-2xl mb-8"></div>
+
     <div v-else class="flex p-1.5 bg-gray-100 dark:bg-gray-700 rounded-2xl mb-8">
       <button
         v-for="t in (['buy', 'sell'] as const)" :key="t"
@@ -13,6 +14,15 @@
     </div>
 
     <div class="space-y-6">
+      <div class="space-y-2">
+        <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">Способ оплаты</label>
+        <select v-model="formStore.state.payment_method" class="w-full p-4 bg-gray-50 dark:bg-gray-900 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition">
+          <option value="">Выберите метод...</option>
+          <option v-for="m in currentPaymentMethods" :key="m.key" :value="m.key">
+            {{ m.label }}
+          </option>
+        </select>
+      </div>
       <div class="space-y-2">
         <div class="flex justify-between px-1 h-4">
           <label class="text-xs font-bold text-gray-400 uppercase tracking-widest">Вы отдаете</label>
@@ -60,19 +70,17 @@
 
       <div v-if="authStore.user && !configStore.loading" class="pt-6 border-t border-dashed dark:border-gray-600 space-y-4">
         <template v-if="formStore.state.type === 'buy'">
-          <select v-model="formStore.state.wallet_type" class="w-full p-4 bg-gray-50 dark:bg-gray-900 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition">
-            <option value="">Выберите сеть...</option>
-            <option v-for="t in configStore.walletTypes" :key="t.key" :value="t.key">{{ t.label }}</option>
-          </select>
-          <input v-model="formStore.state.wallet_address" placeholder="Адрес вашего кошелька"
-                 class="w-full p-4 bg-gray-50 dark:bg-gray-900 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition" />
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <select v-model="formStore.state.wallet_type" class="p-4 bg-gray-50 dark:bg-gray-900 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition">
+              <option value="">Выберите сеть...</option>
+              <option v-for="t in configStore.walletTypes" :key="t.key" :value="t.key">{{ t.label }}</option>
+            </select>
+            <input v-model="formStore.state.wallet_address" placeholder="Адрес вашего кошелька"
+                   class="p-4 bg-gray-50 dark:bg-gray-900 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition" />
+          </div>
         </template>
 
         <template v-else>
-          <select v-model="formStore.state.payment_method" class="w-full p-4 bg-gray-50 dark:bg-gray-900 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition">
-            <option value="">Выберите метод выплаты...</option>
-            <option v-for="m in configStore.paymentMethods" :key="m.value" :value="m.value">{{ m.label }}</option>
-          </select>
           <textarea v-model="formStore.state.user_requisites" placeholder="Реквизиты карты/счета для получения фиата"
                     class="w-full p-4 bg-gray-50 dark:bg-gray-900 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition" rows="2"></textarea>
         </template>
@@ -84,9 +92,8 @@
         </ul>
       </div>
 
-      <div v-if="configStore.loading" class="h-16 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
       <button
-        v-else
+        v-if="!configStore.loading"
         @click="handleSubmit"
         :disabled="loading || !formStore.isAmountValid || !formStore.state.amount_from"
         class="w-full py-5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-200 dark:disabled:bg-gray-700 disabled:text-gray-400 text-white font-black rounded-2xl shadow-xl transition-all active:scale-95 uppercase tracking-widest"
@@ -94,6 +101,7 @@
         <span v-if="loading">Обработка...</span>
         <span v-else>{{ authStore.user ? 'Создать заказ' : 'Войти и обменять' }}</span>
       </button>
+      <div v-else class="h-16 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
     </div>
   </div>
 </template>
@@ -115,13 +123,22 @@ const toast = useToast();
 const loading = ref(false);
 const apiErrors = ref<any>(null);
 
+// Динамический список "Отдаю"
 const availableFromList = computed(() =>
   formStore.state.type === 'buy' ? configStore.fiatCurrencies : configStore.cryptoCurrencies
 );
 
+// Динамический список "Получаю"
 const availableToList = computed(() => {
   const from = formStore.state.from_currency;
   return configStore.directions[from] ?? [];
+});
+
+// Геттер методов оплаты (связываем UI с новыми геттерами стора)
+const currentPaymentMethods = computed(() => {
+  return formStore.state.type === 'buy'
+    ? configStore.buyPaymentMethods
+    : configStore.sellPaymentMethods;
 });
 
 const handleSubmit = async () => {
@@ -152,7 +169,9 @@ const handleSubmit = async () => {
 };
 
 onMounted(async () => {
+  // Загружаем конфиги, если их нет
   if (!configStore.mainConfigs) await configStore.getMainConfigs();
+  // Инициализируем дефолты формы
   formStore.initDefaultValues();
 });
 </script>

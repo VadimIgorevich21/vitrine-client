@@ -70,6 +70,17 @@ export const useConfigStore = defineStore("config", () => {
     return notification;
   });
 
+  // Методы для покупки (когда пользователь платит фиатом)
+  const buyPaymentMethods = computed(() => mainConfigs.value?.buy_payment_methods ?? []);
+
+// Методы для продажи (когда пользователь получает фиат)
+  const sellPaymentMethods = computed(() => mainConfigs.value?.sell_payment_methods ?? []);
+
+// Динамический геттер, который возвращает нужные методы в зависимости от типа сделки
+  const getMethodsByType = (type: 'buy' | 'sell') => {
+    return type === 'buy' ? buyPaymentMethods.value : sellPaymentMethods.value;
+  };
+
   return {
     mainConfigs,
     loading,
@@ -85,5 +96,9 @@ export const useConfigStore = defineStore("config", () => {
     updateConfigs,
     notifications,
     maintenanceNotification,
+
+    buyPaymentMethods,
+    sellPaymentMethods,
+    getMethodsByType,
   };
 });
