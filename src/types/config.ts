@@ -1,8 +1,18 @@
 // types/config.ts
 
-export interface ExchangeRate {
-    currency: string;
-    rate: number;
+export interface ExchangeRule {
+    directions: Record<string, string[]>; // Объект типа { "USD": ["BTC", "ETH"], "BTC": ["USD"] }
+    all_from: string[];
+}
+
+export interface PaymentMethod {
+    value: string;
+    label: string;
+}
+
+export interface WalletType {
+    key: string;
+    label: string;
 }
 
 export interface MaintenanceNotification {
@@ -10,17 +20,22 @@ export interface MaintenanceNotification {
 }
 
 export interface Configs {
-    exchange_rates?: ExchangeRate[];
+    app_build?: string;
+    // Данные для обмена
+    exchange_rules: ExchangeRule;
+    fiat_currencies: string[];
+    crypto_currencies: string[];
+    payment_methods: PaymentMethod[];
+    wallet_types: WalletType[];
+
+    // Остальные конфиги
     notifications?: any[];
     unreadNotificationsCount?: number | null;
     maintenanceNotification?: MaintenanceNotification;
     contacts?: {
-        types?: any[];
+        types?: Record<string, string>;
     };
     users?: {
         roles?: any[];
-    };
-    authentication?: {
-        statuses?: any[];
     };
 }

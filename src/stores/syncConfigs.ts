@@ -6,36 +6,24 @@ import configService from "@/services/configService";
 import type { Configs } from "@/types/config";
 
 export const useConfigStore = defineStore("config", () => {
-  // state
+  // --- State ---
   const mainConfigs = ref<Configs | null>(null);
-  const exchangeRates = ref<Configs["exchange_rates"]>([]);
   const loading = ref<boolean>(false);
 
-  // actions
+  // --- Actions ---
   const getMainConfigs = async (): Promise<void> => {
     loading.value = true;
-
     try {
-      let configs: Configs;
+      const response = await configService.getConfigs();
+      const configs = response.data.data;
 
-      // При жёсткой перезагрузке store пустой — всегда запрашиваем свежие конфиги с API.
-      // При навигации внутри SPA используем кэш, чтобы не дергать API на каждый переход.
-      const isColdStart = mainConfigs.value === null;
-      const cached = !isColdStart ? localStorage.getItem("configs") : null;
-
-      if (!cached) {
-        const response = await configService.getConfigs();
-        configs = response.data.data;
-        localStorage.setItem("configs", JSON.stringify(configs));
-      } else {
-        configs = JSON.parse(cached) as Configs;
-      }
-
+      localStorage.setItem("configs", JSON.stringify(configs));
       mainConfigs.value = configs;
-      exchangeRates.value = configs?.exchange_rates ?? [];
     } catch (err) {
       console.error("Error loading configs:", err);
-      mainConfigs.value = null;
+      // Если API упало, пробуем достать из кэша
+      const cached = localStorage.getItem("configs");
+      if (cached) mainConfigs.value = JSON.parse(cached);
       throw err;
     } finally {
       loading.value = false;
@@ -46,56 +34,55 @@ export const useConfigStore = defineStore("config", () => {
     try {
       const response = await configService.getConfigs();
       const configs = response.data.data;
-
       localStorage.setItem("configs", JSON.stringify(configs));
-
       mainConfigs.value = configs;
-      exchangeRates.value = configs?.exchange_rates ?? [];
     } catch (err) {
       console.error("Error updating configs:", err);
-      mainConfigs.value = null;
     }
   };
 
-  const setNotifications = (notifications: any[]): void => {
-    if (!mainConfigs.value) return;
-    mainConfigs.value.notifications = notifications ?? [];
-  };
+  // --- Getters (Добавленное для формы обмена) ---
 
-  const setUnreadNotificationsCount = (count: number | null): void => {
-    if (!mainConfigs.value) return;
-    mainConfigs.value.unreadNotificationsCount = count ?? null;
-  };
+  // Список фиатных валют для таба "Покупка" (from)
+  const fiatCurrencies = computed(() => mainConfigs.value?.fiat_currencies ?? []);
 
-  // getters
-  const notifications = computed(
-      () => mainConfigs.value?.notifications ?? []
-  );
+  // Список криптовалют для таба "Продажа" (from)
+  const cryptoCurrencies = computed(() => mainConfigs.value?.crypto_currencies ?? []);
+
+  // Карта направлений: какая валюта на какие меняется
+  const directions = computed(() => mainConfigs.value?.exchange_rules?.directions ?? {});
+
+  // Список методов оплаты (для выплаты пользователю или приема средств)
+  const paymentMethods = computed(() => mainConfigs.value?.payment_methods ?? []);
+
+  // Список сетей/типов кошельков (ERC20, TRC20 и т.д.)
+  const walletTypes = computed(() => mainConfigs.value?.wallet_types ?? []);
+
+  // Вспомогательные геттеры для уведомлений
+  const notifications = computed(() => mainConfigs.value?.notifications ?? []);
 
   const maintenanceNotification = computed(() => {
     const notification = mainConfigs.value?.maintenanceNotification;
     if (!notification) return null;
-
     if (typeof notification.content === "string") {
-      return {
-        ...notification,
-        content: JSON.parse(notification.content),
-      };
+      return { ...notification, content: JSON.parse(notification.content) };
     }
-
     return notification;
   });
 
   return {
     mainConfigs,
-    exchangeRates,
     loading,
+
+    // Новые геттеры
+    fiatCurrencies,
+    cryptoCurrencies,
+    directions,
+    paymentMethods,
+    walletTypes,
 
     getMainConfigs,
     updateConfigs,
-    setNotifications,
-    setUnreadNotificationsCount,
-
     notifications,
     maintenanceNotification,
   };
