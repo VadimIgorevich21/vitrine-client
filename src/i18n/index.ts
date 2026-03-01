@@ -1,24 +1,42 @@
 import { createI18n } from 'vue-i18n'
 import en from '@/locales/en'
 import ru from '@/locales/ru'
+import pl from '@/locales/pl'
 
-const LOCALE_STORAGE_KEY = 'locale'
+export const LOCALE_STORAGE_KEY = 'locale'
 const DEFAULT_LOCALE = 'en'
 
-const messages = {
-  en,
-  ru,
-}
+export const locales = {
+  en: {
+    label: 'English',
+    short: 'EN',
+    flag: '🇬🇧',
+    messages: en,
+  },
+  pl: {
+    label: 'Polski',
+    short: 'PL',
+    flag: '🇵🇱',
+    messages: pl,
+  },
+  ru: {
+    label: 'Русский',
+    short: 'RU',
+    flag: '🇷🇺',
+    messages: ru,
+  },
+} as const
 
-const supportedLocales = Object.keys(messages) as string[]
+export type LocaleKey = keyof typeof locales
+export const supportedLocales = Object.keys(locales) as LocaleKey[]
 
-const savedLocale = (): string => {
+const savedLocale = (): LocaleKey => {
   try {
     const stored = localStorage.getItem(LOCALE_STORAGE_KEY)
-    if (stored && supportedLocales.includes(stored)) return stored
-  } catch {
-    /* ignore */
-  }
+    if (stored && supportedLocales.includes(stored as LocaleKey)) {
+      return stored as LocaleKey
+    }
+  } catch {}
   return DEFAULT_LOCALE
 }
 
@@ -26,7 +44,10 @@ export const i18n = createI18n({
   legacy: false,
   locale: savedLocale(),
   fallbackLocale: DEFAULT_LOCALE,
-  messages,
+  messages: Object.fromEntries(
+    Object.entries(locales).map(([key, value]) => [
+      key,
+      value.messages,
+    ])
+  ),
 })
-
-export { LOCALE_STORAGE_KEY, supportedLocales }
