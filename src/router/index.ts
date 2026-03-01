@@ -109,6 +109,19 @@ export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   linkExactActiveClass: 'exact-active',
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    if (to.hash) {
+      return { el: to.hash, behavior: 'smooth' }
+    }
+    // Only scroll to top if the route actually changed (not just query/hash)
+    if (to.path !== from.path) {
+      return { top: 0 }
+    }
+    return false
+  },
 })
 
 // Единый навигационный гард без использования next()
