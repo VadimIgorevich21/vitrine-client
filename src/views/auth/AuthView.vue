@@ -4,8 +4,8 @@ import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import FormError from "@/components/FormError.vue";
 import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
-import { getGoogleAuthUrl } from "@/services/authService";
-import { useAuthStore } from "@/stores/authStore";
+import { getGoogleAuthUrl } from "@/services/authService.ts";
+import { useAuthStore } from "@/stores/authStore.ts";
 import logoShine from "@/assets/img/logo-shine.png";
 import bgImage from "@/assets/img/background.png";
 import BaseButton from "@/components/ui/BaseButton.vue"
@@ -134,9 +134,9 @@ function goGoogle() {
   >
     <!-- Logo -->
     <div class="auth-logo">
-      <a href="/">
+      <router-link to="/" class="auth-logo__link">
         <img :src="logoShine" alt="Logo" class="auth-logo__img" />
-      </a>
+      </router-link>
     </div>
 
     <!-- ── Step 1: Email ───────────────────────────────────────────── -->

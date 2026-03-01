@@ -2,8 +2,8 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { saveTokenFromCallback } from '@/services/authService'
-import { useAuthStore } from '@/stores/authStore'
+import { saveTokenFromCallback } from '@/services/authService.ts'
+import { useAuthStore } from '@/stores/authStore.ts'
 
 const { t } = useI18n()
 const route = useRoute()
