@@ -215,7 +215,7 @@ function goGoogle() {
       </p>
 
       <!-- Error message -->
-      <p v-if="hasError" class="auth-otp-error">{{ t("login.invalidCode") }}</p>
+<!--      <p v-if="hasError" class="auth-otp-error">{{ t("login.invalidCode") }}</p>-->
 
       <!-- 6-digit boxes -->
       <div class="auth-otp-boxes" :class="{ 'auth-otp-boxes--error': hasError }">
@@ -238,6 +238,10 @@ function goGoogle() {
           @keydown="onDigitKeydown(i, $event)"
           @focus="onDigitFocus(i)"
         />
+      </div>
+
+      <div v-if="authError" class="text-center font-14px">
+        <FormError :error="authError" />
       </div>
 
       <div v-if="loading" class="auth-otp-loading">
@@ -318,14 +322,15 @@ function goGoogle() {
 
 .auth-card__subtitle {
   font-size: 14px;
-  color: #6B7280;
+  /* color: #6B7280; */
+  color: #929AAA;
   text-align: center;
   margin: 0;
   line-height: 1.6;
 }
 
 .auth-card__email {
-  color: #374151;
+  color: #929AAA;
   font-weight: 600;
 }
 
