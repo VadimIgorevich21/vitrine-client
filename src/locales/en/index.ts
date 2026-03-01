@@ -6,6 +6,7 @@ import login from './login'
 import cabinet from './cabinet'
 import orders from './orders'
 import privacy from './privacy'
+import terms from './terms'
 
 export default {
   home,
@@ -16,4 +17,5 @@ export default {
   cabinet,
   orders,
   privacy,
+  terms,
 }
