@@ -67,16 +67,20 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function sendOtp(email: string): Promise<void> {
     try {
+      loading.value = true
       error.value = null
       await authService.sendOtp(email)
     } catch (err) {
       error.value = getError(err)
       throw err
+    } finally {
+      loading.value = false
     }
   }
 
   async function verifyOtp(email: string, code: string, redirectPath?: string): Promise<void> {
     try {
+      loading.value = true
       error.value = null
       await authService.verifyOtp(email, code)
       await getAuthUser()
@@ -86,6 +90,8 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (err) {
       error.value = getError(err)
       throw err
+    } finally {
+      loading.value = false
     }
   }
 

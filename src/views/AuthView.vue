@@ -8,6 +8,7 @@ import { getGoogleAuthUrl } from "@/services/authService";
 import { useAuthStore } from "@/stores/authStore";
 import logoShine from "@/assets/img/logo-shine.png";
 import bgImage from "@/assets/img/background.png";
+import BaseButton from "@/components/ui/BaseButton.vue"
 
 const { t } = useI18n();
 const route = useRoute();
@@ -163,15 +164,9 @@ function goGoogle() {
 
       <FormError :error="authError" />
 
-      <button
-        type="button"
-        class="auth-btn-primary"
-        :disabled="loading || !otpEmail.trim()"
-        @click="sendOtp"
-      >
-        <span v-if="loading" class="auth-btn-spinner" />
+      <BaseButton :loading="loading" :disabled="!otpEmail.trim()" @click="sendOtp">
         {{ t("login.otpSendCode") }}
-      </button>
+      </BaseButton>
 
       <!-- Divider -->
       <div class="auth-divider">
