@@ -1,68 +1,124 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { ref, computed, nextTick } from 'vue'
+import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import FormError from '@/components/FormError.vue'
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import { getGoogleAuthUrl } from '@/services/authService'
 import { useAuthStore } from '@/stores/authStore'
+import logoShine from '@/assets/img/logo-shine.png'
+import bgImage from '@/assets/img/background.png'
 
 const { t } = useI18n()
 const route = useRoute()
 const authStore = useAuthStore()
 
-const mode = ref<'otp' | 'password'>('otp')
 const otpEmail = ref('')
-const otpCode = ref('')
+const otpDigits = ref<string[]>(['', '', '', '', '', ''])
 const otpSent = ref(false)
-const email = ref('')
-const password = ref('')
+
+const OTP_LENGTH = 6
+const digitRefs = ref<HTMLInputElement[]>([])
 
 const redirectPath = computed(() => (route.query.redirect as string) || '/cabinet')
 const loading = computed(() => authStore.loading)
 const authError = computed(() => authStore.error)
+const hasError = computed(() => !!authStore.error)
 
+const otpCode = computed(() => otpDigits.value.join(''))
+
+// ── OTP send ────────────────────────────────────────────────────────────────
 async function sendOtp() {
   if (!otpEmail.value.trim()) return
   try {
     await authStore.sendOtp(otpEmail.value)
     otpSent.value = true
+    otpDigits.value = Array(OTP_LENGTH).fill('')
+    await nextTick()
+    digitRefs.value[0]?.focus()
   } catch {
     // error in store
   }
 }
 
+// ── OTP verify ───────────────────────────────────────────────────────────────
 async function submitOtp() {
-  if (!otpEmail.value.trim() || !otpCode.value.trim()) return
+  if (otpCode.value.length < OTP_LENGTH) return
   try {
     await authStore.verifyOtp(otpEmail.value, otpCode.value, redirectPath.value)
   } catch {
-    // error in store
+    // error in store — shake + highlight handled via hasError
+    // clear digits so user can retype
+    otpDigits.value = Array(OTP_LENGTH).fill('')
+    await nextTick()
+    digitRefs.value[0]?.focus()
   }
 }
 
-function switchToPassword() {
-  mode.value = 'password'
-  authStore.error = null
-  email.value = otpEmail.value
+// ── Per-digit input handling ─────────────────────────────────────────────────
+function onDigitInput(index: number, event: Event) {
+  const target = event.target as HTMLInputElement
+  const raw = target.value.replace(/\D/g, '')
+
+  // Handle pasting a full code
+  if (raw.length > 1) {
+    const chars = raw.slice(0, OTP_LENGTH).split('')
+    chars.forEach((c, i) => {
+      otpDigits.value[i] = c
+    })
+    const next = Math.min(chars.length, OTP_LENGTH - 1)
+    nextTick(() => digitRefs.value[next]?.focus())
+    if (chars.length === OTP_LENGTH) submitOtp()
+    return
+  }
+
+  otpDigits.value[index] = raw
+  if (raw && index < OTP_LENGTH - 1) {
+    nextTick(() => digitRefs.value[index + 1]?.focus())
+  }
+  if (otpCode.value.length === OTP_LENGTH) submitOtp()
 }
 
-function switchToOtp() {
-  mode.value = 'otp'
+function onDigitKeydown(index: number, event: KeyboardEvent) {
+  if (event.key === 'Backspace') {
+    if (otpDigits.value[index]) {
+      otpDigits.value[index] = ''
+    } else if (index > 0) {
+      otpDigits.value[index - 1] = ''
+      nextTick(() => digitRefs.value[index - 1]?.focus())
+    }
+  } else if (event.key === 'ArrowLeft' && index > 0) {
+    digitRefs.value[index - 1]?.focus()
+  } else if (event.key === 'ArrowRight' && index < OTP_LENGTH - 1) {
+    digitRefs.value[index + 1]?.focus()
+  }
+}
+
+function onDigitFocus(index: number) {
+  digitRefs.value[index]?.select()
+}
+
+// ── Back to email step ────────────────────────────────────────────────────────
+function goBack() {
   otpSent.value = false
-  otpCode.value = ''
+  otpDigits.value = Array(OTP_LENGTH).fill('')
   authStore.error = null
-  otpEmail.value = email.value
 }
 
-async function submitEmailLogin() {
-  if (!email.value.trim() || !password.value) return
+// ── Resend ────────────────────────────────────────────────────────────────────
+async function resendOtp() {
+  otpDigits.value = Array(OTP_LENGTH).fill('')
+  authStore.error = null
   try {
-    await authStore.login({ email: email.value, password: password.value }, redirectPath.value)
+    await authStore.sendOtp(otpEmail.value)
+    await nextTick()
+    digitRefs.value[0]?.focus()
   } catch {
     // error in store
   }
 }
 
+// ── Google ────────────────────────────────────────────────────────────────────
 function goGoogle() {
   if (typeof window === 'undefined') return
   const redirectUri = `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(redirectPath.value)}`
@@ -71,152 +127,495 @@ function goGoogle() {
 </script>
 
 <template>
-  <div class="max-w-md mx-auto px-4 py-12">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-      {{ t('login.title') }}
-    </h1>
+  <div
+    class="auth-page"
+    :style="{ backgroundImage: `url(${bgImage})` }"
+  >
+    <!-- Logo -->
+    <div class="auth-logo">
+      <img :src="logoShine" alt="Logo" class="auth-logo__img" />
+    </div>
 
-    <!-- OTP: email → код -->
-    <div v-if="mode === 'otp'" class="space-y-4 mb-4">
-      <div>
-        <label for="auth-otp-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          {{ t('login.email') }}
-        </label>
+    <!-- ── Step 1: Email ───────────────────────────────────────────── -->
+    <div v-if="!otpSent" class="auth-card">
+      <h1 class="auth-card__title">{{ t('login.connectTitle') }}</h1>
+      <p class="auth-card__subtitle">{{ t('login.connectSubtitle') }}</p>
+
+      <div class="auth-input-wrap">
+        <svg class="auth-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m22 7-10 7L2 7"/>
+        </svg>
         <input
           id="auth-otp-email"
           v-model="otpEmail"
           type="email"
           autocomplete="email"
-          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          :placeholder="t('login.emailPlaceholder')"
+          class="auth-input"
           :disabled="loading"
+          @keyup.enter="sendOtp"
         />
       </div>
-      <template v-if="!otpSent">
-        <button
-          type="button"
-          class="w-full py-2 px-4 rounded-md bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
-          :disabled="loading || !otpEmail.trim()"
-          @click="sendOtp"
-        >
-          {{ t('login.otpSendCode') }}
-        </button>
-      </template>
-      <template v-else>
-        <div>
-          <label for="auth-otp-code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            {{ t('login.otpCodePlaceholder') }}
-          </label>
-          <input
-            id="auth-otp-code"
-            v-model="otpCode"
-            type="text"
-            inputmode="numeric"
-            autocomplete="one-time-code"
-            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            :disabled="loading"
-          />
-        </div>
-        <button
-          type="button"
-          class="w-full py-2 px-4 rounded-md bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
-          :disabled="loading || !otpCode.trim()"
-          @click="submitOtp"
-        >
-          {{ t('login.submit') }}
-        </button>
-      </template>
+
       <FormError :error="authError" />
+
       <button
         type="button"
-        class="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-        @click="switchToPassword"
+        class="auth-btn-primary"
+        :disabled="loading || !otpEmail.trim()"
+        @click="sendOtp"
       >
-        {{ t('login.otpSwitchToPassword') }}
+        <span v-if="loading" class="auth-btn-spinner" />
+        {{ t('login.otpSendCode') }}
       </button>
-    </div>
 
-    <!-- Вход по паролю -->
-    <form
-      v-if="mode === 'password'"
-      class="space-y-4 mb-4"
-      @submit.prevent="submitEmailLogin"
-    >
-      <div>
-        <label for="auth-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          {{ t('login.email') }}
-        </label>
-        <input
-          id="auth-email"
-          v-model="email"
-          type="email"
-          autocomplete="email"
-          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          :disabled="loading"
-        />
+      <!-- Divider -->
+      <div class="auth-divider">
+        <span class="auth-divider__line" />
+        <span class="auth-divider__text">{{ t('login.or') }}</span>
+        <span class="auth-divider__line" />
       </div>
-      <div>
-        <label for="auth-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          {{ t('login.password') }}
-        </label>
-        <input
-          id="auth-password"
-          v-model="password"
-          type="password"
-          autocomplete="current-password"
-          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          :disabled="loading"
-        />
-      </div>
-      <FormError :error="authError" />
+
+      <!-- Google -->
       <button
-        type="submit"
-        class="w-full py-2 px-4 rounded-md bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+        type="button"
+        class="auth-btn-google"
         :disabled="loading"
+        @click="goGoogle"
       >
-        {{ t('login.submit') }}
+        <svg class="auth-btn-google__icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        {{ t('login.loginWithGoogle') }}
       </button>
-      <button
-        type="button"
-        class="block text-sm text-blue-600 dark:text-blue-400 hover:underline"
-        @click="switchToOtp"
-      >
-        {{ t('login.passwordSwitchToOtp') }}
-      </button>
-    </form>
-
-    <!-- Разделитель -->
-    <div class="relative mb-6">
-      <div class="absolute inset-0 flex items-center">
-        <div class="w-full border-t border-gray-300 dark:border-gray-600" />
-      </div>
-      <div class="relative flex justify-center text-sm">
-        <span class="px-2 bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400">или</span>
-      </div>
     </div>
 
-    <!-- Вход через Google -->
-    <button
-      type="button"
-      class="w-full py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center justify-center gap-2"
-      :disabled="loading"
-      @click="goGoogle"
-    >
-      <svg class="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
-        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-      </svg>
-      {{ t('login.loginWithGoogle') }}
-    </button>
+    <!-- ── Step 2: OTP Verification ────────────────────────────────── -->
+    <div v-else class="auth-card">
+      <!-- Back arrow -->
+      <button type="button" class="auth-back-arrow" :disabled="loading" @click="goBack">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
 
-    <p class="mt-6">
-      <RouterLink
-        to="/"
-        class="text-blue-600 dark:text-blue-400 hover:underline"
-      >
-        {{ t('common.backToHome') }}
-      </RouterLink>
-    </p>
+      <h1 class="auth-card__title">{{ t('login.verifyTitle') }}</h1>
+
+      <p class="auth-card__subtitle">
+        {{ t('login.verifySentTo') }}<br />
+        <strong class="auth-card__email">{{ otpEmail }}</strong>
+      </p>
+
+      <!-- Error message -->
+      <p v-if="hasError" class="auth-otp-error">{{ t('login.invalidCode') }}</p>
+
+      <!-- 6-digit boxes -->
+      <div class="auth-otp-boxes" :class="{ 'auth-otp-boxes--error': hasError }">
+        <input
+          v-for="(_, i) in otpDigits"
+          :key="i"
+          :ref="(el) => { if (el) digitRefs[i] = el as HTMLInputElement }"
+          v-model="otpDigits[i]"
+          type="text"
+          inputmode="numeric"
+          maxlength="6"
+          autocomplete="one-time-code"
+          class="auth-otp-box"
+          :class="{
+            'auth-otp-box--filled': !!otpDigits[i],
+            'auth-otp-box--error': hasError,
+          }"
+          :disabled="loading"
+          @input="onDigitInput(i, $event)"
+          @keydown="onDigitKeydown(i, $event)"
+          @focus="onDigitFocus(i)"
+        />
+      </div>
+
+      <div v-if="loading" class="auth-otp-loading">
+        <span class="auth-btn-spinner auth-btn-spinner--dark" />
+      </div>
+
+      <!-- Resend -->
+      <button type="button" class="auth-resend-btn" :disabled="loading" @click="resendOtp">
+        {{ t('login.resendCode') }}
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="auth-footer">
+      <span class="auth-footer__copy">© 2026 IronBit. All rights reserved.</span>
+      <nav class="auth-footer__nav">
+        <a href="#" class="auth-footer__link">{{ t('footer.buySell') }}</a>
+        <a href="#" class="auth-footer__link">{{ t('footer.contactUs') }}</a>
+        <a href="#" class="auth-footer__link">{{ t('footer.terms') }}</a>
+      </nav>
+      <div class="auth-footer__right">
+        <LanguageSwitcher />
+      </div>
+    </footer>
   </div>
 </template>
+
+<style scoped>
+/* ── Page ──────────────────────────────────────────────── */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 0 16px;
+}
+
+/* ── Logo ──────────────────────────────────────────────── */
+.auth-logo {
+  margin-top: 48px;
+  margin-bottom: 40px;
+}
+.auth-logo__img {
+  height: 48px;
+  object-fit: contain;
+}
+
+/* ── Card ──────────────────────────────────────────────── */
+.auth-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px 44px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+
+.auth-card__title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+  margin: 0;
+}
+
+.auth-card__subtitle {
+  font-size: 14px;
+  color: #6B7280;
+  text-align: center;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.auth-card__email {
+  color: #374151;
+  font-weight: 600;
+}
+
+/* ── Back arrow ────────────────────────────────────────── */
+.auth-back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: #6B7280;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+.auth-back-arrow:hover:not(:disabled) {
+  background: #F3F4F6;
+  color: #111827;
+}
+
+/* ── Input ─────────────────────────────────────────────── */
+.auth-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-input-icon {
+  position: absolute;
+  left: 14px;
+  width: 18px;
+  height: 18px;
+  color: #9CA3AF;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 13px 16px 13px 42px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #111827;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.18s;
+  box-sizing: border-box;
+}
+
+.auth-input:focus { border-color: #F97316; }
+.auth-input:disabled { background: #F9FAFB; color: #9CA3AF; }
+.auth-input::placeholder { color: #9CA3AF; }
+
+/* ── OTP error message ─────────────────────────────────── */
+.auth-otp-error {
+  color: #EC4899;
+  font-size: 13px;
+  text-align: center;
+  margin: 0;
+}
+
+/* ── OTP 6-box grid ────────────────────────────────────── */
+.auth-otp-boxes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.auth-otp-box {
+  width: 52px;
+  height: 56px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+  text-align: center;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+  caret-color: transparent;
+  box-sizing: border-box;
+}
+
+.auth-otp-box:focus {
+  border-color: #6366F1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.auth-otp-box--filled {
+  border-color: #D1D5DB;
+}
+
+.auth-otp-box--error {
+  border-color: #F9A8D4 !important;
+  color: #EC4899;
+}
+
+/* ── OTP loading ───────────────────────────────────────── */
+.auth-otp-loading {
+  display: flex;
+  justify-content: center;
+  margin: -4px 0;
+}
+
+/* ── Resend ────────────────────────────────────────────── */
+.auth-resend-btn {
+  background: none;
+  border: none;
+  color: #6366F1;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  text-align: center;
+  transition: color 0.15s, opacity 0.15s;
+}
+.auth-resend-btn:hover:not(:disabled) {
+  color: #4F46E5;
+  text-decoration: underline;
+}
+.auth-resend-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Primary button ────────────────────────────────────── */
+.auth-btn-primary {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #F97316 0%, #EA580C 100%);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.12s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.auth-btn-primary:hover:not(:disabled) { opacity: 0.92; transform: translateY(-1px); }
+.auth-btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.auth-btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+
+.auth-btn-spinner--dark {
+  border-color: rgba(99, 102, 241, 0.25);
+  border-top-color: #6366F1;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Divider ───────────────────────────────────────────── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0;
+}
+.auth-divider__line { flex: 1; height: 1px; background: #E5E7EB; }
+.auth-divider__text { font-size: 13px; color: #9CA3AF; }
+
+/* ── Google button ─────────────────────────────────────── */
+.auth-btn-google {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  background: #fff;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.auth-btn-google:hover:not(:disabled) { background: #F9FAFB; border-color: #D1D5DB; }
+.auth-btn-google:disabled { opacity: 0.55; cursor: not-allowed; }
+.auth-btn-google__icon { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* ── Footer ────────────────────────────────────────────── */
+.auth-footer {
+  margin-top: auto;
+  padding: 20px 16px 28px;
+  width: 100%;
+  /* 3-column grid: copyright | links-centered | lang */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px 0;
+  box-sizing: border-box;
+}
+
+.auth-footer__copy {
+  font-size: 12px;
+  color: #6B7280;
+  justify-self: start;
+}
+
+.auth-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 20px;
+}
+
+.auth-footer__link {
+  font-size: 13px;
+  color: #374151;
+  text-decoration: none;
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+.auth-footer__link:hover { color: #F97316; }
+
+.auth-footer__right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ══════════ RESPONSIVE ══════════════════════════════════ */
+
+/* ≤ 480px – phones */
+@media (max-width: 480px) {
+  .auth-logo { margin-top: 28px; margin-bottom: 20px; }
+  .auth-logo__img { height: 36px; }
+
+  .auth-card {
+    padding: 28px 20px;
+    border-radius: 16px;
+    gap: 14px;
+  }
+
+  .auth-card__title { font-size: 19px; }
+  .auth-card__subtitle { font-size: 13px; }
+
+  /* font-size: 16px prevents iOS auto-zoom on focus */
+  .auth-input { padding: 11px 14px 11px 40px; font-size: 16px; }
+
+  .auth-btn-primary { padding: 13px; font-size: 14px; }
+  .auth-btn-google  { padding: 11px 14px; font-size: 13px; }
+
+  .auth-otp-boxes { gap: 6px; }
+  .auth-otp-box   { width: 42px; height: 48px; font-size: 18px; border-radius: 8px; }
+
+  /* Footer collapses to column */
+  .auth-footer {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
+    padding: 16px 12px 20px;
+  }
+  .auth-footer__copy { justify-self: center; order: 2; }
+  .auth-footer__nav  { order: 1; }
+  .auth-footer__right { justify-self: center; order: 3; }
+  .auth-footer__link { font-size: 12px; }
+}
+
+/* ≤ 360px */
+@media (max-width: 360px) {
+  .auth-card  { padding: 24px 14px; gap: 12px; }
+  .auth-card__title { font-size: 17px; }
+
+  .auth-otp-boxes { gap: 5px; }
+  .auth-otp-box   { width: 36px; height: 44px; font-size: 16px; border-radius: 7px; }
+
+  .auth-footer__nav { flex-direction: column; align-items: center; gap: 6px; }
+}
+
+/* ≤ 320px */
+@media (max-width: 320px) {
+  .auth-page { padding: 0 8px; }
+  .auth-logo__img { height: 30px; }
+
+  .auth-card  { padding: 20px 12px; border-radius: 14px; }
+  .auth-card__title { font-size: 16px; }
+
+  .auth-otp-boxes { gap: 4px; }
+  .auth-otp-box   { width: 32px; height: 40px; font-size: 15px; border-radius: 6px; }
+
+  .auth-btn-primary { font-size: 13px; padding: 11px; }
+}
+</style>

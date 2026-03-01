@@ -40,16 +40,7 @@ const routes: RouteRecordRaw[] = [
         name: 'login',
         component: LoginView,
       },
-      {
-        path: 'auth',
-        name: 'auth',
-        component: AuthView,
-      },
-      {
-        path: 'auth/callback',
-        name: 'authCallback',
-        component: AuthCallbackView,
-      },
+
       {
         path: 'privacy',
         name: 'privacy',
@@ -76,6 +67,17 @@ const routes: RouteRecordRaw[] = [
         meta: { title: 'Orders' },
       },
     ],
+  },
+  // Auth страницы — без layout (полноэкранный дизайн)
+  {
+    path: '/auth',
+    name: 'auth',
+    component: AuthView,
+  },
+  {
+    path: '/auth/callback',
+    name: 'authCallback',
+    component: AuthCallbackView,
   },
   // Без layout
   {
