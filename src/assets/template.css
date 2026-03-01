@@ -1,0 +1,26 @@
+/* 1. Назначаем для всего документа */
+html, body {
+    margin: 0;
+    padding: 0;
+    /* Ставим Inter первым, а стандартный sans-serif вторым на случай ошибки */
+    font-family: 'Inter', sans-serif;
+
+    /* Делаем шрифт более четким (актуально для темных тем и Mac) */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Оптимизация отрисовки */
+    text-rendering: optimizeLegibility;
+}
+
+/* 2. Нюанс: формы и кнопки НЕ всегда наследуют шрифт от body */
+/* Этот хак заставит их тоже использовать Inter */
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+}

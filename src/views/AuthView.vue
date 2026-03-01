@@ -133,7 +133,9 @@ function goGoogle() {
   >
     <!-- Logo -->
     <div class="auth-logo">
-      <img :src="logoShine" alt="Logo" class="auth-logo__img" />
+      <a href="/">
+        <img :src="logoShine" alt="Logo" class="auth-logo__img" />
+      </a>
     </div>
 
     <!-- ── Step 1: Email ───────────────────────────────────────────── -->
@@ -291,7 +293,7 @@ function goGoogle() {
 }
 
 .auth-logo__img {
-  height: 48px;
+  height: 80px;
   object-fit: contain;
 }
 
@@ -310,8 +312,9 @@ function goGoogle() {
 }
 
 .auth-card__title {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 150%;
   color: #111827;
   text-align: center;
   margin: 0;

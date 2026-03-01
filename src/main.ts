@@ -7,6 +7,8 @@ import { router } from '@/router'
 import '@/assets/tailwind.css'
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import "@/assets/fonts/Inter/inter-sans.css";
+import "@/assets/template.css";
 import App from './App.vue'
 
 const app = createApp(App)

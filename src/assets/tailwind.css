@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+:root {
+    /* Добавляем Inter в самое начало */
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+    /* Убедитесь, что body использует именно эту переменную */
+    font-family: var(--font-sans);
+}
