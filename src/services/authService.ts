@@ -1,5 +1,6 @@
 import axios from 'axios'
-import type { InternalAxiosRequestConfig } from 'axios'
+// Заменяем InternalAxiosRequestConfig на AxiosRequestConfig
+import type { AxiosRequestConfig, AxiosError } from 'axios'
 import { notify } from '@kyvg/vue3-notification'
 import { apiClient } from '@/services/api'
 import type { LoginPayload } from '@/types/auth'
@@ -9,22 +10,30 @@ const apiUrl = import.meta.env.VITE_APP_API_URL ?? ''
 
 export const authClient = axios.create({
   baseURL: apiUrl,
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
   },
   withCredentials: true,
 })
 
-// X-Locale для client-api (OTP-письма и ответы в выбранном языке)
-authClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+// X-Locale для client-api
+authClient.interceptors.request.use((config: AxiosRequestConfig) => {
+  // Исправляем "headers is possibly undefined"
+  if (!config.headers) {
+    config.headers = {}
+  }
+
   const locale = i18n.global.locale?.value ?? localStorage.getItem('locale') ?? 'en'
   config.headers['X-Locale'] = locale
+
   return config
 })
 
 authClient.interceptors.response.use(
   (response) => response,
-  (error) => {
+  (error: AxiosError) => {
     const { response } = error
 
     if (response?.status === 401) {
@@ -60,19 +69,13 @@ authClient.interceptors.response.use(
   }
 )
 
-//const USER_STORAGE_KEY = 'user'
 const USER_ID_KEY = 'userId'
 const TOKEN_KEY = 'token'
 
-/** Base URL бэкенда без завершающего слэша */
 function getApiBase(): string {
   return (apiUrl || '').replace(/\/$/, '')
 }
 
-/**
- * URL для входа через Google.
- * Редирект на этот URL; после входа бэкенд перенаправит на redirect_uri с token и token_type=Bearer.
- */
 export function getGoogleAuthUrl(redirectUri?: string): string {
   const base = getApiBase()
   const uri = redirectUri ?? (typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : '')
@@ -82,9 +85,6 @@ export function getGoogleAuthUrl(redirectUri?: string): string {
   return `${base}/client-api/auth/google${query ? `?${query}` : ''}`
 }
 
-/**
- * Сохраняет токен после OAuth callback (query: token, token_type=Bearer).
- */
 export function saveTokenFromCallback(token: string): void {
   if (token) localStorage.setItem(TOKEN_KEY, token)
 }
@@ -135,10 +135,12 @@ export default {
   },
 
   async sendOtp(email: string): Promise<unknown> {
+    await authClient.get("/sanctum/csrf-cookie");
     return authClient.post('/client-api/auth/otp/send', { email: email.trim() })
   },
 
   async verifyOtp(email: string, code: string): Promise<{ token: string }> {
+    await authClient.get("/sanctum/csrf-cookie");
     const { data } = await authClient.post<{ token: string }>('/client-api/auth/otp/verify', {
       email: email.trim(),
       otp: code.trim(),
@@ -148,12 +150,4 @@ export default {
     }
     return data
   },
-
-  // Telegram auth (раскомментируйте и настройте эндпоинты при необходимости)
-  // async telegramCheckAuth(payload: Record<string, unknown>) {
-  //   await authClient.get('/tg/csrf-token').then((res) => {
-  //     localStorage.setItem('xsrfLocalToken', res.data.csrf_token)
-  //   })
-  //   return authClient.post('/tg/telegram-check-auth', payload)
-  // },
 }

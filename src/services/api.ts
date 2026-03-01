@@ -3,7 +3,7 @@
  * we set the base URL for the API
  */
 
-import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios'
+import axios, { type AxiosError, type AxiosRequestConfig } from 'axios'
 import { notify } from '@kyvg/vue3-notification'
 import { router } from '@/router'
 import { i18n } from '@/i18n'
@@ -12,6 +12,9 @@ const apiUrl = import.meta.env.VITE_APP_API_URL || ''
 
 export const apiClient = axios.create({
   baseURL: apiUrl + '/client-api',
+  // Добавьте эти строки явно, чтобы исключить капризы версии:
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
   },
@@ -19,14 +22,18 @@ export const apiClient = axios.create({
 })
 
 // Request interceptor: locale для бэкенда (письма, сообщения API)
-apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
+  if (!config.headers) config.headers = {}
+
   const locale = i18n.global.locale?.value ?? localStorage.getItem('locale') ?? 'en'
   config.headers['X-Locale'] = locale
   return config
 })
 
 // Request interceptor: Add Authorization token
-apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
+  if (!config.headers) config.headers = {}
+
   const token = localStorage.getItem('token')
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
@@ -35,7 +42,9 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 })
 
 // Request interceptor: Add Telegram auth
-apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
+  if (!config.headers) config.headers = {}
+
   const tgInitData = localStorage.getItem('TgInitData')
   if (tgInitData) {
     config.headers['Tg-Auth'] = `Tg ${tgInitData}`
