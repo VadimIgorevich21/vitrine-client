@@ -50,10 +50,8 @@ const text = computed(() => {
 
 <style scoped>
 .form-error {
-  margin-top: 0.25rem;
-  min-height: 1.25rem;
-  font-size: 0.8125rem;
-  color: #dc2626;
+  /* font-size: 0.8125rem; */
+  color: #EC4899;
 }
 
 .dark .form-error {

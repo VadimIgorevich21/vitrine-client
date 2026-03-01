@@ -142,7 +142,10 @@ function goGoogle() {
     <!-- ── Step 1: Email ───────────────────────────────────────────── -->
     <div v-if="!otpSent" class="auth-card">
       <h1 class="auth-card__title">{{ t("login.connectTitle") }}</h1>
-      <p class="auth-card__subtitle">{{ t("login.connectSubtitle") }}</p>
+      <div v-if="authError" class="text-center font-14px">
+        <FormError :error="authError" />
+      </div>
+      <p v-else class="auth-card__subtitle">{{ t("login.connectSubtitle") }}</p>
 
       <div class="auth-input-wrap">
         <svg class="auth-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -161,8 +164,6 @@ function goGoogle() {
           @keyup.enter="sendOtp"
         />
       </div>
-
-      <FormError :error="authError" />
 
       <BaseButton :loading="loading" :disabled="!otpEmail.trim()" @click="sendOtp">
         {{ t("login.otpSendCode") }}
