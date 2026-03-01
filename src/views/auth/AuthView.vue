@@ -256,7 +256,7 @@ function goGoogle() {
 
     <!-- Footer -->
     <footer class="auth-footer">
-      <div class="auth-footer__container">
+      <div class="auth-footer__container default-container">
         <span class="auth-footer__copy">© 2026 IronBit. All rights reserved.</span>
         <nav class="auth-footer__nav">
           <a href="#" class="auth-footer__link">{{ t("footer.buySell") }}</a>
@@ -585,7 +585,6 @@ function goGoogle() {
   width: 100%;
 }
 .auth-footer__container {
-  max-width: 1300px; /* Ваше ограничение */
   margin: 0 auto;    /* Центрирование контейнера */
   padding: 20px 16px 28px;
   width: 100%;
