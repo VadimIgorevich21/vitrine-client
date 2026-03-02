@@ -96,7 +96,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="bg-white min-h-[600px] py-20 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-[600px] py-20 px-4 sm:px-6 lg:px-8">
     <div class="default-container">
       <div class="flex flex-col lg:flex-row items-start justify-between gap-16 lg:gap-24">
         <!-- Left Side: Content -->

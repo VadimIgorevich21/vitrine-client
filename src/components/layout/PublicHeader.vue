@@ -17,7 +17,7 @@ const displayName = computed(() => {
 </script>
 
 <template>
-  <header class="py-4 px-4 sm:px-6 lg:px-8">
+  <header class="public-header py-4 px-4 sm:px-6 lg:px-8">
     <div class="default-container">
       <div class="header-container bg-white/10 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-[100px] px-6 h-16 flex justify-between items-center">
         <!-- Logo -->
@@ -58,6 +58,10 @@ const displayName = computed(() => {
 </template>
 
 <style scoped>
+.public-header {
+  margin-top: 30px;
+}
+
 .header-container {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
