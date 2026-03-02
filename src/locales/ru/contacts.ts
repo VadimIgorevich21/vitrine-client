@@ -8,4 +8,8 @@ export default {
     emailPlaceholder: "Ваш Email",
     messagePlaceholder: "Введите ваше сообщение здесь",
     sendButton: "Отправить сообщение",
+    emailRequired: "Пожалуйста, введите ваш e-mail",
+    messageRequired: "Пожалуйста, введите сообщение",
+    successMessage: "Ваше сообщение успешно отправлено!",
+    errorMessage: "Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте снова.",
 }

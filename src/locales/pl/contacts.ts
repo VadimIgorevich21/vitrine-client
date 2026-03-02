@@ -8,4 +8,8 @@ export default {
     emailPlaceholder: "Twój Email",
     messagePlaceholder: "Wpisz tutaj swoją wiadomość",
     sendButton: "Wyślij wiadomość",
+    emailRequired: "Proszę podać swój adres e-mail",
+    messageRequired: "Proszę wpisać swoją wiadomość",
+    successMessage: "Twoja wiadomość została pomyślnie wysłana!",
+    errorMessage: "Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.",
 }

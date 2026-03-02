@@ -1,25 +1,66 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useToast } from 'vue-toastification'
+import { apiClient } from '@/services/api'
 import BaseButton from '@/components/ui/BaseButton.vue'
 
 const { t } = useI18n()
+const toast = useToast()
 
 const form = ref({
   email: '',
   message: ''
 })
 
+const errors = ref({
+  email: '',
+  message: ''
+})
+
 const isSubmitting = ref(false)
 
+const validate = () => {
+  let isValid = true
+  errors.value.email = ''
+  errors.value.message = ''
+
+  if (!form.value.email) {
+    errors.value.email = t('contacts.emailRequired')
+    isValid = false
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) {
+    // Basic email regex if needed, or just required if user only asked for "not empty"
+    // The user said "if data is not filled", so mostly non-empty.
+  }
+
+  if (!form.value.message) {
+    errors.value.message = t('contacts.messageRequired')
+    isValid = false
+  }
+
+  return isValid
+}
+
 const handleSubmit = async () => {
+  if (!validate()) return
+
   isSubmitting.value = true
-  // Mock submission
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  alert('Message sent (Mock)')
-  form.value.email = ''
-  form.value.message = ''
-  isSubmitting.value = false
+  try {
+    await apiClient.post('/contact-form', form.value)
+    
+    toast.success(t('contacts.successMessage'))
+    
+    // Clear form
+    form.value.email = ''
+    form.value.message = ''
+    errors.value.email = ''
+    errors.value.message = ''
+  } catch (error) {
+    console.error('Contact form error:', error)
+    toast.error(t('contacts.errorMessage'))
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
@@ -54,27 +95,45 @@ const handleSubmit = async () => {
               {{ t('contacts.formSubtext') }}
             </p>
 
-            <form @submit.prevent="handleSubmit" class="space-y-4">
+            <form @submit.prevent="handleSubmit" class="space-y-2">
               <div>
                 <input
                   v-model="form.email"
                   type="email"
-                  required
                   :placeholder="t('contacts.emailPlaceholder')"
-                  class="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-orange-500/20 outline-none transition-all placeholder:text-gray-400"
+                  :class="[
+                    'w-full px-5 py-4 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 outline-none transition-all placeholder:text-gray-400',
+                    errors.email ? 'ring-2 ring-red-500/20' : 'focus:ring-orange-500/20'
+                  ]"
                 />
+                <div class="h-6 mt-1 ml-2">
+                  <transition name="fade">
+                    <span v-if="errors.email" class="text-red-500 text-xs font-medium">
+                      {{ errors.email }}
+                    </span>
+                  </transition>
+                </div>
               </div>
               <div>
                 <textarea
                   v-model="form.message"
-                  required
                   rows="5"
                   :placeholder="t('contacts.messagePlaceholder')"
-                  class="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-orange-500/20 outline-none transition-all placeholder:text-gray-400 resize-none"
+                  :class="[
+                    'w-full px-5 py-4 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 outline-none transition-all placeholder:text-gray-400 resize-none',
+                    errors.message ? 'ring-2 ring-red-500/20' : 'focus:ring-orange-500/20'
+                  ]"
                 ></textarea>
+                <div class="h-6 mt-1 ml-2">
+                  <transition name="fade">
+                    <span v-if="errors.message" class="text-red-500 text-xs font-medium">
+                      {{ errors.message }}
+                    </span>
+                  </transition>
+                </div>
               </div>
               
-              <div class="pt-4">
+              <div class="pt-2">
                 <BaseButton 
                   type="submit" 
                   :loading="isSubmitting"
@@ -94,6 +153,14 @@ const handleSubmit = async () => {
 h1 {
   letter-spacing: -0.01em;
 }
-/* Optional: background grid pattern if needed, but the user didn't explicitly ask for it, 
-   though it is visible in the design. For now focusing on layout and content. */
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
