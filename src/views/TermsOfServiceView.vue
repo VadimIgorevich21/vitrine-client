@@ -4,36 +4,37 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div class="bg-white min-h-screen">
+  <div class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
     <!-- Main Content -->
-    <article class="default-container px-6 py-20">
-      <h1 class="text-5xl font-bold text-gray-900 mb-12">{{ t('terms.title') }}</h1>
+    <article class="default-container">
+      <h1 class="page-title-h1 mb-10">{{ t('terms.title') }}</h1>
 
       <div class="space-y-12">
         <!-- Block 1 -->
-        <section>
-          <h2 class="text-2xl font-bold text-gray-900 mb-6">{{ t('terms.blockTitle') }}</h2>
+          <h2 class="page-title-h2 mb-6">{{ t('terms.blockTitle') }}</h2>
           
           <div class="space-y-6">
             <div>
-              <h3 class="text-lg font-bold text-gray-900 mb-3">{{ t('terms.subheading1') }}</h3>
-              <p class="text-gray-500 leading-relaxed text-sm">
+              <h3 class="page-title-h3 mb-3">{{ t('terms.subheading1') }}</h3>
+              <p class="page-content-text">
                 {{ t('terms.text1') }}
               </p>
             </div>
 
             <div>
-              <h3 class="text-lg font-bold text-gray-900 mb-3">{{ t('terms.subheading2') }}</h3>
-              <div class="space-y-4 text-gray-500 leading-relaxed text-sm">
-                <p>
+              <h3 class="page-title-h3 mb-3">{{ t('terms.subheading2') }}</h3>
+              <div class="space-y-4">
+                <p class="page-content-text">
+                  {{ t('terms.text2') }}
+                </p>
+                <p class="page-content-text">
                   {{ t('terms.text2') }}
                 </p>
               </div>
             </div>
             
-            <a href="#" class="inline-block text-orange-400 font-medium hover:text-orange-500 transition-colors text-sm">{{ t('terms.link') }}</a>
+            <a href="#" class="page-orange-link font-14px transition-colors">{{ t('terms.link') }}</a>
           </div>
-        </section>
       </div>
     </article>
   </div>

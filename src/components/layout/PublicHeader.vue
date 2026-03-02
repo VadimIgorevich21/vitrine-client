@@ -68,7 +68,8 @@ const displayName = computed(() => {
 
 .signin-btn {
   /* Matching the greyish button color from the design */
-  background-color: #9BA5B7;
+  //background-color: #9BA5B7;
+  background: linear-gradient(275.09deg, #C8CCD4 2.73%, #AEB3BF 48.28%, #929AAA 95.62%);
 }
 
 .signin-btn:hover {

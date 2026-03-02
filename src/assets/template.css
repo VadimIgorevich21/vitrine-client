@@ -34,3 +34,66 @@ textarea {
 .font-14px {
     font-size: 14px;
 }
+
+.font-20px {
+    font-size: 20px;
+}
+
+
+
+
+.page-title-h1 {
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 120%;
+    letter-spacing: 0;
+    color: #101828;
+}
+
+.page-title-h2 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 150%;
+    letter-spacing: 0;
+    color: #101828;
+}
+
+.page-title-h3 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: 0;
+    color: #101828;
+}
+
+.page-subtitle-gradient {
+    background: linear-gradient(92.01deg, #929AAA 35.6%, #D8E0F0 95.78%);
+    /* Обрезаем фон по контуру текста */
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Делаем сам текст прозрачным, чтобы был виден фон под ним */
+    -webkit-text-fill-color: transparent;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 120%;
+    letter-spacing: 0;
+}
+
+.page-content-text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0;
+    color: #929AAA;
+}
+
+.page-orange-link {
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing: 0;
+    color: #FF7A00;
+}
+.page-orange-link:hover {
+    color: #f54a00;
+}
+

@@ -100,17 +100,19 @@ const handleSubmit = async () => {
     <div class="default-container">
       <div class="flex flex-col lg:flex-row items-start justify-between gap-16 lg:gap-24">
         <!-- Left Side: Content -->
-        <div class="flex-1 max-w-xl">
-          <h1 class="text-[56px] leading-[1.1] font-bold text-gray-900 mb-4 tracking-tight">
-            {{ t('contacts.title1') }}<br />
-            <span class="text-[#9BA5B7] font-normal">{{ t('contacts.title2') }}</span>
+        <div class="flex-1 max-w-[555px]">
+          <h1 class="page-title-h1 mb-4">
+            {{ t('contacts.title1') }}
           </h1>
-          <p class="text-gray-500 text-lg leading-relaxed mb-10 max-w-[480px]">
+          <div class="mb-10">
+            <span class="page-subtitle-gradient">{{ t('contacts.title2') }}</span>
+          </div>
+          <p class="page-content-text mb-10 max-w-[555px]">
             {{ t('contacts.description') }}
           </p>
           <a
             href="mailto:info@ironbit.io"
-            class="text-[20px] font-semibold text-orange-500 hover:text-orange-600 transition-colors"
+            class="page-orange-link font-20px transition-colors"
           >
             {{ t('contacts.email') }}
           </a>
@@ -119,7 +121,7 @@ const handleSubmit = async () => {
         <!-- Right Side: Form Card -->
         <div class="w-full max-w-[500px]">
           <div class="bg-white rounded-[32px] p-8 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-gray-100">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            <h2 class="page-title-h2 text-2xl font-bold text-gray-900 mb-4">
               {{ t('contacts.formTitle') }}
             </h2>
             <p class="text-sm text-gray-400 leading-relaxed mb-8">
@@ -180,10 +182,6 @@ const handleSubmit = async () => {
 </template>
 
 <style scoped>
-h1 {
-  letter-spacing: -0.01em;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease;
