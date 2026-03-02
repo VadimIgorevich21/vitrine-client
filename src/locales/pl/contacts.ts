@@ -1,0 +1,11 @@
+export default {
+    title1: "Masz pytania?",
+    title2: "Pomożemy",
+    description: "W przypadku jakichkolwiek pytań dotyczących naszych usług, zgodności lub transakcji prosimy o kontakt z naszym zespołem pomocy technicznej. Odpowiemy niezwłocznie.",
+    email: "info@ironbit.io",
+    formTitle: "Wyślij nam wiadomość",
+    formSubtext: "Jeśli masz pilną prośbę, wpisz „Pilne” w treści wiadomości, a my zajmiemy się nią natychmiast.",
+    emailPlaceholder: "Twój Email",
+    messagePlaceholder: "Wpisz tutaj swoją wiadomość",
+    sendButton: "Wyślij wiadomość",
+}

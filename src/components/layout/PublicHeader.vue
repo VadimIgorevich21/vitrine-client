@@ -28,7 +28,7 @@ const displayName = computed(() => {
         <!-- Navigation (Center) -->
         <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600 dark:text-gray-300">
           <a href="#" class="hover:text-blue-600 transition-colors">{{ t('header.howItWorks') }}</a>
-          <a href="#" class="hover:text-blue-600 transition-colors">{{ t('header.contactUs') }}</a>
+          <RouterLink to="/contacts" class="hover:text-blue-600 transition-colors">{{ t('header.contactUs') }}</RouterLink>
         </nav>
 
         <!-- Right Side: Lang + Sign In -->

@@ -8,6 +8,7 @@ import AuthView from '@/views/auth/AuthView.vue'
 import AuthCallbackView from '@/views/auth/AuthCallbackView.vue'
 import PrivacyPolicyView from '@/views/PrivacyPolicyView.vue'
 import TermsOfServiceView from '@/views/TermsOfServiceView.vue'
+import ContactView from '@/views/ContactView.vue'
 import CabinetView from '@/views/CabinetView.vue'
 import OrdersView from '@/views/OrdersView.vue'
 import MaintenanceView from '@/views/MaintenanceView.vue'
@@ -53,6 +54,12 @@ const routes: RouteRecordRaw[] = [
         name: 'terms',
         component: TermsOfServiceView,
         meta: { title: 'Terms of Service' },
+      },
+      {
+        path: 'contacts',
+        name: 'contacts',
+        component: ContactView,
+        meta: { title: 'Contacts' },
       },
     ],
   },

@@ -7,6 +7,7 @@ import cabinet from './cabinet'
 import orders from './orders'
 import privacy from './privacy'
 import terms from './terms'
+import contacts from './contacts'
 
 export default {
   home,
@@ -18,4 +19,5 @@ export default {
   orders,
   privacy,
   terms,
+  contacts,
 }

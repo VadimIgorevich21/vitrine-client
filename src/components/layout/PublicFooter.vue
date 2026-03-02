@@ -28,7 +28,7 @@ const { t } = useI18n()
             <li><a href="#" class="hover:text-white transition-colors">{{ t('footer.buyCrypto') }}</a></li>
             <li><a href="#" class="hover:text-white transition-colors">{{ t('footer.sellCrypto') }}</a></li>
             <li><a href="#" class="hover:text-white transition-colors">{{ t('footer.howItWorks') }}</a></li>
-            <li><a href="#" class="hover:text-white transition-colors">{{ t('footer.contactUs') }}</a></li>
+            <li><RouterLink to="/contacts" class="hover:text-white transition-colors">{{ t('footer.contactUs') }}</RouterLink></li>
           </ul>
         </div>
 
