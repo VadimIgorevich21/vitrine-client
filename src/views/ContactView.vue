@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 import { apiClient } from '@/services/api'
@@ -19,18 +19,29 @@ const errors = ref({
 })
 
 const isSubmitting = ref(false)
+const wasAttempted = ref(false)
+const touched = ref({
+  email: false,
+  message: false
+})
 
 const validate = () => {
-  let isValid = true
   errors.value.email = ''
   errors.value.message = ''
+
+  // If both fields are empty, don't show any errors
+  if (!form.value.email && !form.value.message && !wasAttempted.value) {
+    return false
+  }
+
+  let isValid = true
 
   if (!form.value.email) {
     errors.value.email = t('contacts.emailRequired')
     isValid = false
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) {
-    // Basic email regex if needed, or just required if user only asked for "not empty"
-    // The user said "if data is not filled", so mostly non-empty.
+    errors.value.email = t('contacts.emailInvalid')
+    isValid = false
   }
 
   if (!form.value.message) {
@@ -41,7 +52,24 @@ const validate = () => {
   return isValid
 }
 
+// Reactively validate if the user already tried to submit or touched the field
+watch([() => form.value.email, () => form.value.message], () => {
+  if (wasAttempted.value || touched.value.email || touched.value.message) {
+    validate()
+  }
+})
+
+const isFormInvalid = computed(() => {
+  if (!form.value.email || !form.value.message) return true
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) return true
+  return false
+})
+
 const handleSubmit = async () => {
+  wasAttempted.value = true
+  touched.value.email = true
+  touched.value.message = true
+  
   if (!validate()) return
 
   isSubmitting.value = true
@@ -55,6 +83,9 @@ const handleSubmit = async () => {
     form.value.message = ''
     errors.value.email = ''
     errors.value.message = ''
+    wasAttempted.value = false
+    touched.value.email = false
+    touched.value.message = false
   } catch (error) {
     console.error('Contact form error:', error)
     toast.error(t('contacts.errorMessage'))
@@ -103,12 +134,13 @@ const handleSubmit = async () => {
                   :placeholder="t('contacts.emailPlaceholder')"
                   :class="[
                     'w-full px-5 py-4 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 outline-none transition-all placeholder:text-gray-400',
-                    errors.email ? 'ring-2 ring-red-500/20' : 'focus:ring-orange-500/20'
+                    errors.email && (touched.email || wasAttempted) ? 'ring-2 ring-red-500/20' : 'focus:ring-orange-500/20'
                   ]"
+                  @blur="touched.email = true; validate()"
                 />
                 <div class="h-6 mt-1 ml-2">
                   <transition name="fade">
-                    <span v-if="errors.email" class="text-red-500 text-xs font-medium">
+                    <span v-if="errors.email && (touched.email || wasAttempted)" class="text-red-500 text-xs font-medium">
                       {{ errors.email }}
                     </span>
                   </transition>
@@ -121,21 +153,19 @@ const handleSubmit = async () => {
                   :placeholder="t('contacts.messagePlaceholder')"
                   :class="[
                     'w-full px-5 py-4 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 outline-none transition-all placeholder:text-gray-400 resize-none',
-                    errors.message ? 'ring-2 ring-red-500/20' : 'focus:ring-orange-500/20'
+                    errors.message && (touched.message || wasAttempted) ? 'ring-2 ring-red-500/20' : 'focus:ring-orange-500/20'
                   ]"
+                  @blur="touched.message = true; validate()"
                 ></textarea>
                 <div class="h-6 mt-1 ml-2">
-                  <transition name="fade">
-                    <span v-if="errors.message" class="text-red-500 text-xs font-medium">
-                      {{ errors.message }}
-                    </span>
-                  </transition>
+                  <!-- Error message removed as per user request (button is disabled instead) -->
                 </div>
               </div>
               
               <div class="pt-2">
                 <BaseButton 
                   type="submit" 
+                  :disabled="isFormInvalid"
                   :loading="isSubmitting"
                 >
                   {{ t('contacts.sendButton') }}
