@@ -2,6 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/authStore'
 import { computed } from 'vue'
+import KycWidget from "@/components/kyc/KycWidget.vue";
 
 const { t } = useI18n()
 const authStore = useAuthStore()
@@ -21,5 +22,7 @@ const displayName = computed(() => {
     <p class="text-gray-600 dark:text-gray-300">
       {{ t('cabinet.welcome', { name: displayName }) }}
     </p>
+    <KycWidget />
+
   </div>
 </template>
