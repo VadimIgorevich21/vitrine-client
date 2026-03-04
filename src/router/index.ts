@@ -18,6 +18,7 @@ import {
   getConfigs,
   roleRedirectAndTitle,
 } from './middleware'
+import TentPage from "@/views/TentPage.vue";
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -80,6 +81,12 @@ const routes: RouteRecordRaw[] = [
         component: OrdersView,
         meta: { title: 'Orders' },
       },
+      {
+        path: 'test-page',
+        name: 'test-page',
+        component: TentPage,
+        meta: { title: 'TentPage' },
+      },
     ],
   },
   // Auth страницы — без layout (полноэкранный дизайн)
@@ -87,6 +94,12 @@ const routes: RouteRecordRaw[] = [
     path: '/auth',
     name: 'auth',
     component: AuthView,
+  },
+  {
+    path: '/success-payment',
+    name: 'success-payment',
+    component: TentPage,
+    meta: { title: 'success-payment' },
   },
   {
     path: '/auth/callback',
