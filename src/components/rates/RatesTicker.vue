@@ -86,9 +86,9 @@ const formatPrice = (value: number, precision: number, currency: string) => {
 .ticker-wrapper {
   width: 100%;
   overflow: hidden;
-  background: white;
-  border-top: 1px solid #f1f5f9;
-  border-bottom: 1px solid #f1f5f9;
+  //background: white;
+  //border-top: 1px solid #f1f5f9;
+  //border-bottom: 1px solid #f1f5f9;
   padding: 16px 0;
   position: relative;
   z-index: 10;

@@ -8,7 +8,7 @@ import bgImage from "@/assets/img/background.png";
 <template>
   <div class="home-page min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900"
        :style="{ backgroundImage: `url(${bgImage})` }"
-       style="background-repeat: no-repeat"
+       style="background-repeat: no-repeat; background-color: #ffffff"
   >
     <HomeHeader />
     <main class="flex-1">

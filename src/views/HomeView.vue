@@ -15,7 +15,7 @@ const toggleLocale = () => {
 
 <template>
   <div class="home-hero-container">
-    <div class="default-container pt-12 pb-24">
+    <div class="default-container pt-12 pb-20">
       <div class="hero-grid">
         
         <!-- Left Side: Content -->
@@ -89,7 +89,6 @@ const toggleLocale = () => {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding-top: 1rem;
 }
 
 .hero-form-column {
