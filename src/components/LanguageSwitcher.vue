@@ -126,15 +126,11 @@ onUnmounted(() =>
   padding: 2px 4px;
   border: none;
   background: transparent;
-  color: #374151;
+  //color: #374151;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.2s ease;
-}
-
-.lang-switcher__btn:hover {
-  opacity: 0.7;
 }
 
 .lang-switcher__short {

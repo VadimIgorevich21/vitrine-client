@@ -18,6 +18,7 @@ import {
   getConfigs,
   roleRedirectAndTitle,
 } from './middleware'
+import HomeLayout from "@/layouts/HomeLayout.vue";
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -30,13 +31,19 @@ const routes: RouteRecordRaw[] = [
   // Публичные страницы — свой layout (хедер: имя + «Кабинет» или «Войти»)
   {
     path: '/',
-    component: PublicLayout,
+    component: HomeLayout,
     children: [
       {
         path: '',
         name: 'home',
         component: HomeView,
       },
+    ]
+  },
+  {
+    path: '/',
+    component: PublicLayout,
+    children: [
       {
         path: 'login',
         name: 'login',

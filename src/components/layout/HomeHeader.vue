@@ -19,7 +19,7 @@ const displayName = computed(() => {
 <template>
   <header class="public-header py-4 px-4 sm:px-6 lg:px-8">
     <div class="default-container">
-      <div class="header-container bg-white/10 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-[100px] px-6 h-16 flex justify-between items-center">
+      <div class="home-page-header header-container backdrop-blur-sm px-6 h-16 flex justify-between items-center">
         <!-- Logo -->
         <RouterLink to="/" class="flex items-center">
           <img :src="logo" alt="IronBit" class="h-8 w-auto" />
@@ -33,7 +33,7 @@ const displayName = computed(() => {
 
         <!-- Right Side: Lang + Sign In -->
         <div class="flex items-center gap-4">
-          <LanguageSwitcher class="public-pages-lang-switcher" />
+          <LanguageSwitcher class="home-page-lang-switcher" />
 
           <template v-if="authStore.loggedIn">
             <RouterLink
@@ -77,20 +77,57 @@ const displayName = computed(() => {
   cursor: pointer;
 }
 
-.header-nav-link {
-  color: #929AAA;
+.home-page-header {
+  border-radius: 16777200px;
+  border-width: 1px;
 }
-.header-nav-link:hover {
-  color: #7A8290;
+
+.home-page-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      45deg,
+      rgba(0,0,0,0.85) 0%,
+      rgba(200,200,200,0.6) 5%,
+      rgba(200,200,200,0.6) 95%,
+      rgba(0,0,0,0.85) 100%
+    ),
+    linear-gradient(
+      45deg,
+      rgba(0,0,0,0.9) 0%,
+      rgba(0,0,0,0.9) 100%
+    );
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+}
+
+.home-page-header .header-nav-link {
+  color: #B0B8C6;
+}
+.home-page-header .header-nav-link:hover {
+  color: #E0E4EB;
   transition: color 0.2s;
 }
 
-.public-pages-lang-switcher {
-  color: #929AAA;
+.home-page-lang-switcher {
+  color: #B0B8C6;
 }
 
-.public-pages-lang-switcher:hover {
-  color: #7A8290;
+.home-page-lang-switcher:hover {
+  color: #E0E4EB;
   transition: color 0.2s;
 }
+
 </style>
