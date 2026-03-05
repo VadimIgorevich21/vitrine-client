@@ -2,7 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
-import { apiClient } from '@/services/api'
+import { apiClient } from '@/services/api.ts'
 import BaseButton from '@/components/ui/BaseButton.vue'
 
 const { t } = useI18n()

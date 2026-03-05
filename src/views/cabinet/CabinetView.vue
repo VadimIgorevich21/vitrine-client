@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { useAuthStore } from '@/stores/authStore'
+import { useAuthStore } from '@/stores/authStore.ts'
 import { computed } from 'vue'
 // import KycWidget from "@/components/kyc/KycWidget.vue";
 import KycComponent from "@/components/kyc/KycComponent.vue";
