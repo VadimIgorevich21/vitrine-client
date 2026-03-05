@@ -23,7 +23,7 @@ import bgImage from "@/assets/img/background.png";
 /* ── Page ──────────────────────────────────────────────── */
 .home-page {
   background-position: center top;
-  background-position: 0 -150px;
+  background-position: 0 -100px;
   background-repeat: no-repeat;
   font-family: 'Inter', system-ui, sans-serif;
 }

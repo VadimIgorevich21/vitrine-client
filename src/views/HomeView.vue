@@ -3,6 +3,7 @@ import { useCounterStore } from '@/stores/counter'
 import { useI18n } from 'vue-i18n'
 import RatesTable from '@/components/rates/RatesTable.vue';
 import ExchangeForm from '@/components/orders/ExchangeForm.vue';
+import RatesTicker from '@/components/rates/RatesTicker.vue';
 
 const counterStore = useCounterStore()
 const { t, locale } = useI18n()
@@ -14,7 +15,7 @@ const toggleLocale = () => {
 
 <template>
   <div class="home-hero-container">
-    <div class="default-container px-4 pt-12 pb-24">
+    <div class="default-container pt-12 pb-24">
       <div class="hero-grid">
         
         <!-- Left Side: Content -->
@@ -26,7 +27,7 @@ const toggleLocale = () => {
 
           <h1 class="hero-title">
             {{ t('home.hero_title_p1') }} <br>
-            <span class="text-gradient">{{ t('home.hero_title_p2') }}</span>
+            <span>{{ t('home.hero_title_p2') }}</span>
           </h1>
 
           <p class="hero-subtitle">
@@ -46,6 +47,7 @@ const toggleLocale = () => {
       </div>
     </div>
   </div>
+  <RatesTicker />
 
   <!-- Bottom section (Original contents, adjusted) -->
   <div class="default-container px-4 py-20 border-t border-white/5">
@@ -96,11 +98,15 @@ const toggleLocale = () => {
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.1;
-  font-weight: 800;
+  font-weight: 500;
+  font-size: 64px;
+  line-height: 130%;
+  letter-spacing: 0;
   color: white;
-  letter-spacing: -0.02em;
+  background: linear-gradient(113.64deg, #FFFFFF 40.81%, #978FE3 76.61%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .text-gradient {
@@ -111,23 +117,40 @@ const toggleLocale = () => {
 }
 
 .hero-subtitle {
-  font-size: 1.125rem;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.6);
+  max-width: 550px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 150%;
+  letter-spacing: -0.2px;
+
+  background:
+  linear-gradient(113.64deg, #FFFFFF 40.81%, #978FE3 76.61%),
+  linear-gradient(0deg, #FFFFFF, #FFFFFF);
+
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 /* Badge Styles - Restored to original */
 .innovate-badge {
+  width: 240px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-align: center;
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 6px 16px;
   border-radius: 999px;
-  font-size: 14px;
-  color: #e6e8ff;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
+  color: #ffffff;
+  //background: rgba(255, 255, 255, 0.04);
+  //backdrop-filter: blur(8px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
@@ -166,8 +189,8 @@ const toggleLocale = () => {
 }
 
 .badge-dot {
-  width: 6px;
-  height: 6px;
+  width: 12px;
+  height: 12px;
   background: #ff7a00;
   border-radius: 50%;
 }
