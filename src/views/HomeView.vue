@@ -6,6 +6,7 @@ import ExchangeForm from '@/components/orders/ExchangeForm.vue';
 import RatesTicker from '@/components/rates/RatesTicker.vue';
 import InstantRegistration from '@/components/home/InstantRegistration.vue';
 import SimpleProcess from '@/components/home/SimpleProcess.vue';
+import SupportContact from '@/components/home/SupportContact.vue';
 
 const counterStore = useCounterStore()
 const { t, locale } = useI18n()
@@ -52,6 +53,7 @@ const toggleLocale = () => {
   <RatesTicker />
   <InstantRegistration />
   <SimpleProcess />
+  <SupportContact />
 
   <!-- Bottom section (Original contents, adjusted) -->
   <div class="default-container px-4 py-20 border-t border-white/5">

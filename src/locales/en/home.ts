@@ -25,4 +25,8 @@ export default {
   process_step3_desc: 'Pay securely via Card',
   process_step4_title: 'Receive Crypto',
   process_step4_desc: 'Get funds in your wallet instantly and securely',
+  support_title_p1: 'Still have',
+  support_title_p2: 'Questions?',
+  support_description: 'Our support team is available 24/7 to assist you with any inquiries regarding our platform or your transactions',
+  support_btn: 'Contact Us',
 }
