@@ -2,6 +2,7 @@ export interface User {
   id: number
   name?: string
   email?: string
+  kyc_verified?: boolean
   roles: string[]
   permissions: string[]
   isAdmin?: boolean

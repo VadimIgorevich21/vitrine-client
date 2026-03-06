@@ -83,9 +83,22 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'orders',
+        alias: 'history',
         name: 'orders',
         component: OrdersView,
         meta: { title: 'Orders' },
+      },
+      {
+        path: 'account',
+        name: 'account',
+        component: CabinetView, // Placeholder
+        meta: { title: 'Account' },
+      },
+      {
+        path: 'verification',
+        name: 'verification',
+        component: () => import('@/views/VerificationView.vue'),
+        meta: { title: 'Verification' },
       },
     ],
   },
