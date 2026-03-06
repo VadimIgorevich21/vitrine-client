@@ -8,4 +8,8 @@ export default {
   hero_title_p1: 'Trade Crypto with',
   hero_title_p2: 'Absolute Precision',
   hero_subtitle: 'Experience the next generation of digital assets exchange. Buy and sell crypto assets instantly with card payments, transparent pricing, and intelligent rate execution.',
+  instant_reg_title_p1: 'Instant Registration.',
+  instant_reg_title_p2: 'Powerful Features.',
+  instant_reg_subtitle: 'You only need to enter your email and password, no additional data required. Secure account setup in seconds.',
+  instant_reg_button: 'Register Now',
 }

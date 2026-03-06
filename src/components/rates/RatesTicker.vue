@@ -39,6 +39,7 @@ const sequence1 = [
 ];
 
 // Placeholder sequence (alternative)
+/*
 const sequence2 = [
   { from: 'BTC', to: 'USD', change: 2.4 },
   { from: 'BTC', to: 'EUR', change: 2.1 },
@@ -49,6 +50,7 @@ const sequence2 = [
   { from: 'USDC', to: 'USD', change: 0.1 },
   { from: 'USDC', to: 'EUR', change: 0.0 },
 ];
+*/
 
 const activeSequence = sequence1;
 
@@ -86,9 +88,9 @@ const formatPrice = (value: number, precision: number, currency: string) => {
 .ticker-wrapper {
   width: 100%;
   overflow: hidden;
-  //background: white;
-  //border-top: 1px solid #f1f5f9;
-  //border-bottom: 1px solid #f1f5f9;
+  /* background: white; */
+  /* border-top: 1px solid #f1f5f9; */
+  /* border-bottom: 1px solid #f1f5f9; */
   padding: 16px 0;
   position: relative;
   z-index: 10;

@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import RatesTable from '@/components/rates/RatesTable.vue';
 import ExchangeForm from '@/components/orders/ExchangeForm.vue';
 import RatesTicker from '@/components/rates/RatesTicker.vue';
+import InstantRegistration from '@/components/home/InstantRegistration.vue';
 
 const counterStore = useCounterStore()
 const { t, locale } = useI18n()
@@ -48,6 +49,7 @@ const toggleLocale = () => {
     </div>
   </div>
   <RatesTicker />
+  <InstantRegistration />
 
   <!-- Bottom section (Original contents, adjusted) -->
   <div class="default-container px-4 py-20 border-t border-white/5">
@@ -148,8 +150,8 @@ const toggleLocale = () => {
   padding: 6px 16px;
   border-radius: 999px;
   color: #ffffff;
-  //background: rgba(255, 255, 255, 0.04);
-  //backdrop-filter: blur(8px);
+  /* background: rgba(255, 255, 255, 0.04); */
+  /* backdrop-filter: blur(8px); */
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
