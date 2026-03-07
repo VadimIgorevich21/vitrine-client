@@ -50,7 +50,7 @@ const menuItems = [
 const footerLinks = [
   { name: 'terms', path: '/terms' },
   { name: 'refund', path: '/refund' },
-  { name: 'contact', path: '/contact' }
+  { name: 'contact', path: '/contacts' }
 ]
 
 const handleLogout = async () => {
