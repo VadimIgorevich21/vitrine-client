@@ -14,7 +14,7 @@
             {{ t('home.instant_reg_subtitle') }}
           </p>
           <div class="reg-actions">
-            <button class="btn-register">
+            <button class="btn-register" @click="handleAction">
               {{ t('home.instant_reg_button') }}
             </button>
           </div>
@@ -31,8 +31,20 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
 
 const { t } = useI18n();
+const router = useRouter();
+const authStore = useAuthStore();
+
+const handleAction = () => {
+  if (authStore.user) {
+    router.push({ name: 'cabinet' });
+  } else {
+    router.push({ name: 'auth' });
+  }
+};
 </script>
 
 <style scoped>

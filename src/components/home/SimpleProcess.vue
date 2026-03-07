@@ -17,7 +17,7 @@
             {{ t('home.process_description') }}
           </p>
           <div class="process-actions">
-            <button class="btn-get-started">
+            <button class="btn-get-started" @click="handleAction">
               {{ t('home.process_btn') }}
             </button>
           </div>
@@ -82,8 +82,20 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
 
 const { t } = useI18n();
+const router = useRouter();
+const authStore = useAuthStore();
+
+const handleAction = () => {
+  if (authStore.user) {
+    router.push({ name: 'cabinet' });
+  } else {
+    router.push({ name: 'auth' });
+  }
+};
 </script>
 
 <style scoped>
