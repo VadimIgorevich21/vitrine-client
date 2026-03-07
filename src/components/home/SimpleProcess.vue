@@ -4,16 +4,16 @@
       <div class="process-grid">
         <!-- Left Content (Similar to InstantRegistration) -->
         <div class="process-content">
-          <h1 class="page-title-h1 mb-4">
+          <h1 class="page-title-h1">
             {{ t('home.process_title_p1') }}
           </h1>
+          <h1 class="page-title-h1 mb-4">
+            {{ t('home.process_title_p2') }}
+          </h1>
           <div class="mb-4">
-            <span class="page-subtitle-gradient">{{ t('home.process_title_p2') }}</span>
+            <span class="page-subtitle-gradient">{{ t('home.process_title_p3') }}</span>
           </div>
-          <h2 class="process-subtitle-small mb-8">
-             {{ t('home.process_title_p3') }}
-          </h2>
-          <p class="page-content-text mb-8">
+          <p class="page-content-text home-process-description mb-8">
             {{ t('home.process_description') }}
           </p>
           <div class="process-actions">
@@ -88,9 +88,7 @@ const { t } = useI18n();
 
 <style scoped>
 .simple-process-section {
-  background-color: #F9FAFB;
-  border-top: 1px solid #E5E7EB;
-  border-bottom: 1px solid #E5E7EB;
+  background-color: #FAFAFA;
 }
 
 :deep(.dark) .simple-process-section {
@@ -100,12 +98,15 @@ const { t } = useI18n();
 
 .process-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 6rem;
+  grid-template-columns: 1.4fr 1.2fr;
+  gap: 0rem;
   align-items: center;
 }
 
 
+.home-process-description {
+  max-width: 400px;
+}
 
 .process-subtitle-small {
   font-weight: 500;
