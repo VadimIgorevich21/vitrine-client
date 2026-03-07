@@ -65,9 +65,9 @@ const handleLogout = async () => {
   >
     <div class="flex flex-col h-full p-6">
       <!-- Close Button (Mobile) -->
-      <button @click="$emit('close')" class="lg:hidden absolute top-6 right-6 text-gray-400 hover:text-white">
+      <button @click="$emit('close')" class="lg:hidden absolute top-8 right-6 text-gray-400 hover:text-white transition-colors duration-200">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 6L6 18M6 18H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
 
@@ -119,7 +119,7 @@ const handleLogout = async () => {
           <span>{{ t('cabinet.sidebar.logout') }}</span>
         </button>
 
-        <div class="border-t border-white/5 pt-4 space-y-3">
+        <div class="border-t border-white/5 pt-6 space-y-3">
           <RouterLink 
             v-for="link in footerLinks" 
             :key="link.path" 
