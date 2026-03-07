@@ -103,7 +103,7 @@ onUnmounted(() =>
           @click="switchLocale(lang)"
         >
           <span class="lang-switcher__item">
-            {{ locales[lang].flag }}
+            <img :src="locales[lang].flag" :alt="locales[lang].label" class="lang-switcher__flag" />
             {{ locales[lang].short }}
           </span>
         </button>
@@ -126,7 +126,7 @@ onUnmounted(() =>
   padding: 2px 4px;
   border: none;
   background: transparent;
-  //color: #374151;
+  /* color: #374151; */
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -184,7 +184,14 @@ onUnmounted(() =>
 .lang-switcher__item {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 6px;
+}
+
+.lang-switcher__flag {
+  width: 18px;
+  height: auto;
+  border-radius: 2px;
+  object-fit: contain;
 }
 
 /* Анимация */

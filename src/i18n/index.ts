@@ -10,19 +10,19 @@ export const locales = {
   en: {
     label: 'English',
     short: 'EN',
-    flag: '🇬🇧',
+    flag: '/img/flags/GB.svg',
     messages: en,
   },
   pl: {
     label: 'Polski',
     short: 'PL',
-    flag: '🇵🇱',
+    flag: '/img/flags/PL.svg',
     messages: pl,
   },
   ru: {
     label: 'Русский',
     short: 'RU',
-    flag: '🇷🇺',
+    flag: '/img/flags/RU.svg',
     messages: ru,
   },
 } as const
@@ -36,7 +36,7 @@ const savedLocale = (): LocaleKey => {
     if (stored && supportedLocales.includes(stored as LocaleKey)) {
       return stored as LocaleKey
     }
-  } catch {}
+  } catch { }
   return DEFAULT_LOCALE
 }
 
