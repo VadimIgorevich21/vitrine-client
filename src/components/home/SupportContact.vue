@@ -9,7 +9,7 @@
           {{ t('home.support_description') }}
         </p>
         <div class="support-actions">
-          <button class="btn-contact">
+          <button class="btn-contact" @click="handleContact">
             {{ t('home.support_btn') }}
           </button>
         </div>
@@ -20,8 +20,14 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 const { t } = useI18n();
+const router = useRouter();
+
+const handleContact = () => {
+  router.push({ name: 'contacts' });
+};
 </script>
 
 <style scoped>
