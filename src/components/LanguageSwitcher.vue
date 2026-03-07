@@ -123,7 +123,7 @@ onUnmounted(() =>
   display: flex;
   align-items: center;
   gap: 2px;
-  padding: 2px 4px;
+  padding: 2px 0;
   border: none;
   background: transparent;
   /* color: #374151; */
