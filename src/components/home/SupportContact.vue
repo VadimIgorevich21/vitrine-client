@@ -2,10 +2,10 @@
   <section class="support-contact-section">
     <div class="default-container px-4 py-32 text-center">
       <div class="support-content">
-        <h2 class="support-title mb-6">
-          {{ t('home.support_title_p1') }} <span class="text-orange">{{ t('home.support_title_p2') }}</span>
+        <h2 class="page-title-h1 white-color mb-12">
+          {{ t('home.support_title_p1') }} <span class="text-orange-gradient">{{ t('home.support_title_p2') }}</span>
         </h2>
-        <p class="support-description mb-10">
+        <p class="support-description mb-12">
           {{ t('home.support_description') }}
         </p>
         <div class="support-actions">
@@ -26,13 +26,13 @@ const { t } = useI18n();
 
 <style scoped>
 .support-contact-section {
-  background-color: #0c111d; /* Very dark background */
+  /* background-color: #121212; Very dark background */
+  background-color: #020202; /* Very dark background */
   position: relative;
   overflow: hidden;
 }
 
 .support-content {
-  max-width: 800px;
   margin: 0 auto;
   position: relative;
   z-index: 2;
@@ -45,21 +45,16 @@ const { t } = useI18n();
   line-height: 1.2;
 }
 
-.text-orange {
-  color: #ff7a00;
-}
-
 .support-description {
   font-size: 1.125rem;
   line-height: 1.6;
-  color: #94a3b8;
-  max-width: 600px;
+  color: #929AAA;
   margin-left: auto;
   margin-right: auto;
 }
 
 .btn-contact {
-  background: #ff7a00;
+  background: linear-gradient(135deg, #FF4D00 0%, #FF8A00 100%);
   color: #ffffff;
   padding: 18px 64px;
   border-radius: 999px;
@@ -73,7 +68,6 @@ const { t } = useI18n();
 
 .btn-contact:hover {
   transform: translateY(-3px);
-  background: #ff8a1a;
   box-shadow: 0 20px 40px -10px rgba(255, 122, 0, 0.6);
 }
 
@@ -106,5 +100,16 @@ const { t } = useI18n();
     padding: 16px 48px;
     width: 100%;
   }
+}
+
+.page-title-h1.white-color {
+  color: #ffffff;
+}
+
+.text-orange-gradient {
+  background: linear-gradient(135deg, #FF4D00 0%, #FFDA50 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 </style>
