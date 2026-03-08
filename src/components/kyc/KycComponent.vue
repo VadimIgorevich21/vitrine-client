@@ -3,27 +3,17 @@ import { ref } from 'vue'
 import { apiClient } from "@/services/api.js";
 
 let allpassStarted = ref(false)
-let accessToken = ref('')
+let kycLink = ref('')
 
 const startVerification = async () => {
   // запрос к твоему backend
   const { data } = await apiClient.post('/allpass/start')
-  accessToken.value = data.token
+  kycLink.value = data.link
+  
+  if (kycLink.value) {
+    window.open(kycLink.value, '_blank')
+  }
 
-  // инициализируем SDK
-  window.Allpass.init({
-    onLoad: () => console.log('Loaded'),
-    onStart: () => console.log('Start flow'),
-    onPassStep: (e) => console.log('Step', e.stepType),
-    onComplete: (e) => {
-      console.log('Completed')
-      allpassStarted.value = false
-    },
-    onError: (e) => console.error('Error', e)
-  })
-
-  // запускаем верификацию
-  window.Allpass.start(accessToken.value)
   allpassStarted.value = true
 }
 </script>
