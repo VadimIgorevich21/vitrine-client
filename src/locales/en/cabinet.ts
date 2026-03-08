@@ -26,4 +26,10 @@ export default {
     kyc_not_verified_message: 'Account not Verified. Complete verification to unlock access to crypto trading',
     complete_kyc: 'Complete KYC',
   },
+  verification_page: {
+    title: '"BTCBIT Sp.z.o.o." verification',
+    description: 'You\'re about to submit sensitive data to "BTCBIT Sp.z.o.o.". If you received this link from a suspicious source, please close this page and notify us immediately.',
+    continue: 'Continue',
+    powered_by: 'Powered by',
+  },
 }

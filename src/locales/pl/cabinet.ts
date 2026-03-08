@@ -26,4 +26,10 @@ export default {
     kyc_not_verified_message: 'Konto niezweryfikowane. Ukończ weryfikację, aby odblokować dostęp do handlu kryptowalutami',
     complete_kyc: 'Ukończ KYC',
   },
+  verification_page: {
+    title: 'Weryfikacja "BTCBIT Sp.z.o.o."',
+    description: 'Zamierzasz przesłać poufne dane do "BTCBIT Sp.z.o.o.". Jeśli otrzymałeś ten link z podejrzanego źródła, zamknij tę stronę i natychmiast nas poinformuj.',
+    continue: 'Kontynuuj',
+    powered_by: 'Obsługiwane przez',
+  },
 }
