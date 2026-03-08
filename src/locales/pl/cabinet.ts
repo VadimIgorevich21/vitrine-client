@@ -12,4 +12,18 @@ export default {
     refund: 'Polityka Zwrotów',
     contact: 'Skontaktuj się z Nami',
   },
+  account_page: {
+    turnover_title: 'Twój Obrót',
+    crypto_purchased: 'Całkowita Kupiona Kryptowaluta',
+    crypto_sold: 'Całkowita Sprzedana Kryptowaluta',
+    personal_info_title: 'Informacje Osobiste',
+    default_currency: 'Domyślna Waluta',
+    country: 'Kraj',
+    phone_number: 'Numer Telefonu',
+    email: 'Email',
+    kyc_status_title: 'KYC',
+    identity_verified: 'Tożsamość Zweryfikowana',
+    kyc_not_verified_message: 'Konto niezweryfikowane. Ukończ weryfikację, aby odblokować dostęp do handlu kryptowalutami',
+    complete_kyc: 'Ukończ KYC',
+  },
 }

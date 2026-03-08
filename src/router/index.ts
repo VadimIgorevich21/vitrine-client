@@ -70,6 +70,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/',
+    component: CabinetLayout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'account',
+        name: 'account',
+        component: () => import('@/views/cabinet/AccountView.vue'),
+      },
+    ],
+  },
   // Кабинет — только для авторизованных, свой layout
   {
     path: '/cabinet',
@@ -87,12 +99,6 @@ const routes: RouteRecordRaw[] = [
         name: 'orders',
         component: OrdersView,
         meta: { title: 'Orders' },
-      },
-      {
-        path: 'account',
-        name: 'account',
-        component: CabinetView, // Placeholder
-        meta: { title: 'Account' },
       },
       {
         path: 'verification',

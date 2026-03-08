@@ -12,4 +12,18 @@ export default {
     refund: 'Refund Policy',
     contact: 'Contact Us',
   },
+  account_page: {
+    turnover_title: 'Your Turnover',
+    crypto_purchased: 'Total Crypto Purchased',
+    crypto_sold: 'Total Crypto Sold',
+    personal_info_title: 'Personal Information',
+    default_currency: 'Default Currency',
+    country: 'Country',
+    phone_number: 'Phone Number',
+    email: 'Email',
+    kyc_status_title: 'KYC',
+    identity_verified: 'Identity Verified',
+    kyc_not_verified_message: 'Account not Verified. Complete verification to unlock access to crypto trading',
+    complete_kyc: 'Complete KYC',
+  },
 }

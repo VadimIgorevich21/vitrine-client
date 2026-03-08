@@ -12,4 +12,18 @@ export default {
     refund: 'Политика возврата',
     contact: 'Связаться с нами',
   },
+  account_page: {
+    turnover_title: 'Ваш товарооборот',
+    crypto_purchased: 'Всего куплено крипто',
+    crypto_sold: 'Всего продано крипто',
+    personal_info_title: 'Персональная информация',
+    default_currency: 'Валюта по умолчанию',
+    country: 'Страна',
+    phone_number: 'Номер телефона',
+    email: 'Email',
+    kyc_status_title: 'KYC',
+    identity_verified: 'Личность подтверждена',
+    kyc_not_verified_message: 'Аккаунт не верифицирован. Пройдите верификацию, чтобы открыть доступ к торговле криптовалютой',
+    complete_kyc: 'Пройти KYC',
+  },
 }

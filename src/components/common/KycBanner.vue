@@ -12,7 +12,7 @@ const goToVerification = () => {
 
 <template>
   <div 
-    class="bg-[#F6851B] text-white px-6 py-4 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:bg-opacity-95 transition-all shadow-sm group"
+    class="bg-[#FF8A01] text-white px-6 py-4 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:bg-opacity-95 transition-all shadow-sm group"
     @click="goToVerification"
   >
     <div class="flex items-center gap-4">
