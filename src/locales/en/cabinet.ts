@@ -31,5 +31,8 @@ export default {
     description: 'You\'re about to submit sensitive data to "BTCBIT Sp.z.o.o.". If you received this link from a suspicious source, please close this page and notify us immediately.',
     continue: 'Continue',
     powered_by: 'Powered by',
+    pending_title: 'Verification Incomplete',
+    pending_description: 'Your documents could not be verified at this time. You may resubmit your information to continue the verification process and regain access to trading.',
+    submit_kyc: 'Submit KYC',
   },
 }

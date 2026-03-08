@@ -31,5 +31,8 @@ export default {
     description: 'Zamierzasz przesłać poufne dane do "BTCBIT Sp.z.o.o.". Jeśli otrzymałeś ten link z podejrzanego źródła, zamknij tę stronę i natychmiast nas poinformuj.',
     continue: 'Kontynuuj',
     powered_by: 'Obsługiwane przez',
+    pending_title: 'Weryfikacja niekompletna',
+    pending_description: 'Twoje dokumenty nie mogły zostać zweryfikowane w tej chwili. Możesz ponownie przesłać swoje informacje, aby kontynuować proces weryfikacji i odzyskać dostęp do handlu.',
+    submit_kyc: 'Prześlij KYC',
   },
 }
