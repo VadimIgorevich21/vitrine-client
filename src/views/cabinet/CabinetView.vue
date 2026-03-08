@@ -23,7 +23,6 @@ const displayName = computed(() => {
     <p class="text-gray-600 dark:text-gray-300">
       {{ t('cabinet.welcome', { name: displayName }) }}
     </p>
-    <KycComponent />
 
   </div>
 </template>
