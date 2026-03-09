@@ -23,6 +23,7 @@ import HomeLayout from "@/layouts/HomeLayout.vue";
 declare module 'vue-router' {
   interface RouteMeta {
     requiresAuth?: boolean
+    requiresVerification?: boolean
     title?: string
   }
 }
@@ -92,13 +93,14 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'cabinet',
         component: CabinetView,
+        meta: { requiresVerification: true },
       },
       {
         path: 'orders',
         alias: 'history',
         name: 'orders',
         component: OrdersView,
-        meta: { title: 'Orders' },
+        meta: { title: 'Orders', requiresVerification: true },
       },
       {
         path: 'verification',

@@ -60,7 +60,11 @@ export async function authenticated(
     await authStore.getAuthUser()
   }
 
-  const meta = to.meta as { requiresAuth?: boolean }
+  const meta = to.meta as {
+    requiresAuth?: boolean
+    requiresVerification?: boolean
+  }
+
   if (meta.requiresAuth && !authStore.user) {
     return {
       path: '/auth',
@@ -74,7 +78,9 @@ export async function authenticated(
   }
 
   // 4) Проверка на rejected KYC статус
-  const requiresAuth = !!(to.meta as { requiresAuth?: boolean }).requiresAuth
+  const requiresAuth = !!meta.requiresAuth
+  const requiresKyc = !!meta.requiresVerification
+
   if (authStore.user?.kyc_status === 'rejected') {
     if (requiresAuth && to.path !== '/cabinet/restricted') {
       return { path: '/cabinet/restricted' }
@@ -83,6 +89,13 @@ export async function authenticated(
     // Если статус не rejected, но пользователь пытается зайти на страницу ограничения
     if (to.path === '/cabinet/restricted') {
       return { path: '/cabinet' }
+    }
+
+    // 5) Проверка на пройденный KYC для определенных страниц
+    if (requiresKyc && authStore.user?.kyc_verified !== true) {
+      if (to.path !== '/cabinet/verification') {
+        return { path: '/cabinet/verification' }
+      }
     }
   }
 
