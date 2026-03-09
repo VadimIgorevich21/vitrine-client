@@ -73,6 +73,19 @@ export async function authenticated(
     return { path: '/operations' }
   }
 
+  // 4) Проверка на rejected KYC статус
+  const requiresAuth = !!(to.meta as { requiresAuth?: boolean }).requiresAuth
+  if (authStore.user?.kyc_status === 'rejected') {
+    if (requiresAuth && to.path !== '/cabinet/restricted') {
+      return { path: '/cabinet/restricted' }
+    }
+  } else {
+    // Если статус не rejected, но пользователь пытается зайти на страницу ограничения
+    if (to.path === '/cabinet/restricted') {
+      return { path: '/cabinet' }
+    }
+  }
+
   return undefined
 }
 

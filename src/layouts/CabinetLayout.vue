@@ -6,7 +6,7 @@ import { computed, ref } from 'vue'
 import logoUrl from '@/assets/img/logo.png'
 
 const authStore = useAuthStore()
-const showKycBanner = computed(() => authStore.user?.kyc_verified !== true)
+const showKycBanner = computed(() => authStore.user?.kyc_verified !== true && authStore.user?.kyc_status !== 'rejected')
 
 const isMobileMenuOpen = ref(false)
 
@@ -45,8 +45,8 @@ const toggleMobileMenu = () => {
       </div>
 
       <!-- Main Content -->
-      <main class="flex-1 p-4 lg:p-6 lg:pb-10">
-        <div class="max-w-6xl mx-auto">
+      <main class="flex-1 p-4 lg:p-6 lg:pb-10 flex flex-col">
+        <div class="max-w-6xl mx-auto w-full flex-1 flex flex-col">
           <RouterView />
         </div>
       </main>

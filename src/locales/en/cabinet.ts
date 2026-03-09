@@ -35,4 +35,9 @@ export default {
     pending_description: 'Your documents could not be verified at this time. You may resubmit your information to continue the verification process and regain access to trading.',
     submit_kyc: 'Submit KYC',
   },
+  restricted_page: {
+    title: 'Account Restricted',
+    description: 'We are unable to complete the verification process for your account. As a result, access to trading services has been restricted. If you believe this is an error, please contact our support team for further assistance.',
+    contact_support: 'Contact Support',
+  },
 }

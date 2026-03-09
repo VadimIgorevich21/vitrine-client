@@ -106,6 +106,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/VerificationView.vue'),
         meta: { title: 'Verification' },
       },
+      {
+        path: 'restricted',
+        name: 'restricted',
+        component: () => import('@/views/errors/RestrictedView.vue'),
+        meta: { title: 'Account Restricted' },
+      },
     ],
   },
   // Auth страницы — без layout (полноэкранный дизайн)

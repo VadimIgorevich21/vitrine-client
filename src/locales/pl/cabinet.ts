@@ -35,4 +35,9 @@ export default {
     pending_description: 'Twoje dokumenty nie mogły zostać zweryfikowane w tej chwili. Możesz ponownie przesłać swoje informacje, aby kontynuować proces weryfikacji i odzyskać dostęp do handlu.',
     submit_kyc: 'Prześlij KYC',
   },
+  restricted_page: {
+    title: 'Konto ograniczone',
+    description: 'Nie jesteśmy w stanie zakończyć procesu weryfikacji Twojego konta. W rezultacie dostęp do usług handlowych został ograniczony. Jeśli uważasz, że jest to błąd, skontaktuj się z naszym zespołem pomocy technicznej w celu uzyskania dalszej pomocy.',
+    contact_support: 'Skontaktuj się z pomocą',
+  },
 }
