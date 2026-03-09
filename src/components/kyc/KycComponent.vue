@@ -10,39 +10,59 @@ const router = useRouter()
 const authStore = useAuthStore()
 let allpassStarted = ref(false)
 let kycLink = ref('')
+let isLoading = ref(false)
 
 const isPending = computed(() => authStore.user?.kyc_status === 'pending')
 
 const startVerification = async () => {
-  // запрос к твоему backend
-  const { data } = await apiClient.post('/allpass/start')
+  if (isLoading.value) return
   
-  // Обновляем пользователя в сторе (если бэк прислал объект user)
-  if (data.user) {
-    authStore.user = data.user
-    // Опционально сохраняем в localStorage для консистентности
-    localStorage.setItem('user', JSON.stringify(data.user))
+  // Открываем окно сразу, чтобы браузер не заблокировал "всплывающее окно"
+  // так как асинхронный запрос может длиться долго.
+  const kycWindow = window.open('', '_blank')
+  if (kycWindow) {
+    kycWindow.document.write('Loading...') // Или заглушка
   }
 
-  const status = authStore.user?.kyc_status
-
-  if (status === 'rejected') {
-    router.push('/cabinet/restricted')
-    return
-  }
-
-  if (status === 'completed' || status === 'approved') {
-    router.push('/account')
-    return
-  }
-
-  kycLink.value = data.link
+  isLoading.value = true
   
-  if (kycLink.value) {
-    window.open(kycLink.value, '_blank')
-  }
+  try {
+    const { data } = await apiClient.post('/allpass/start')
+    
+    if (data.user) {
+      authStore.user = data.user
+      localStorage.setItem('user', JSON.stringify(data.user))
+    }
 
-  allpassStarted.value = true
+    const status = authStore.user?.kyc_status
+
+    if (status === 'rejected') {
+      if (kycWindow) kycWindow.close()
+      router.push('/cabinet/restricted')
+      return
+    }
+
+    if (status === 'completed' || status === 'approved') {
+      if (kycWindow) kycWindow.close()
+      router.push('/account')
+      return
+    }
+
+    kycLink.value = data.link
+    
+    if (kycLink.value && kycWindow) {
+      kycWindow.location.href = kycLink.value
+    } else if (kycWindow) {
+      kycWindow.close()
+    }
+
+    allpassStarted.value = true
+  } catch (error) {
+    console.error('Verification start failed:', error)
+    if (kycWindow) kycWindow.close()
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
 
@@ -70,9 +90,15 @@ const startVerification = async () => {
 
       <button 
         @click="startVerification"
-        class="w-full bg-[#1D1E2C] text-white py-4 rounded-2xl font-medium hover:bg-opacity-90 transition-all mb-4 cursor-pointer"
+        class="w-full bg-[#1D1E2C] text-white py-4 rounded-2xl font-medium hover:bg-opacity-90 transition-all mb-4 cursor-pointer flex items-center justify-center gap-2"
+        :disabled="isLoading"
+        :class="{ 'opacity-70 cursor-not-allowed': isLoading }"
       >
-        {{ t('cabinet.verification_page.continue') }}
+        <svg v-if="isLoading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>{{ t('cabinet.verification_page.continue') }}</span>
       </button>
 
       <div class="text-xs text-gray-400 flex items-center justify-center gap-1">
@@ -102,9 +128,15 @@ const startVerification = async () => {
       <div class="flex justify-center">
         <button 
           @click="startVerification"
-          class="btn-submit-kyc"
+          class="btn-submit-kyc flex items-center justify-center gap-2"
+          :disabled="isLoading"
+          :class="{ 'opacity-70 cursor-not-allowed': isLoading }"
         >
-          {{ t('cabinet.verification_page.submit_kyc') }}
+          <svg v-if="isLoading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span>{{ t('cabinet.verification_page.submit_kyc') }}</span>
         </button>
       </div>
     </div>
@@ -124,8 +156,26 @@ const startVerification = async () => {
   cursor: pointer;
 }
 
-.btn-submit-kyc:hover {
+.btn-submit-kyc:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 12px 24px -5px rgba(255, 122, 0, 0.5);
+}
+
+.btn-submit-kyc:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
