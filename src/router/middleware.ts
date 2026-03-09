@@ -97,6 +97,11 @@ export async function authenticated(
         return { path: '/cabinet/verification' }
       }
     }
+
+    // 6) Если пользователь УЖЕ верифицирован, не пускаем его на страницу верификации
+    if (to.path === '/cabinet/verification' && authStore.user?.kyc_verified === true) {
+      return { path: '/cabinet' }
+    }
   }
 
   return undefined

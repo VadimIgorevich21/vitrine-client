@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { apiClient } from "@/services/api.js";
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/authStore'
 
 const { t } = useI18n()
+const router = useRouter()
 const authStore = useAuthStore()
 let allpassStarted = ref(false)
 let kycLink = ref('')
@@ -14,6 +16,26 @@ const isPending = computed(() => authStore.user?.kyc_status === 'pending')
 const startVerification = async () => {
   // запрос к твоему backend
   const { data } = await apiClient.post('/allpass/start')
+  
+  // Обновляем пользователя в сторе (если бэк прислал объект user)
+  if (data.user) {
+    authStore.user = data.user
+    // Опционально сохраняем в localStorage для консистентности
+    localStorage.setItem('user', JSON.stringify(data.user))
+  }
+
+  const status = authStore.user?.kyc_status
+
+  if (status === 'rejected') {
+    router.push('/cabinet/restricted')
+    return
+  }
+
+  if (status === 'completed' || status === 'approved') {
+    router.push('/account')
+    return
+  }
+
   kycLink.value = data.link
   
   if (kycLink.value) {
