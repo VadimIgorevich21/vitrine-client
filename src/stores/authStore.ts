@@ -58,6 +58,7 @@ export const useAuthStore = defineStore('auth', () => {
       await authService.login(payload)
       await getAuthUser()
       if (user.value) {
+        listenKycStatus()
         router.push(redirectPath || '/cabinet')
       }
     } catch (err) {
@@ -184,11 +185,15 @@ export const useAuthStore = defineStore('auth', () => {
     await logout()
   }
 
+  const kycChannel = ref<string | null>(null)
+
   function listenKycStatus(): void {
-    if (!user.value || !user.value.id) return
+    if (!user.value || !user.value.id || user.value.kyc_verified === true) return
+    if (kycChannel.value) return // Already subscribed
 
     const channelName = `private-user.${user.value.id}`
     const channel = pusher.subscribe(channelName)
+    kycChannel.value = channelName
 
     channel.bind('kyc.status.updated', (data: { user: User }) => {
       console.log('🔔 [Pusher] KYC Status Updated:', data.user.kyc_status)
@@ -199,6 +204,11 @@ export const useAuthStore = defineStore('auth', () => {
       if (data.user.kyc_status === 'rejected') {
         router.push('/cabinet/restricted')
       } else if (data.user.kyc_status === 'completed' || data.user.kyc_status === 'approved') {
+        // Если верификация пройдена — отписываемся от канала
+        if (kycChannel.value) {
+          pusher.unsubscribe(kycChannel.value)
+          kycChannel.value = null
+        }
         router.push('/account')
       }
     })
