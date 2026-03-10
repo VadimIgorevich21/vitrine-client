@@ -27,26 +27,26 @@ const displayName = computed(() => {
 
         <!-- Navigation (Center) -->
         <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600 dark:text-gray-300">
-          <a href="#" class="hover:text-blue-600 transition-colors">{{ t('header.howItWorks') }}</a>
-          <RouterLink to="/contacts" class="hover:text-blue-600 transition-colors">{{ t('header.contactUs') }}</RouterLink>
+          <a href="#" class="header-nav-link transition-colors">{{ t('header.howItWorks') }}</a>
+          <RouterLink to="/contacts" class="header-nav-link transition-colors">{{ t('header.contactUs') }}</RouterLink>
         </nav>
 
         <!-- Right Side: Lang + Sign In -->
         <div class="flex items-center gap-4">
-          <LanguageSwitcher />
+          <LanguageSwitcher class="public-pages-lang-switcher" />
 
           <template v-if="authStore.loggedIn">
             <RouterLink
               to="/cabinet"
-              class="text-sm font-medium text-gray-900 dark:text-white hover:text-blue-600 transition-colors"
+              class="signin-btn text-white px-6 py-2 rounded-[100px] text-sm font-medium transition-colors"
             >
-              {{ displayName }}
+              {{ t('cabinet.title') }}
             </RouterLink>
           </template>
           <template v-else>
             <RouterLink
               to="/auth"
-              class="signin-btn bg-[#9BA5B7] hover:bg-[#8A94A6] text-white px-6 py-2 rounded-[100px] text-sm font-medium transition-colors"
+              class="signin-btn text-white px-6 py-2 rounded-[100px] text-sm font-medium transition-colors"
             >
               {{ t('header.login') }}
             </RouterLink>
@@ -73,6 +73,24 @@ const displayName = computed(() => {
 }
 
 .signin-btn:hover {
-  background-color: #8A94A6;
+  filter: brightness(1.1); /* Слегка осветляем всю кнопку */
+  cursor: pointer;
+}
+
+.header-nav-link {
+  color: #929AAA;
+}
+.header-nav-link:hover {
+  color: #7A8290;
+  transition: color 0.2s;
+}
+
+.public-pages-lang-switcher {
+  color: #929AAA;
+}
+
+.public-pages-lang-switcher:hover {
+  color: #7A8290;
+  transition: color 0.2s;
 }
 </style>

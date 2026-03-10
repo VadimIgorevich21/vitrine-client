@@ -103,7 +103,7 @@ onUnmounted(() =>
           @click="switchLocale(lang)"
         >
           <span class="lang-switcher__item">
-            {{ locales[lang].flag }}
+            <img :src="locales[lang].flag" :alt="locales[lang].label" class="lang-switcher__flag" />
             {{ locales[lang].short }}
           </span>
         </button>
@@ -123,18 +123,14 @@ onUnmounted(() =>
   display: flex;
   align-items: center;
   gap: 2px;
-  padding: 2px 4px;
+  padding: 2px 0;
   border: none;
   background: transparent;
-  color: #374151;
+  /* color: #374151; */
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.2s ease;
-}
-
-.lang-switcher__btn:hover {
-  opacity: 0.7;
 }
 
 .lang-switcher__short {
@@ -188,7 +184,14 @@ onUnmounted(() =>
 .lang-switcher__item {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 6px;
+}
+
+.lang-switcher__flag {
+  width: 18px;
+  height: auto;
+  border-radius: 2px;
+  object-fit: contain;
 }
 
 /* Анимация */

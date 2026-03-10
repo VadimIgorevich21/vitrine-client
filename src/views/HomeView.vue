@@ -2,9 +2,11 @@
 import { useCounterStore } from '@/stores/counter'
 import { useI18n } from 'vue-i18n'
 import RatesTable from '@/components/rates/RatesTable.vue';
-import RateTicker from '@/components/rates/RateTicker.vue';
-// ИМПОРТИРУЕМ ФОРМУ
-import ExchangeForm from '@/components/orders/ExchangeForm.vue';
+import RatesTicker from '@/components/rates/RatesTicker.vue';
+import InstantRegistration from '@/components/home/InstantRegistration.vue';
+import SimpleProcess from '@/components/home/SimpleProcess.vue';
+import SupportContact from '@/components/home/SupportContact.vue';
+import HomeHero from '@/components/home/HomeHero.vue';
 
 const counterStore = useCounterStore()
 const { t, locale } = useI18n()
@@ -15,42 +17,33 @@ const toggleLocale = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
-      <div class="space-y-8">
-        <div>
-          <h1 class="text-4xl font-black text-gray-900 dark:text-white mb-4">
-            {{ t('home.welcome') }}
-          </h1>
-          <p class="text-gray-500 text-lg">Надежный обмен криптовалют по лучшему курсу в реальном времени.</p>
-        </div>
-
-        <div class="flex gap-4">
-          <RateTicker from="BTC" to="USD" />
-          <RateTicker from="ETH" to="USD" />
-        </div>
-
-        <section class="bg-white dark:bg-gray-800 shadow-sm rounded-3xl p-6 border border-gray-100 dark:border-gray-700">
-          <h2 class="text-xl font-bold mb-4 dark:text-white">Все направления</h2>
-          <RatesTable />
-        </section>
-      </div>
-
-      <div class="sticky top-8">
-        <ExchangeForm />
-      </div>
-
+  <HomeHero />
+  <RatesTicker />
+  <InstantRegistration />
+  <SimpleProcess />
+  <!-- Bottom section (Original contents, adjusted) -->
+  <div class="!hidden default-container px-4 py-20 border-t border-white/5">
+    <div class="grid grid-cols-1 gap-12">
+      <section class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm shadow-xl rounded-[2rem] p-8 border border-white/20">
+        <h2 class="text-2xl font-bold mb-6 dark:text-white">Все направления обмена</h2>
+        <RatesTable />
+      </section>
     </div>
 
-    <div class="max-w-md mx-auto mt-20 p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-sm text-center">
+    <!-- Stats/Counter (Keeping for now) -->
+    <div class="max-w-md mx-auto mt-20 p-8 bg-white/5 dark:bg-gray-800/50 backdrop-blur-md rounded-3xl shadow-sm border border-white/10 text-center">
       <h2 class="text-xl font-semibold mb-4 dark:text-white">{{ t('home.counter') }}</h2>
-      <div class="text-4xl font-bold text-blue-600 mb-6">{{ counterStore.count }}</div>
+      <div class="text-4xl font-bold text-blue-500 mb-6">{{ counterStore.count }}</div>
       <div class="flex gap-2 justify-center">
-        <button @click="counterStore.decrement" class="p-3 bg-red-100 text-red-600 rounded-xl">-</button>
-        <button @click="counterStore.increment" class="p-3 bg-green-100 text-green-600 rounded-xl">+</button>
-        <button @click="toggleLocale" class="p-3 bg-gray-100 rounded-xl text-xs">{{ locale.toUpperCase() }}</button>
+        <button @click="counterStore.decrement" class="p-3 bg-red-100/10 text-red-500 rounded-xl hover:bg-red-100/20 transition">-</button>
+        <button @click="counterStore.increment" class="p-3 bg-green-100/10 text-green-500 rounded-xl hover:bg-green-100/20 transition">+</button>
+        <button @click="toggleLocale" class="p-3 bg-gray-100/10 rounded-xl text-xs text-gray-400 hover:bg-gray-100/20 transition">{{ locale.toUpperCase() }}</button>
       </div>
     </div>
   </div>
+  <SupportContact />
 </template>
+
+<style scoped>
+/* Common styles if any */
+</style>

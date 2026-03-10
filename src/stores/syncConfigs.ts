@@ -12,6 +12,9 @@ export const useConfigStore = defineStore("config", () => {
 
   // --- Actions ---
   const getMainConfigs = async (): Promise<void> => {
+    // If configs are already loaded in memory, don't fetch again
+    if (mainConfigs.value) return;
+
     loading.value = true;
     try {
       const response = await configService.getConfigs();
@@ -73,10 +76,10 @@ export const useConfigStore = defineStore("config", () => {
   // Методы для покупки (когда пользователь платит фиатом)
   const buyPaymentMethods = computed(() => mainConfigs.value?.buy_payment_methods ?? []);
 
-// Методы для продажи (когда пользователь получает фиат)
+  // Методы для продажи (когда пользователь получает фиат)
   const sellPaymentMethods = computed(() => mainConfigs.value?.sell_payment_methods ?? []);
 
-// Динамический геттер, который возвращает нужные методы в зависимости от типа сделки
+  // Динамический геттер, который возвращает нужные методы в зависимости от типа сделки
   const getMethodsByType = (type: 'buy' | 'sell') => {
     return type === 'buy' ? buyPaymentMethods.value : sellPaymentMethods.value;
   };

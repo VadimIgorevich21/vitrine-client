@@ -1,0 +1,44 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+
+const { t } = useI18n()
+const router = useRouter()
+
+const goToVerification = () => {
+  router.push('/cabinet/verification')
+}
+</script>
+
+<template>
+  <div 
+    class="bg-[#FF8A01] text-white px-6 py-4 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:bg-opacity-95 transition-all shadow-sm group"
+    @click="goToVerification"
+  >
+    <div class="flex items-center gap-4">
+      <div class="">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M18.6667 19.9997C18.6667 18.5269 17.4728 17.333 16 17.333C14.5272 17.333 13.3333 18.5269 13.3333 19.9997C13.3333 21.4724 14.5272 22.6663 16 22.6663C17.4728 22.6663 18.6667 21.4724 18.6667 19.9997ZM16 25.333C14.9391 25.333 13.922 25.7547 13.1719 26.5049C12.7465 26.9303 12.4314 27.4432 12.2344 27.9997H19.7656C19.5686 27.4432 19.2535 26.9303 18.8281 26.5049C18.078 25.7547 17.0609 25.333 16 25.333ZM4 5.33301C4 4.27214 4.42173 3.25503 5.17188 2.50488C5.92202 1.75474 6.93914 1.33301 8 1.33301H18.6667V1.33431C19.2639 1.33363 19.8558 1.44947 20.4076 1.67806C20.9591 1.90664 21.4599 2.24232 21.8815 2.66504L26.6628 7.44629L26.8177 7.60775C27.1698 7.99414 27.4528 8.43903 27.6536 8.92285C27.8829 9.47528 28.0007 10.0682 28 10.6663V26.6663C28 27.7272 27.5783 28.7443 26.8281 29.4945C26.078 30.2446 25.0609 30.6663 24 30.6663H8C6.93913 30.6663 5.92202 30.2446 5.17188 29.4945C4.42173 28.7443 4 27.7272 4 26.6663V5.33301ZM24.7786 9.33301L20 4.55436V9.33301H24.7786ZM6.66667 26.6663C6.66667 27.02 6.80724 27.359 7.05729 27.6091C7.30734 27.8591 7.64638 27.9997 8 27.9997H9.46875C9.72828 26.7285 10.3553 25.5506 11.2865 24.6195C11.5895 24.3164 11.9181 24.0448 12.2682 23.8083C11.2804 22.8403 10.6667 21.492 10.6667 19.9997C10.6667 17.0542 13.0545 14.6663 16 14.6663C18.9455 14.6663 21.3333 17.0542 21.3333 19.9997C21.3333 21.4923 20.7187 22.8402 19.7305 23.8083C20.0809 24.0449 20.4102 24.3161 20.7135 24.6195C21.6447 25.5506 22.2717 26.7285 22.5312 27.9997H24C24.3536 27.9997 24.6927 27.8591 24.9427 27.6091C25.1928 27.359 25.3333 27.02 25.3333 26.6663V11.9997H20C19.2928 11.9997 18.6147 11.7185 18.1146 11.2184C17.6145 10.7183 17.3333 10.0403 17.3333 9.33301V3.99967H8C7.64638 3.99967 7.30734 4.14025 7.05729 4.3903C6.80724 4.64035 6.66667 4.97939 6.66667 5.33301V26.6663Z" fill="white"/>
+        </svg>
+
+      </div>
+      <span class="kyc-banner-text font-medium text-base sm:text-lg">
+        {{ t('cabinet.kyc_banner') }}
+      </span>
+    </div>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-transform group-hover:translate-x-1">
+      <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</template>
+
+<style scoped>
+.kyc-banner-text {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: 0;
+  text-align: center;
+  color: #ffffff;
+}
+</style>

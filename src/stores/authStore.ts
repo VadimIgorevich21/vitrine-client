@@ -4,6 +4,7 @@ import { ref, computed } from 'vue'
 import { router } from '@/router'
 import { getError } from '@/utils/helpers'
 import authService from '@/services/authService'
+import pusher from '@/services/pusher'
 import type { User, LoginPayload } from '@/types/auth'
 
 function isAuthError(err: unknown): boolean {
@@ -57,6 +58,7 @@ export const useAuthStore = defineStore('auth', () => {
       await authService.login(payload)
       await getAuthUser()
       if (user.value) {
+        listenKycStatus()
         router.push(redirectPath || '/cabinet')
       }
     } catch (err) {
@@ -140,6 +142,7 @@ export const useAuthStore = defineStore('auth', () => {
       if (!localStorage.getItem(USER_ID_KEY) && user.value?.id) {
         localStorage.setItem(USER_ID_KEY, String(user.value.id))
       }
+      listenKycStatus()
     } catch (err) {
       user.value = null
       error.value = getError(err)
@@ -180,6 +183,35 @@ export const useAuthStore = defineStore('auth', () => {
     toLogout.value = true
     user.value = null
     await logout()
+  }
+
+  const kycChannel = ref<string | null>(null)
+
+  function listenKycStatus(): void {
+    if (!user.value || !user.value.id || user.value.kyc_verified === true) return
+    if (kycChannel.value) return // Already subscribed
+
+    const channelName = `private-user.${user.value.id}`
+    const channel = pusher.subscribe(channelName)
+    kycChannel.value = channelName
+
+    channel.bind('kyc.status.updated', (data: { user: User }) => {
+      console.log('🔔 [Pusher] KYC Status Updated:', data.user.kyc_status)
+      user.value = data.user
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(data.user))
+
+      // Автоматический редирект при изменении статуса
+      if (data.user.kyc_status === 'rejected') {
+        router.push('/cabinet/restricted')
+      } else if (data.user.kyc_status === 'completed' || data.user.kyc_status === 'approved') {
+        // Если верификация пройдена — отписываемся от канала
+        if (kycChannel.value) {
+          pusher.unsubscribe(kycChannel.value)
+          kycChannel.value = null
+        }
+        router.push('/account')
+      }
+    })
   }
 
   return {

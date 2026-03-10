@@ -3,26 +3,28 @@ import type { RouteRecordRaw } from 'vue-router'
 import PublicLayout from '@/layouts/PublicLayout.vue'
 import CabinetLayout from '@/layouts/CabinetLayout.vue'
 import HomeView from '@/views/HomeView.vue'
-import LoginView from '@/views/LoginView.vue'
+import LoginView from '@/views/for-deleting/LoginView.vue'
 import AuthView from '@/views/auth/AuthView.vue'
 import AuthCallbackView from '@/views/auth/AuthCallbackView.vue'
-import PrivacyPolicyView from '@/views/PrivacyPolicyView.vue'
-import TermsOfServiceView from '@/views/TermsOfServiceView.vue'
-import ContactView from '@/views/ContactView.vue'
-import CabinetView from '@/views/CabinetView.vue'
-import OrdersView from '@/views/OrdersView.vue'
-import MaintenanceView from '@/views/MaintenanceView.vue'
-import NotFoundView from '@/views/NotFoundView.vue'
+import PrivacyPolicyView from '@/views/public-pages/PrivacyPolicyView.vue'
+import TermsOfServiceView from '@/views/public-pages/TermsOfServiceView.vue'
+import ContactView from '@/views/public-pages/ContactView.vue'
+import CabinetView from '@/views/cabinet/CabinetView.vue'
+import OrdersView from '@/views/cabinet/orders/OrdersView.vue'
+import MaintenanceView from '@/views/errors/MaintenanceView.vue'
+import NotFoundView from '@/views/errors/NotFoundView.vue'
 import {
   authenticated,
   getConfigs,
   roleRedirectAndTitle,
 } from './middleware'
 import TentPage from "@/views/TentPage.vue";
+import HomeLayout from "@/layouts/HomeLayout.vue";
 
 declare module 'vue-router' {
   interface RouteMeta {
     requiresAuth?: boolean
+    requiresVerification?: boolean
     title?: string
   }
 }
@@ -31,13 +33,19 @@ const routes: RouteRecordRaw[] = [
   // Публичные страницы — свой layout (хедер: имя + «Кабинет» или «Войти»)
   {
     path: '/',
-    component: PublicLayout,
+    component: HomeLayout,
     children: [
       {
         path: '',
         name: 'home',
         component: HomeView,
       },
+    ]
+  },
+  {
+    path: '/',
+    component: PublicLayout,
+    children: [
       {
         path: 'login',
         name: 'login',
@@ -64,6 +72,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/',
+    component: CabinetLayout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'account',
+        name: 'account',
+        component: () => import('@/views/cabinet/AccountView.vue'),
+      },
+    ],
+  },
   // Кабинет — только для авторизованных, свой layout
   {
     path: '/cabinet',
@@ -74,12 +94,26 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'cabinet',
         component: CabinetView,
+        meta: { requiresVerification: true },
       },
       {
         path: 'orders',
+        alias: 'history',
         name: 'orders',
         component: OrdersView,
-        meta: { title: 'Orders' },
+        meta: { title: 'Orders', requiresVerification: true },
+      },
+      {
+        path: 'verification',
+        name: 'verification',
+        component: () => import('@/views/VerificationView.vue'),
+        meta: { title: 'Verification' },
+      },
+      {
+        path: 'restricted',
+        name: 'restricted',
+        component: () => import('@/views/errors/RestrictedView.vue'),
+        meta: { title: 'Account Restricted' },
       },
       {
         path: 'test-page',
