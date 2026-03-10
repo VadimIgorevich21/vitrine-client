@@ -87,7 +87,7 @@ const startVerification = async () => {
 
       <button 
         @click="startVerification"
-        class="w-full bg-[#1D1E2C] text-white py-4 rounded-2xl font-medium hover:bg-opacity-90 transition-all mb-4 cursor-pointer flex items-center justify-center gap-2"
+        class="btn-kyc-black flex items-center justify-center gap-2"
         :disabled="isLoading"
         :class="{ 'opacity-70 cursor-not-allowed': isLoading }"
       >
@@ -140,6 +140,26 @@ const startVerification = async () => {
 </template>
 
 <style scoped>
+.btn-kyc-black {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  background: #1D1E2C;
+  color: white;
+  padding: 16px;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: all 0.3s;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.btn-kyc-black:hover:not(:disabled) {
+  background: #2D2E3C;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+}
+
 .btn-submit-kyc {
   background: linear-gradient(135deg, #FF4D00 0%, #FF8A00 100%);
   color: white;
