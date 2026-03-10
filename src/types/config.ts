@@ -6,7 +6,7 @@ export interface ExchangeRule {
 }
 
 export interface PaymentMethod {
-    value: string;
+    key: string;
     label: string;
 }
 
