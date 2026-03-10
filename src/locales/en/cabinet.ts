@@ -32,12 +32,15 @@ export default {
     continue: 'Continue',
     powered_by: 'Powered by',
     pending_title: 'Verification Incomplete',
-    pending_description: 'Your documents could not be verified at this time. You may resubmit your information to continue the verification process and regain access to trading.',
+    pending_description_part1: 'Your documents could not be verified at this time.',
+    pending_description_part2: 'You may resubmit your information to continue the verification process and regain access to trading.',
     submit_kyc: 'Submit KYC',
   },
   restricted_page: {
     title: 'Account Restricted',
-    description: 'We are unable to complete the verification process for your account. As a result, access to trading services has been restricted. If you believe this is an error, please contact our support team for further assistance.',
+    description_part_1: 'We are unable to complete the verification process for your account.',
+    description_part_2: 'As a result, access to trading services has been restricted.',
+    description_part_3: 'If you believe this is an error, please contact our support team for further assistance.',
     contact_support: 'Contact Support',
   },
 }

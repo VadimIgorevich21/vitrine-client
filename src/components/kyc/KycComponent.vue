@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router'
 import { apiClient } from "@/services/api.js";
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/authStore'
+import allpassLogo from "@/assets/img/verification/allpass.logo.desktop.svg";
+import incompleteWarning from "@/assets/img/verification/incomplete-warning.png";
 
 const { t } = useI18n()
 const router = useRouter()
@@ -73,12 +75,7 @@ const startVerification = async () => {
       <!-- Sumsub Logo / Indicator -->
       <div class="flex justify-center mb-8">
         <div class="flex items-center gap-2">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-[#00AE98]">
-            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="text-2xl font-bold text-[#1D1E2C]">sumsub</span>
+          <img :src="allpassLogo" alt="allpassLogo" class="h-8 w-auto" />
         </div>
       </div>
 
@@ -103,7 +100,7 @@ const startVerification = async () => {
 
       <div class="text-xs text-gray-400 flex items-center justify-center gap-1">
         <span>{{ t('cabinet.verification_page.powered_by') }}</span>
-        <span class="font-semibold text-gray-500">sumsub</span>
+        <span class="font-semibold text-gray-500">allpass.ai</span>
       </div>
 
       <div id="allpass" v-show="allpassStarted" class="mt-4"></div>
@@ -112,17 +109,16 @@ const startVerification = async () => {
     <!-- Verification Incomplete Screen -->
     <div v-else class="bg-white rounded-[32px] shadow-sm border border-gray-100 p-10 max-w-2xl w-full text-center">
       <div class="flex justify-center mb-6">
-        <div class="bg-[#FFF4E5] w-16 h-16 rounded-full flex items-center justify-center">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 11V16M16 21H16.01M5.33333 26.6667H26.6667C28.8467 26.6667 30.2067 24.3333 29.1167 22.4667L18.45 4.46667C17.36 2.6 14.64 2.6 13.55 4.46667L2.88333 22.4667C1.79333 24.3333 3.15333 26.6667 5.33333 26.6667Z" stroke="#FF8A00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
+        <img :src="incompleteWarning" alt="incompleteWarning" class="w-auto" />
       </div>
 
-      <h1 class="text-2xl font-semibold mb-4 text-[#101828]">{{ t('cabinet.verification_page.pending_title') }}</h1>
+      <h1 class="page-title-h2 mb-6">{{ t('cabinet.verification_page.pending_title') }}</h1>
       
-      <p class="text-[#667085] mb-8 max-w-md mx-auto leading-relaxed">
-        {{ t('cabinet.verification_page.pending_description') }}
+      <p class="verification-description-text page-content-text max-w-md mx-auto leading-relaxed">
+        {{ t('cabinet.verification_page.pending_description_part1') }}
+      </p>
+      <p class="verification-description-text page-content-text mb-8 max-w-md mx-auto leading-relaxed">
+        {{ t('cabinet.verification_page.pending_description_part2') }}
       </p>
 
       <div class="flex justify-center">
@@ -168,6 +164,10 @@ const startVerification = async () => {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+.verification-description-text {
+  max-width: 500px;
 }
 
 @keyframes spin {
