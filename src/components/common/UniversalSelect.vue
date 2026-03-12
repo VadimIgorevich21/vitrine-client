@@ -3,13 +3,15 @@
     <!-- Selected Item Button -->
     <div 
       @click="isOpen = !isOpen"
-      class="flex items-center justify-between bg-white dark:bg-gray-800 border shadow-sm rounded-xl px-4 py-2 font-bold text-gray-700 dark:text-white cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+      class="flex items-center justify-between bg-white dark:bg-gray-800 border shadow-sm rounded-xl px-4 py-2 font-bold text-gray-700 dark:text-white cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-all min-h-[44px]"
     >
       <div class="flex items-center">
-        <img v-if="selectedCurrency?.icon" :src="getIconPath(selectedCurrency.icon)" class="w-5 h-5 rounded-full mr-2 object-cover" />
-        <span>{{ modelValue || 'Select' }}</span>
+        <img v-if="selectedItemIcon" :src="getIconPath(selectedItemIcon)" 
+             class="w-5 h-5 mr-2" 
+             :class="rounded ? 'rounded-full object-cover' : 'rounded-none object-contain'" />
+        <span class="truncate">{{ selectedItemLabel || placeholder }}</span>
       </div>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 transition-transform" :class="{'rotate-180': isOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 transition-transform shrink-0" :class="{'rotate-180': isOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
     </div>
@@ -34,7 +36,7 @@
               v-model="searchQuery"
               ref="searchInput"
               type="text"
-              placeholder="Поиск валюты..."
+              :placeholder="searchPlaceholder"
               class="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-gray-900 border-2 border-[#FFD200] rounded-xl outline-none text-sm font-medium dark:text-white"
             />
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -46,29 +48,34 @@
         <!-- List -->
         <div class="max-h-64 overflow-y-auto custom-scrollbar">
           <div 
-            v-for="currency in filteredCurrencies" 
-            :key="currency.code"
-            @click="selectCurrency(currency)"
+            v-for="item in filteredItems" 
+            :key="item[itemKey]"
+            @click="selectItem(item)"
             class="flex items-center px-4 py-3 cursor-pointer transition-colors"
             :class="[
-              modelValue === currency.code ? 'bg-gray-50 dark:bg-gray-700' : 'hover:bg-gray-50 dark:hover:bg-gray-700'
+              modelValue === item[itemKey] ? 'bg-gray-50 dark:bg-gray-700' : 'hover:bg-gray-50 dark:hover:bg-gray-700'
             ]"
           >
-            <div class="w-8 h-8 flex items-center justify-center mr-3 bg-gray-50 dark:bg-gray-900 rounded-full overflow-hidden">
-               <img v-if="currency.icon" :src="getIconPath(currency.icon)" class="w-6 h-6 object-contain" />
-               <span v-else class="text-xs font-bold text-gray-400">{{ currency.code.substring(0, 1) }}</span>
+            <div 
+              v-if="iconPath && item[iconPath]"
+              class="w-8 h-8 flex items-center justify-center mr-3 bg-gray-50 dark:bg-gray-900 overflow-hidden shrink-0"
+              :class="rounded ? 'rounded-full' : 'rounded-none'"
+            >
+               <img :src="getIconPath(item[iconPath])" 
+                    class="w-6 h-6" 
+                    :class="rounded ? 'object-cover' : 'object-contain'" />
             </div>
-            <div class="flex items-center space-x-2">
-              <span class="font-black text-gray-900 dark:text-white">{{ currency.code }}</span>
-              <span class="text-gray-400 font-medium">{{ currency.title }}</span>
+            <div class="flex items-center space-x-2 truncate">
+              <span class="font-black text-gray-900 dark:text-white">{{ item[labelPath] }}</span>
+              <span v-if="sublabelPath && item[sublabelPath]" class="text-gray-400 font-medium truncate">{{ item[sublabelPath] }}</span>
             </div>
-            <div v-if="modelValue === currency.code" class="ml-auto">
+            <div v-if="modelValue === item[itemKey]" class="ml-auto shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
             </div>
           </div>
-          <div v-if="filteredCurrencies.length === 0" class="px-4 py-8 text-center text-gray-400 text-sm">
+          <div v-if="filteredItems.length === 0" class="px-4 py-8 text-center text-gray-400 text-sm">
             Ничего не найдено
           </div>
         </div>
@@ -79,15 +86,28 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
-import type { Currency } from '@/types/config';
 
-const props = defineProps<{
-  modelValue: string;
-  currencies: Currency[];
-}>();
+const props = withDefaults(defineProps<{
+  modelValue: string | number;
+  items: any[];
+  itemKey?: string;
+  labelPath?: string;
+  sublabelPath?: string;
+  iconPath?: string;
+  placeholder?: string;
+  searchPlaceholder?: string;
+  rounded?: boolean;
+}>(), {
+  itemKey: 'code',
+  labelPath: 'code',
+  placeholder: 'Выберите...',
+  searchPlaceholder: 'Поиск...',
+  rounded: false
+});
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void;
+  (e: 'update:modelValue', value: any): void;
+  (e: 'change', value: any): void;
 }>();
 
 const isOpen = ref(false);
@@ -95,28 +115,43 @@ const searchQuery = ref('');
 const searchInput = ref<HTMLInputElement | null>(null);
 const container = ref<HTMLElement | null>(null);
 
-const selectedCurrency = computed(() => {
-  return props.currencies.find(c => c.code === props.modelValue);
+const selectedItem = computed(() => {
+  return props.items.find(item => item[props.itemKey] === props.modelValue);
 });
 
-const filteredCurrencies = computed(() => {
+const selectedItemLabel = computed(() => {
+  return selectedItem.value ? selectedItem.value[props.labelPath] : '';
+});
+
+const selectedItemIcon = computed(() => {
+  return (props.iconPath && selectedItem.value) ? selectedItem.value[props.iconPath] : null;
+});
+
+const filteredItems = computed(() => {
   const query = searchQuery.value.toLowerCase().trim();
-  if (!query) return props.currencies;
-  return props.currencies.filter(c => 
-    c.code.toLowerCase().includes(query) || 
-    c.title.toLowerCase().includes(query)
-  );
+  if (!query) return props.items;
+  return props.items.filter(item => {
+    const label = String(item[props.labelPath] || '').toLowerCase();
+    const sublabel = props.sublabelPath ? String(item[props.sublabelPath] || '').toLowerCase() : '';
+    return label.includes(query) || sublabel.includes(query);
+  });
 });
 
-const selectCurrency = (currency: Currency) => {
-  emit('update:modelValue', currency.code);
+const selectItem = (item: any) => {
+  const val = item[props.itemKey];
+  emit('update:modelValue', val);
+  emit('change', val);
   isOpen.value = false;
   searchQuery.value = '';
 };
 
 const getIconPath = (path: string) => {
   if (!path) return '';
-  return path.startsWith('/') ? path : `/${path}`;
+  // Handle protocol-relative, absolute or root-relative paths
+  if (path.startsWith('http') || path.startsWith('data:') || path.startsWith('/')) {
+    return path;
+  }
+  return `/${path}`;
 };
 
 const handleClickOutside = (event: MouseEvent) => {

@@ -8,6 +8,7 @@ export interface ExchangeRule {
 export interface PaymentMethod {
     key: string;
     label: string;
+    icon?: string;
 }
 
 export interface WalletType {
@@ -29,12 +30,22 @@ export interface Currency {
     sort_order: number;
 }
 
+export interface Country {
+    code: string;
+    phone_code: string;
+    flag: string;
+    name_ru: string;
+    name_en: string;
+    name: string;
+}
+
 export interface Configs {
     app_build?: string;
     // Данные для обмена
     exchange_rules: ExchangeRule;
     fiat_currencies: Currency[];
     crypto_currencies: Currency[];
+    countries: Country[];
     payment_methods: PaymentMethod[];
     buy_payment_methods: PaymentMethod[];
     sell_payment_methods: PaymentMethod[];

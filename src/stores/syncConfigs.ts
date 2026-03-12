@@ -52,6 +52,9 @@ export const useConfigStore = defineStore("config", () => {
   // Список криптовалют для таба "Продажа" (from)
   const cryptoCurrencies = computed(() => mainConfigs.value?.crypto_currencies ?? []);
 
+  // Список стран
+  const countries = computed(() => mainConfigs.value?.countries ?? []);
+
   // Карта направлений: какая валюта на какие меняется
   const directions = computed(() => mainConfigs.value?.exchange_rules?.directions ?? {});
 
@@ -91,6 +94,7 @@ export const useConfigStore = defineStore("config", () => {
     // Новые геттеры
     fiatCurrencies,
     cryptoCurrencies,
+    countries,
     directions,
     paymentMethods,
     walletTypes,

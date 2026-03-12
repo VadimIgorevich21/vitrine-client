@@ -3,12 +3,14 @@
     <!-- Payment Method -->
     <div class="space-y-2">
       <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">Способ получения</label>
-      <select v-model="formStore.state.payment_method" class="w-full p-4 bg-gray-50 dark:bg-gray-900 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition">
-        <option value="">Выберите метод...</option>
-        <option v-for="m in currentPaymentMethods" :key="m.key" :value="m.key">
-          {{ m.label }}
-        </option>
-      </select>
+      <UniversalSelect 
+        v-model="formStore.state.payment_method"
+        :items="currentPaymentMethods"
+        itemKey="key"
+        labelPath="label"
+        iconPath="icon"
+        placeholder="Выберите метод..."
+      />
     </div>
 
     <!-- Give (Crypto) -->
@@ -31,9 +33,14 @@
           class="flex-1 bg-transparent border-none p-2 text-2xl font-bold outline-none no-spinner dark:text-white"
           placeholder="0.00"
         />
-        <CurrencySelect 
+        <UniversalSelect 
           v-model="formStore.state.from_currency" 
-          :currencies="availableFromList"
+          :items="availableFromList"
+          itemKey="code"
+          labelPath="code"
+          sublabelPath="title"
+          iconPath="icon"
+          rounded
           class="w-auto"
         />
       </div>
@@ -54,10 +61,15 @@
           class="flex-1 bg-transparent border-none p-2 text-2xl font-bold text-blue-600 dark:text-blue-400 outline-none no-spinner"
           placeholder="0.00"
         />
-        <CurrencySelect 
+        <UniversalSelect 
           v-model="formStore.state.to_currency" 
-          :currencies="availableToList"
-          @update:modelValue="formStore.calculateTo"
+          :items="availableToList"
+          itemKey="code"
+          labelPath="code"
+          sublabelPath="title"
+          iconPath="icon"
+          rounded
+          @change="formStore.calculateTo"
           class="w-auto"
         />
       </div>
@@ -97,7 +109,7 @@ import { useOrderFormStore } from '@/stores/useOrderFormStore';
 import { useConfigStore } from '@/stores/syncConfigs';
 import { useAuthStore } from '@/stores/authStore';
 import { useToast } from "vue-toastification";
-import CurrencySelect from '@/components/common/CurrencySelect.vue';
+import UniversalSelect from '@/components/common/UniversalSelect.vue';
 
 const formStore = useOrderFormStore();
 const configStore = useConfigStore();
