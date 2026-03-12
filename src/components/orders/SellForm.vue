@@ -160,7 +160,7 @@ const currentPaymentMethods = computed(() => configStore.sellPaymentMethods);
 const handleSubmit = async () => {
   if (!authStore.user) {
     formStore.persist();
-    router.push({ name: 'login', query: { redirect: '/cabinet' } });
+    router.push({ name: 'auth', query: { redirect: '/cabinet' } });
     return;
   }
 

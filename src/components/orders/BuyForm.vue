@@ -98,7 +98,7 @@
       <!-- Continue Button / Minimum Error -->
       <button
         v-if="!configStore.loading"
-        @click="step = 2"
+        @click="authStore.user ? step = 2 : handleSubmit()"
         :disabled="loading || !formStore.state.amount_from || formStore.state.amount_from === 0"
         :class="['primary-btn', !formStore.isAmountValid ? 'btn-error' : 'btn-active']"
         :style="(!formStore.state.amount_from || formStore.state.amount_from === 0) ? { opacity: 0.5 } : {}"
@@ -106,7 +106,7 @@
         <span v-if="!formStore.isAmountValid">
           {{ $t('orders.exchange.minimum') }} {{ formStore.currentRate?.min_amount }} {{ formStore.state.from_currency }}
         </span>
-        <span v-else>Continue</span>
+        <span v-else>{{ authStore.user ? 'Continue' : $t('orders.exchange.loginAndExchange') }}</span>
       </button>
       <div v-else class="pulse-loader btn-pulse"></div>
     </div>
@@ -250,7 +250,7 @@ const selectedToCurrencyIcon = computed(() => {
 const handleSubmit = async () => {
   if (!authStore.user) {
     formStore.persist();
-    router.push({ name: 'login', query: { redirect: '/cabinet' } });
+    router.push({ name: 'auth', query: { redirect: '/cabinet' } });
     return;
   }
 
