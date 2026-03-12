@@ -40,8 +40,7 @@ onMounted(async () => {
 .exchange-card {
   width: 100%;
   max-width: 448px; /* max-w-md */
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   background-color: white;
   border-radius: 32px;
   box-shadow: 0 10px 50px rgba(0,0,0,0.1);
@@ -118,8 +117,7 @@ onMounted(async () => {
   .exchange-card {
     padding: 20px; /* Reduced padding */
     border-radius: 24px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 0 auto;
   }
 
   .tab-button {

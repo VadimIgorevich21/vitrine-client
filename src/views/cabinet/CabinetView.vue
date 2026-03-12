@@ -17,20 +17,15 @@ const displayName = computed(() => {
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-      {{ t('cabinet.title') }}
-    </h1>
-    <p class="text-gray-600 dark:text-gray-300">
-      {{ t('cabinet.welcome', { name: displayName }) }}
-    </p>
-
-    <div class="mt-8">
+  <div class="flex items-center justify-center py-10 w-full">
+    <div class="max-w-2xl w-full">
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+        {{ t('cabinet.title') }}
+      </h1>
+      <p class="text-gray-600 dark:text-gray-300">
+        {{ t('cabinet.welcome', { name: displayName }) }}
+      </p>
       <ExchangeForm />
-    </div>
-
-    <div class="mt-8">
-       <KycComponent />
     </div>
   </div>
 </template>
