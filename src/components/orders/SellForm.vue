@@ -2,21 +2,21 @@
   <div class="space-y-6">
     <!-- Payment Method -->
     <div class="space-y-2">
-      <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">Способ получения</label>
+      <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">{{ $t('orders.exchange.receivingMethod') }}</label>
       <UniversalSelect 
         v-model="formStore.state.payment_method"
         :items="currentPaymentMethods"
         itemKey="key"
         labelPath="label"
         iconPath="icon"
-        placeholder="Выберите метод..."
+        :placeholder="$t('orders.exchange.selectMethod')"
       />
     </div>
 
     <!-- Give (Crypto) -->
     <div class="space-y-2">
       <div class="flex justify-between px-1 h-4">
-        <label class="text-xs font-bold text-gray-400 uppercase tracking-widest">Вы отдаете</label>
+        <label class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ $t('orders.exchange.youGive') }}</label>
         <div v-if="configStore.loading" class="w-24 h-3 bg-gray-100 dark:bg-gray-700 animate-pulse rounded"></div>
         <span v-else-if="formStore.currentRate" class="text-xs font-medium text-blue-500">
           1 {{ formStore.state.from_currency }} ≈ {{ formStore.currentRate.final_rate }}
@@ -45,13 +45,13 @@
         />
       </div>
       <p v-if="!formStore.isAmountValid" class="text-red-500 text-xs font-bold px-2 italic">
-        Минимум: {{ formStore.currentRate?.min_amount }} {{ formStore.state.from_currency }}
+        {{ $t('orders.exchange.minimum') }} {{ formStore.currentRate?.min_amount }} {{ formStore.state.from_currency }}
       </p>
     </div>
 
     <!-- Get (Fiat) -->
     <div class="space-y-2">
-      <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">Вы получаете</label>
+      <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">{{ $t('orders.exchange.youGet') }}</label>
       <div v-if="configStore.loading" class="h-20 bg-gray-50 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
       <div v-else class="flex items-center bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus-within:border-blue-500 focus-within:bg-white dark:focus-within:bg-gray-800 rounded-2xl p-2 transition-all">
         <input
@@ -77,7 +77,7 @@
 
     <!-- Requisites Fields (Sell only) -->
     <div v-if="authStore.user && !configStore.loading" class="pt-6 border-t border-dashed dark:border-gray-600 space-y-4">
-      <textarea v-model="formStore.state.user_requisites" placeholder="Реквизиты карты/счета для получения фиата"
+      <textarea v-model="formStore.state.user_requisites" :placeholder="$t('orders.exchange.userRequisites')"
                 class="w-full p-4 bg-gray-50 dark:bg-gray-900 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition" rows="2"></textarea>
     </div>
 
@@ -95,8 +95,8 @@
       :disabled="loading || !formStore.isAmountValid || !formStore.state.amount_from"
       class="w-full py-5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-200 dark:disabled:bg-gray-700 disabled:text-gray-400 text-white font-black rounded-2xl shadow-xl transition-all active:scale-95 uppercase tracking-widest"
     >
-      <span v-if="loading">Обработка...</span>
-      <span v-else>{{ authStore.user ? 'Создать заказ' : 'Войти и обменять' }}</span>
+      <span v-if="loading">{{ $t('orders.exchange.processing') }}</span>
+      <span v-else>{{ authStore.user ? $t('orders.exchange.createOrderSell') : $t('orders.exchange.loginAndExchange') }}</span>
     </button>
     <div v-else class="h-16 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
   </div>
@@ -109,6 +109,7 @@ import { useOrderFormStore } from '@/stores/useOrderFormStore';
 import { useConfigStore } from '@/stores/syncConfigs';
 import { useAuthStore } from '@/stores/authStore';
 import { useToast } from "vue-toastification";
+import { useI18n } from 'vue-i18n';
 import UniversalSelect from '@/components/common/UniversalSelect.vue';
 
 const formStore = useOrderFormStore();
@@ -116,6 +117,7 @@ const configStore = useConfigStore();
 const authStore = useAuthStore();
 const router = useRouter();
 const toast = useToast();
+const { t } = useI18n();
 
 const loading = ref(false);
 const apiErrors = ref<any>(null);
@@ -158,15 +160,15 @@ const handleSubmit = async () => {
     document.body.appendChild(form)
     form.submit()
 
-    toast.success("Заявка успешно создана!");
+    toast.success(t("orders.exchange.orderCreated"));
     formStore.resetForm();
     router.push({ name: 'order-details', params: { id: res.data.id } });
   } catch (err: any) {
     if (err.response?.status === 422) {
       apiErrors.value = err.response.data.errors;
-      toast.error("Проверьте введенные данные");
+      toast.error(t("orders.exchange.checkInput"));
     } else {
-      toast.error("Произошла ошибка при создании заказа");
+      toast.error(t("orders.exchange.errorCreatingOrder"));
     }
   } finally {
     loading.value = false;

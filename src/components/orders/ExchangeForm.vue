@@ -9,7 +9,7 @@
         :class="['flex-1 py-3 text-sm font-black rounded-xl transition-all duration-300',
                  formStore.state.type === t ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-md' : 'text-gray-400 hover:text-gray-600']"
       >
-        {{ t === 'buy' ? 'КУПИТЬ КРИПТУ' : 'ПРОДАТЬ КРИПТУ' }}
+        {{ t === 'buy' ? $t('orders.exchange.buyCrypto') : $t('orders.exchange.sellCrypto') }}
       </button>
     </div>
 
