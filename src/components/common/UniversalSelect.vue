@@ -179,10 +179,11 @@ watch(isOpen, (newVal) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-weight: 700;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: #374151; /* text-gray-700 */
+  color: #929AAA; /* text-gray-700 */
+  font-size: 14px;
 }
 
 :deep(.dark) .selected-item-button {
@@ -190,9 +191,9 @@ watch(isOpen, (newVal) => {
 }
 
 .selected-item-button.normal {
-  background-color: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  background-color: #FAFAFA;
+  border: 1px solid #F2F2F6;
+  border-radius: 6px;
   padding: 8px 16px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   min-height: 44px;

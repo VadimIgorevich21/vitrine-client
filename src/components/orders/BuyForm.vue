@@ -306,12 +306,12 @@ onMounted(() => {
 .input-label {
   display: block;
   font-size: 12px;
-  font-weight: 700;
-  color: #9ca3af; /* text-gray-400 */
-  text-transform: uppercase;
+  color: #929AAA; /* text-gray-400 */
   letter-spacing: 0.05em;
   padding: 0 4px;
   margin-bottom: 8px;
+  font-weight: 500;
+  line-height: 150%;
 }
 
 .input-section {
@@ -379,9 +379,9 @@ onMounted(() => {
 .input-group {
   display: flex;
   align-items: center;
-  background-color: #f9fafb;
-  border: 2px solid transparent;
-  border-radius: 16px;
+  background-color: #FAFAFA;
+  border: 1px solid #F2F2F6;
+  border-radius: 6px;
   padding: 6px 8px;
   transition: all 0.3s ease;
 }
@@ -419,10 +419,10 @@ onMounted(() => {
   background-color: transparent;
   border: none;
   padding: 8px;
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   outline: none;
-  color: #111827;
+  color: #101828;
   -moz-appearance: textfield;
   appearance: textfield;
 }
@@ -432,7 +432,7 @@ onMounted(() => {
 }
 
 .amount-input.output {
-  color: #9ca3af;
+  color: #929AAA;
 }
 
 :deep(.dark) .amount-input.output {

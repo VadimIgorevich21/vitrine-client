@@ -29,8 +29,8 @@ const { t } = useI18n()
 
         <!-- Right Side: Form Block -->
         <div class="hero-form-column">
-          <div class="form-wrapper-outer">
-            <div class="form-scroll-container">
+          <div class="flex items-center justify-center py-10 w-full">
+            <div class="max-w-2xl w-full flex-1 p-4 lg:p-0">
               <ExchangeForm />
             </div>
           </div>

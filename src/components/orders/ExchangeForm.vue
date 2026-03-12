@@ -38,38 +38,33 @@ onMounted(async () => {
 
 <style scoped>
 .exchange-card {
-  width: 100%;
+  width: 448px; /* max-w-md */
   max-width: 448px; /* max-w-md */
   margin: 0 auto;
   background-color: white;
-  border-radius: 32px;
+  border-radius: 16px;
   box-shadow: 0 10px 50px rgba(0,0,0,0.1);
-  padding: 32px; /* p-8 */
+  padding: 24px;
   transition: all 0.3s ease;
-}
-
-:deep(.dark) .exchange-card {
-  background-color: #1f2937; /* bg-gray-800 */
+  gap: 24px;
+  opacity: 1;
 }
 
 .tabs-container {
   display: flex;
   padding: 4px;
-  background-color: #f9fafb; /* bg-gray-50 */
-  border-radius: 16px; /* rounded-2xl */
-}
-
-:deep(.dark) .tabs-container {
-  background-color: #374151; /* bg-gray-700 */
+  background-color: #FAFAFA; /* bg-gray-50 */
+  border-radius: 6px; /* rounded-2xl */
+  border: 1px solid #F2F2F6;
 }
 
 .tab-button {
   flex: 1;
   padding-top: 12px;
   padding-bottom: 12px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  border-radius: 12px; /* rounded-xl */
+  border-radius: 6px; /* rounded-xl */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   border: none;
@@ -78,18 +73,14 @@ onMounted(async () => {
 
 .tab-button.active {
   background-color: white;
-  color: #111827; /* text-gray-900 */
+  color: #101828; /* text-gray-900 */
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-:deep(.dark) .tab-button.active {
-  background-color: #4b5563; /* bg-gray-600 */
-  color: white;
 }
 
 .tab-button.inactive {
   background-color: transparent;
-  color: #9ca3af; /* text-gray-400 */
+  color: rgba(106, 114, 130, 0.5);
+; /* text-gray-400 */
 }
 
 .tab-button.inactive:hover {
