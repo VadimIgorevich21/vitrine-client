@@ -82,7 +82,10 @@
       <!-- Rate and Fee Info -->
       <div class="rate-info-line">
         <div v-if="formStore.currentRate" class="rate-display">
-          <div class="spin-loader-mini"></div>
+          <RateCountdown 
+            :duration="60" 
+            :reset-trigger="formStore.rateStore.lastUpdated" 
+          />
           <span class="rate-text">
             1 {{ formStore.state.to_currency }} ≈ {{ formStore.currentRate.final_rate }} {{ formStore.state.from_currency }}
           </span>
@@ -144,7 +147,10 @@
 
         <div class="summary-info-line">
           <div v-if="formStore.currentRate" class="summary-rate">
-            <div class="spin-loader-mini"></div>
+            <RateCountdown 
+              :duration="60" 
+              :reset-trigger="formStore.rateStore.lastUpdated" 
+            />
             <span class="summary-rate-text">
               1 {{ formStore.state.to_currency }} ≈ {{ formStore.currentRate.final_rate }} {{ formStore.state.from_currency }}
             </span>
@@ -204,6 +210,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { useToast } from "vue-toastification";
 import { useI18n } from 'vue-i18n';
 import UniversalSelect from '@/components/common/UniversalSelect.vue';
+import RateCountdown from '@/components/common/RateCountdown.vue';
 
 const formStore = useOrderFormStore();
 const configStore = useConfigStore();
@@ -689,14 +696,6 @@ onMounted(() => {
   height: 64px;
 }
 
-.spin-loader-mini {
-  width: 16px;
-  height: 16px;
-  border-radius: 9999px;
-  border: 2px solid #6366f1;
-  border-top-color: transparent;
-  animation: spin-slow 3s linear infinite;
-}
 
 .error-box {
   padding: 16px;

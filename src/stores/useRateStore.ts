@@ -9,6 +9,7 @@ export const useRateStore = defineStore('rates', () => {
   const rates = ref<CurrencyRate[]>([]);
   const loading = ref<boolean>(false);
   const isSubscribed = ref<boolean>(false);
+  const lastUpdated = ref<number>(Date.now());
 
   // Геттер: возвращает null, если не нашел (защита от ошибок в шаблоне)
   const getRate = computed(() => {
@@ -44,6 +45,7 @@ export const useRateStore = defineStore('rates', () => {
     channel.bind('rates.updated', (data: RatesUpdatedPayload) => {
       // console.log('⚡ [Pusher] Курсы обновлены!', data.rates);
       rates.value = data.rates;
+      lastUpdated.value = Date.now();
     });
 
     isSubscribed.value = true;
@@ -55,6 +57,7 @@ export const useRateStore = defineStore('rates', () => {
     loading,
     fetchRates,
     initRatesListener,
-    getRate
+    getRate,
+    lastUpdated
   };
 });

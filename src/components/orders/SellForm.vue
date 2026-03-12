@@ -81,6 +81,22 @@
       </div>
     </div>
 
+    <!-- Rate and Fee Info -->
+    <div class="rate-info-line">
+      <div v-if="formStore.currentRate" class="rate-display">
+        <RateCountdown 
+          :duration="60" 
+          :reset-trigger="formStore.rateStore.lastUpdated" 
+        />
+        <span class="rate-text">
+          1 {{ formStore.state.from_currency }} ≈ {{ formStore.currentRate.final_rate }} {{ formStore.state.to_currency }}
+        </span>
+      </div>
+      <div class="fee-text">
+        Fee: 25 {{ formStore.state.to_currency }} (0.5%)
+      </div>
+    </div>
+
     <!-- Requisites Fields (Sell only) -->
     <div v-if="authStore.user && !configStore.loading" class="requisites-section">
       <textarea v-model="formStore.state.user_requisites" :placeholder="$t('orders.exchange.userRequisites')"
@@ -120,6 +136,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { useToast } from "vue-toastification";
 import { useI18n } from 'vue-i18n';
 import UniversalSelect from '@/components/common/UniversalSelect.vue';
+import RateCountdown from '@/components/common/RateCountdown.vue';
 
 const formStore = useOrderFormStore();
 const configStore = useConfigStore();

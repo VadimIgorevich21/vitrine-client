@@ -135,6 +135,7 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     initDefaultValues,
     persist,
     resetForm,
-    submitOrder
+    submitOrder,
+    rateStore
   };
 });
