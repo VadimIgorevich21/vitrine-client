@@ -273,7 +273,7 @@ watch(isOpen, (newVal) => {
 /* Dropdown Panel */
 .dropdown-panel {
   position: absolute;
-  z-index: 50;
+  z-index: 1000;
   margin-top: 8px;
   width: 100%;
   min-width: 280px;

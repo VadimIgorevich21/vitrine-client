@@ -44,7 +44,8 @@ const { t } = useI18n()
 <style scoped>
 .home-hero-container {
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */ /* Removed to prevent clipping currency dropdowns */
+  z-index: 20; /* Keep hero above the rates ticker (which is z-index 10) */
 }
 
 .hero-grid {
@@ -164,7 +165,7 @@ const { t } = useI18n()
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.1);
-  overflow: hidden;
+  /* overflow: hidden; */ /* Removed to allow currency dropdowns to overflow the card */
   display: flex;
   flex-direction: column;
 }
