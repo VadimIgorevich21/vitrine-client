@@ -38,8 +38,11 @@ onMounted(async () => {
 
 <style scoped>
 .exchange-card {
-  width: 100%;
+  /* width: 100%;
+  height: 497px;
+  */
   max-width: 448px; /* max-w-md */
+  width: 448px; /* max-w-md */
   margin: 0 auto;
   background-color: white;
   border-radius: 16px;
@@ -106,6 +109,8 @@ onMounted(async () => {
 /* Responsiveness for < 500px */
 @media (max-width: 500px) {
   .exchange-card {
+    width: auto;
+    max-width: 100%;
     padding: 20px; /* Reduced padding */
     border-radius: 24px;
     margin: 0 auto;

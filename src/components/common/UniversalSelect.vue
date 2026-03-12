@@ -326,7 +326,7 @@ watch(isOpen, (newVal) => {
 
 /* Items List */
 .items-list {
-  max-height: 256px;
+  max-height: 230px;
   overflow-y: auto;
 }
 
@@ -446,5 +446,11 @@ watch(isOpen, (newVal) => {
 .dropdown-leave-to {
   opacity: 0;
   transform: scale(0.95);
+}
+@media (max-width: 500px) {
+  .dropdown-panel {
+    min-width: 200px;
+    max-width: 100%;
+  }
 }
 </style>
