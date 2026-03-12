@@ -19,12 +19,22 @@ export interface MaintenanceNotification {
     content: string | Record<string, any>;
 }
 
+export interface Currency {
+    code: string;
+    title: string;
+    icon: string;
+    exchange_rate: string;
+    exchange_rate_operation: string;
+    type: string;
+    sort_order: number;
+}
+
 export interface Configs {
     app_build?: string;
     // Данные для обмена
     exchange_rules: ExchangeRule;
-    fiat_currencies: string[];
-    crypto_currencies: string[];
+    fiat_currencies: Currency[];
+    crypto_currencies: Currency[];
     payment_methods: PaymentMethod[];
     buy_payment_methods: PaymentMethod[];
     sell_payment_methods: PaymentMethod[];

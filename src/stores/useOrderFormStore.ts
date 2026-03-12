@@ -89,8 +89,8 @@ export const useOrderFormStore = defineStore('orderForm', () => {
       localStorage.removeItem('order_draft');
     } else {
       state.from_currency = state.type === 'buy'
-        ? configStore.fiatCurrencies[0] ?? ''
-        : configStore.cryptoCurrencies[0] ?? '';
+        ? configStore.fiatCurrencies[0]?.code ?? ''
+        : configStore.cryptoCurrencies[0]?.code ?? '';
 
       const available = configStore.directions[state.from_currency] ?? [];
       state.to_currency = available[0] ?? '';

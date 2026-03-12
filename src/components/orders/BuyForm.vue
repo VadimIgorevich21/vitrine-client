@@ -31,9 +31,11 @@
           class="flex-1 bg-transparent border-none p-2 text-2xl font-bold outline-none no-spinner dark:text-white"
           placeholder="0.00"
         />
-        <select v-model="formStore.state.from_currency" class="bg-white dark:bg-gray-700 border shadow-sm rounded-xl px-4 py-2 font-bold text-gray-700 dark:text-white outline-none">
-          <option v-for="code in availableFromList" :key="code" :value="code">{{ code }}</option>
-        </select>
+        <CurrencySelect 
+          v-model="formStore.state.from_currency" 
+          :currencies="availableFromList"
+          class="w-auto"
+        />
       </div>
       <p v-if="!formStore.isAmountValid" class="text-red-500 text-xs font-bold px-2 italic">
         Минимум: {{ formStore.currentRate?.min_amount }} {{ formStore.state.from_currency }}
@@ -52,9 +54,12 @@
           class="flex-1 bg-transparent border-none p-2 text-2xl font-bold text-blue-600 dark:text-blue-400 outline-none no-spinner"
           placeholder="0.00"
         />
-        <select v-model="formStore.state.to_currency" @change="formStore.calculateTo" class="bg-white dark:bg-gray-700 border shadow-sm rounded-xl px-4 py-2 font-bold text-gray-700 dark:text-white outline-none">
-          <option v-for="code in availableToList" :key="code" :value="code">{{ code }}</option>
-        </select>
+        <CurrencySelect 
+          v-model="formStore.state.to_currency" 
+          :currencies="availableToList"
+          @update:modelValue="formStore.calculateTo"
+          class="w-auto"
+        />
       </div>
     </div>
 
@@ -98,6 +103,7 @@ import { useOrderFormStore } from '@/stores/useOrderFormStore';
 import { useConfigStore } from '@/stores/syncConfigs';
 import { useAuthStore } from '@/stores/authStore';
 import { useToast } from "vue-toastification";
+import CurrencySelect from '@/components/common/CurrencySelect.vue';
 
 const formStore = useOrderFormStore();
 const configStore = useConfigStore();
@@ -111,7 +117,8 @@ const apiErrors = ref<any>(null);
 const availableFromList = computed(() => configStore.fiatCurrencies);
 const availableToList = computed(() => {
   const from = formStore.state.from_currency;
-  return configStore.directions[from] ?? [];
+  const codes = configStore.directions[from] ?? [];
+  return configStore.cryptoCurrencies.filter(c => codes.includes(c.code));
 });
 
 const currentPaymentMethods = computed(() => configStore.buyPaymentMethods);
