@@ -29,7 +29,7 @@ const { t } = useI18n()
 
         <!-- Right Side: Form Block -->
         <div class="hero-form-column">
-          <div class="flex items-center justify-center py-10 w-full">
+          <div class="flex items-center justify-center w-full">
             <div class="max-w-2xl w-full flex-1 p-4 lg:p-0">
               <ExchangeForm />
             </div>
@@ -63,6 +63,7 @@ const { t } = useI18n()
 }
 
 .hero-form-column {
+  width: 100%;
   display: flex;
   justify-content: flex-end;
 }
@@ -195,16 +196,9 @@ const { t } = useI18n()
   background: #cbd5e0;
 }
 
-:deep(.max-w-xl) {
+:deep(.exchange-card) {
   max-width: 100% !important;
-  box-shadow: none !important;
-  border: none !important;
-  padding: 0 1.5rem !important;
-  background: transparent !important;
-}
-
-:deep(.dark .max-w-xl) {
-  background: transparent !important;
+  /* Removed overrides that made the card transparent and flat */
 }
 
 @media (max-width: 1100px) {

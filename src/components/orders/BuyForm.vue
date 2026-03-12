@@ -418,6 +418,7 @@ onMounted(() => {
 }
 .amount-input {
   flex: 1;
+  width: 0;
   min-width: 0;
   background-color: transparent;
   border: none;

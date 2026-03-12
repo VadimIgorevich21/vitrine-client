@@ -109,7 +109,7 @@ onMounted(async () => {
 /* Responsiveness for < 500px */
 @media (max-width: 500px) {
   .exchange-card {
-    width: auto;
+    width: 100%;
     max-width: 100%;
     padding: 20px; /* Reduced padding */
     border-radius: 24px;
