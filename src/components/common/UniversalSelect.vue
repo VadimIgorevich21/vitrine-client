@@ -384,7 +384,7 @@ watch(isOpen, (newVal) => {
 }
 
 .item-main-text {
-  font-weight: 900;
+  font-weight: 500;
   color: #111827;
 }
 
