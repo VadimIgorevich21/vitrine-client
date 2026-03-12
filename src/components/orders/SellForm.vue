@@ -1,8 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Payment Method -->
-    <div class="space-y-2">
-      <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">{{ $t('orders.exchange.receivingMethod') }}</label>
+    <div v-if="currentPaymentMethods.length > 1" class="space-y-2">
       <UniversalSelect 
         v-model="formStore.state.payment_method"
         :items="currentPaymentMethods"
@@ -10,22 +9,31 @@
         labelPath="label"
         iconPath="icon"
         :placeholder="$t('orders.exchange.selectMethod')"
+        class="!border-none !shadow-none !p-0"
       />
+    </div>
+    <div v-else-if="currentPaymentMethods.length === 1" class="flex items-center space-x-3 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-2xl">
+      <div class="w-6 h-6 flex items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+        <img v-if="currentPaymentMethods[0]?.icon" :src="currentPaymentMethods[0].icon.startsWith('/') ? currentPaymentMethods[0].icon : `/${currentPaymentMethods[0].icon}`" class="w-4 h-4 object-contain" />
+        <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+        </svg>
+      </div>
+      <span class="text-sm font-medium text-gray-500">{{ currentPaymentMethods[0]?.label }}</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
     </div>
 
     <!-- Give (Crypto) -->
     <div class="space-y-2">
       <div class="flex justify-between px-1 h-4">
         <label class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ $t('orders.exchange.youGive') }}</label>
-        <div v-if="configStore.loading" class="w-24 h-3 bg-gray-100 dark:bg-gray-700 animate-pulse rounded"></div>
-        <span v-else-if="formStore.currentRate" class="text-xs font-medium text-blue-500">
-          1 {{ formStore.state.from_currency }} ≈ {{ formStore.currentRate.final_rate }}
-        </span>
       </div>
 
       <div v-if="configStore.loading" class="h-20 bg-gray-50 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
       <div v-else :class="['flex items-center bg-gray-50 dark:bg-gray-900 border-2 rounded-2xl p-2 transition-all',
-                    !formStore.isAmountValid ? 'border-red-200 bg-red-50' : 'border-transparent focus-within:border-blue-500 focus-within:bg-white dark:focus-within:bg-gray-800']">
+                    !formStore.isAmountValid ? 'border-indigo-500 bg-white dark:bg-gray-800' : 'border-transparent focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-gray-800']">
         <input
           type="number"
           v-model.number="formStore.state.amount_from"
@@ -41,24 +49,22 @@
           sublabelPath="title"
           iconPath="icon"
           rounded
-          class="w-auto"
+          class="w-auto !bg-transparent !border-none !shadow-none"
         />
       </div>
-      <p v-if="!formStore.isAmountValid" class="text-red-500 text-xs font-bold px-2 italic">
-        {{ $t('orders.exchange.minimum') }} {{ formStore.currentRate?.min_amount }} {{ formStore.state.from_currency }}
-      </p>
+      <!-- No separate error message, moved to button -->
     </div>
 
     <!-- Get (Fiat) -->
     <div class="space-y-2">
       <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">{{ $t('orders.exchange.youGet') }}</label>
       <div v-if="configStore.loading" class="h-20 bg-gray-50 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
-      <div v-else class="flex items-center bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus-within:border-blue-500 focus-within:bg-white dark:focus-within:bg-gray-800 rounded-2xl p-2 transition-all">
+      <div v-else class="flex items-center bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-gray-800 rounded-2xl p-2 transition-all">
         <input
           type="number"
           v-model.number="formStore.state.amount_to"
           @input="formStore.calculateFrom"
-          class="flex-1 bg-transparent border-none p-2 text-2xl font-bold text-blue-600 dark:text-blue-400 outline-none no-spinner"
+          class="flex-1 bg-transparent border-none p-2 text-2xl font-bold text-gray-400 dark:text-gray-500 outline-none no-spinner"
           placeholder="0.00"
         />
         <UniversalSelect 
@@ -70,7 +76,7 @@
           iconPath="icon"
           rounded
           @change="formStore.calculateTo"
-          class="w-auto"
+          class="w-auto !bg-transparent !border-none !shadow-none"
         />
       </div>
     </div>
@@ -92,10 +98,16 @@
     <button
       v-if="!configStore.loading"
       @click="handleSubmit"
-      :disabled="loading || !formStore.isAmountValid || !formStore.state.amount_from"
-      class="w-full py-5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-200 dark:disabled:bg-gray-700 disabled:text-gray-400 text-white font-black rounded-2xl shadow-xl transition-all active:scale-95 uppercase tracking-widest"
+      :disabled="loading || !formStore.state.amount_from || formStore.state.amount_from === 0"
+      :class="['w-full py-5 font-bold rounded-[24px] shadow-lg transition-all active:scale-[0.98] text-lg',
+               !formStore.isAmountValid 
+                ? 'bg-[#B4BDC9] text-white cursor-not-allowed' 
+                : 'bg-gradient-to-r from-[#FF6B00] to-[#FF8A00] text-white hover:opacity-90 shadow-[0_10px_30px_rgba(255,107,0,0.3)]']"
     >
       <span v-if="loading">{{ $t('orders.exchange.processing') }}</span>
+      <span v-else-if="!formStore.isAmountValid">
+        {{ $t('orders.exchange.minimum') }} {{ formStore.currentRate?.min_amount }} {{ formStore.state.from_currency }}
+      </span>
       <span v-else>{{ authStore.user ? $t('orders.exchange.createOrderSell') : $t('orders.exchange.loginAndExchange') }}</span>
     </button>
     <div v-else class="h-16 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-2xl"></div>

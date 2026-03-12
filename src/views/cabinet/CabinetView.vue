@@ -4,6 +4,7 @@ import { useAuthStore } from '@/stores/authStore.ts'
 import { computed } from 'vue'
 // import KycWidget from "@/components/kyc/KycWidget.vue";
 import KycComponent from "@/components/kyc/KycComponent.vue";
+import ExchangeForm from "@/components/orders/ExchangeForm.vue";
 
 const { t } = useI18n()
 const authStore = useAuthStore()
@@ -24,5 +25,12 @@ const displayName = computed(() => {
       {{ t('cabinet.welcome', { name: displayName }) }}
     </p>
 
+    <div class="mt-8">
+      <ExchangeForm />
+    </div>
+
+    <div class="mt-8">
+       <KycComponent />
+    </div>
   </div>
 </template>
