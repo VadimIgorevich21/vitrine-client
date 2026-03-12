@@ -94,15 +94,15 @@
       </ul>
     </div>
 
-    <!-- Submit Button -->
     <button
       v-if="!configStore.loading"
       @click="handleSubmit"
       :disabled="loading || !formStore.state.amount_from || formStore.state.amount_from === 0"
-      :class="['w-full py-5 font-bold rounded-[24px] shadow-lg transition-all active:scale-[0.98] text-lg',
+      :class="['w-full py-5 font-bold rounded-[24px] shadow-lg transition-all active:scale-[0.98] text-lg cursor-pointer',
                !formStore.isAmountValid 
-                ? 'bg-[#B4BDC9] text-white cursor-not-allowed' 
-                : 'bg-gradient-to-r from-[#FF6B00] to-[#FF8A00] text-white hover:opacity-90 shadow-[0_10px_30px_rgba(255,107,0,0.3)]']"
+                ? 'bg-gradient-to-r from-gray-400 to-gray-500 text-white' 
+                : 'bg-gradient-to-r from-[#FF6B00] to-[#FF8A00] text-white hover:opacity-90 shadow-[0_10px_30px_rgba(255,107,0,0.3)]',
+               (!formStore.state.amount_from || formStore.state.amount_from === 0) ? 'opacity-50' : '']"
     >
       <span v-if="loading">{{ $t('orders.exchange.processing') }}</span>
       <span v-else-if="!formStore.isAmountValid">

@@ -6,7 +6,7 @@
       <button
         v-for="t in (['buy', 'sell'] as const)" :key="t"
         @click="formStore.state.type = t"
-        :class="['flex-1 py-3 text-sm font-bold rounded-xl transition-all duration-300',
+        :class="['flex-1 py-3 text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer',
                  formStore.state.type === t ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm' : 'text-gray-400 hover:text-gray-500']"
       >
         {{ t === 'buy' ? $t('orders.exchange.buyCrypto') : $t('orders.exchange.sellCrypto') }}
