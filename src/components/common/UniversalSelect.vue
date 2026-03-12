@@ -1,13 +1,16 @@
 <template>
-  <div class="select-root" :class="{ 'width-auto': borderless, 'width-full': !borderless }" ref="container">
+  <div class="select-root" :class="{ 'width-auto': borderless, 'width-full': !borderless }" ref="container" style="min-width: 0;">
     <!-- Selected Item Button -->
     <div 
       @click="isOpen = !isOpen"
       :class="['selected-item-button', borderless ? 'borderless' : 'normal']"
     >
       <div class="selected-content">
-        <img v-if="selectedItemIcon" :src="getIconPath(selectedItemIcon)" 
-             :class="['item-icon', rounded ? 'rounded-full' : 'rounded-none']" />
+        <div v-if="selectedItemIcon" 
+             class="item-icon" 
+             :class="{ 'is-fiat': isFiat, 'is-crypto': !isFiat, 'rounded-full': rounded && !isFiat, 'selected-rounded': rounded && isFiat }"
+             :style="{ backgroundImage: `url(${getIconPath(selectedItemIcon)})` }">
+        </div>
         <span class="item-label">{{ selectedItemLabel || placeholder }}</span>
       </div>
       <svg xmlns="http://www.w3.org/2000/svg" :class="['arrow-icon', { 'is-open': isOpen }]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,14 +43,13 @@
             v-for="item in filteredItems" 
             :key="item[itemKey]"
             @click="selectItem(item)"
-            :class="['list-item', { 'is-selected': modelValue === item[itemKey] }]"
+            :class="['list-item', { 'is-selected': modelValue === item[itemKey], 'is-fiat': isFiat }]"
           >
             <div 
               v-if="iconPath && item[iconPath]"
-              :class="['item-list-icon-container', rounded ? 'rounded-full' : 'rounded-none']"
+              class="item-list-icon-container"
             >
-               <img :src="getIconPath(item[iconPath])" 
-                    :class="['item-list-icon', rounded ? 'object-cover' : 'object-contain']" />
+                <img :src="getIconPath(item[iconPath])" class="item-list-icon object-contain" />
             </div>
             <div class="item-text-container">
               <span class="item-main-text">{{ item[labelPath] }}</span>
@@ -82,13 +84,15 @@ const props = withDefaults(defineProps<{
   searchPlaceholder?: string;
   rounded?: boolean;
   borderless?: boolean;
+  isFiat?: boolean;
 }>(), {
   itemKey: 'code',
   labelPath: 'code',
   placeholder: 'Выберите...',
   searchPlaceholder: 'Поиск...',
   rounded: false,
-  borderless: false
+  borderless: false,
+  isFiat: false
 });
 
 const emit = defineEmits<{
@@ -184,6 +188,7 @@ watch(isOpen, (newVal) => {
   transition: all 0.2s ease;
   color: #929AAA; /* text-gray-700 */
   font-size: 14px;
+  min-width: 0; /* Important for accessibility in small containers */
 }
 
 :deep(.dark) .selected-item-button {
@@ -226,10 +231,25 @@ watch(isOpen, (newVal) => {
 }
 
 .item-icon {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   margin-right: 8px;
   flex-shrink: 0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.item-icon.is-fiat {
+  background-size: cover;
+}
+
+.item-icon.is-crypto {
+  background-size: contain;
+}
+
+.selected-rounded {
+  border-radius: 24px;
 }
 
 .item-label {
@@ -341,18 +361,19 @@ watch(isOpen, (newVal) => {
   align-items: center;
   justify-content: center;
   margin-right: 12px;
-  background-color: #f3f4f6;
   overflow: hidden;
   flex-shrink: 0;
+  background-color: transparent !important;
 }
 
 :deep(.dark) .item-list-icon-container {
-  background-color: #111827;
+  background-color: transparent;
 }
 
 .item-list-icon {
   width: 24px;
   height: 24px;
+  object-fit: contain;
 }
 
 .item-text-container {

@@ -74,6 +74,7 @@
           iconPath="icon"
           rounded
           borderless
+          is-fiat
           @change="formStore.calculateTo"
           class="currency-select-right"
         />
@@ -211,6 +212,7 @@ onMounted(() => {
 .input-section {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .field-container {
@@ -283,6 +285,7 @@ onMounted(() => {
   border-radius: 16px;
   padding: 6px 8px;
   transition: all 0.3s ease;
+  min-width: 0;
 }
 
 :deep(.dark) .input-group {
@@ -351,7 +354,8 @@ onMounted(() => {
 }
 
 .currency-select-right {
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
   margin-left: 8px;
 }
 

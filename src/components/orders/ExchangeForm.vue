@@ -38,7 +38,7 @@ onMounted(async () => {
 
 <style scoped>
 .exchange-card {
-  width: 448px; /* max-w-md */
+  width: 100%;
   max-width: 448px; /* max-w-md */
   margin: 0 auto;
   background-color: white;

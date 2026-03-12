@@ -46,6 +46,7 @@
             iconPath="icon"
             rounded
             borderless
+            is-fiat
             class="currency-select-right"
           />
         </div>
@@ -317,6 +318,7 @@ onMounted(() => {
 .input-section {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 /* Input Group Header */
@@ -384,6 +386,7 @@ onMounted(() => {
   border-radius: 6px;
   padding: 6px 8px;
   transition: all 0.3s ease;
+  min-width: 0; /* Standard CSS fix for nested flex shrinking */
 }
 
 :deep(.dark) .input-group {
@@ -440,7 +443,8 @@ onMounted(() => {
 }
 
 .currency-select-right {
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
   margin-left: 8px;
 }
 
