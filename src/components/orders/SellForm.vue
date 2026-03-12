@@ -1,7 +1,7 @@
 <template>
-  <div class="space-y-6">
+  <div class="form-wrapper">
     <!-- Payment Method -->
-    <div v-if="currentPaymentMethods.length > 1" class="space-y-2">
+    <div v-if="currentPaymentMethods.length > 1" class="field-container">
       <UniversalSelect 
         v-model="formStore.state.payment_method"
         :items="currentPaymentMethods"
@@ -9,36 +9,34 @@
         labelPath="label"
         iconPath="icon"
         :placeholder="$t('orders.exchange.selectMethod')"
-        class="!border-none !shadow-none !p-0"
       />
     </div>
-    <div v-else-if="currentPaymentMethods.length === 1" class="flex items-center space-x-3 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-2xl">
-      <div class="w-6 h-6 flex items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-        <img v-if="currentPaymentMethods[0]?.icon" :src="currentPaymentMethods[0].icon.startsWith('/') ? currentPaymentMethods[0].icon : `/${currentPaymentMethods[0].icon}`" class="w-4 h-4 object-contain" />
-        <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <div v-else-if="currentPaymentMethods.length === 1" class="selected-method-display">
+      <div class="method-icon-container">
+        <img v-if="currentPaymentMethods[0]?.icon" :src="currentPaymentMethods[0].icon.startsWith('/') ? currentPaymentMethods[0].icon : `/${currentPaymentMethods[0].icon}`" class="method-icon" />
+        <svg v-else xmlns="http://www.w3.org/2000/svg" class="fallback-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
         </svg>
       </div>
-      <span class="text-sm font-medium text-gray-500">{{ currentPaymentMethods[0]?.label }}</span>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <span class="method-label">{{ currentPaymentMethods[0]?.label }}</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="method-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
     </div>
 
     <!-- Give (Crypto) -->
-    <div class="space-y-2">
-      <div class="flex justify-between px-1 h-4">
-        <label class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ $t('orders.exchange.youGive') }}</label>
+    <div class="input-section">
+      <div class="input-header">
+        <label class="input-label">{{ $t('orders.exchange.youGive') }}</label>
       </div>
 
-      <div v-if="configStore.loading" class="h-20 bg-gray-50 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
-      <div v-else :class="['flex items-center bg-gray-50 dark:bg-gray-900 border-2 rounded-2xl px-2 py-1 transition-all',
-                    !formStore.isAmountValid ? 'border-indigo-500 bg-white dark:bg-gray-800' : 'border-transparent focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-gray-800']">
+      <div v-if="configStore.loading" class="pulse-loader small"></div>
+      <div v-else :class="['input-group', !formStore.isAmountValid ? 'error' : '']">
         <input
           type="number"
           v-model.number="formStore.state.amount_from"
           @input="formStore.calculateTo"
-          class="flex-1 min-w-0 bg-transparent border-none p-2 text-xl md:text-2xl font-bold outline-none no-spinner dark:text-white"
+          class="amount-input"
           placeholder="0.00"
         />
         <UniversalSelect 
@@ -50,22 +48,21 @@
           iconPath="icon"
           rounded
           borderless
-          class="shrink-0 ml-2"
+          class="currency-select-right"
         />
       </div>
-      <!-- No separate error message, moved to button -->
     </div>
 
     <!-- Get (Fiat) -->
-    <div class="space-y-2">
-      <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">{{ $t('orders.exchange.youGet') }}</label>
-      <div v-if="configStore.loading" class="h-20 bg-gray-50 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
-      <div v-else class="flex items-center bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-gray-800 rounded-2xl px-2 py-1 transition-all">
+    <div class="input-section">
+      <label class="input-label">{{ $t('orders.exchange.youGet') }}</label>
+      <div v-if="configStore.loading" class="pulse-loader small"></div>
+      <div v-else class="input-group">
         <input
           type="number"
           v-model.number="formStore.state.amount_to"
           @input="formStore.calculateFrom"
-          class="flex-1 min-w-0 bg-transparent border-none p-2 text-xl md:text-2xl font-bold text-gray-400 dark:text-gray-500 outline-none no-spinner"
+          class="amount-input output"
           placeholder="0.00"
         />
         <UniversalSelect 
@@ -78,20 +75,20 @@
           rounded
           borderless
           @change="formStore.calculateTo"
-          class="shrink-0 ml-2"
+          class="currency-select-right"
         />
       </div>
     </div>
 
     <!-- Requisites Fields (Sell only) -->
-    <div v-if="authStore.user && !configStore.loading" class="pt-6 border-t border-dashed dark:border-gray-600 space-y-4">
+    <div v-if="authStore.user && !configStore.loading" class="requisites-section">
       <textarea v-model="formStore.state.user_requisites" :placeholder="$t('orders.exchange.userRequisites')"
-                class="w-full p-4 bg-gray-50 dark:bg-gray-900 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition" rows="2"></textarea>
+                class="requisites-textarea" rows="2"></textarea>
     </div>
 
     <!-- Errors -->
-    <div v-if="apiErrors" class="p-4 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-2xl text-sm font-medium">
-      <ul class="list-disc px-4">
+    <div v-if="apiErrors" class="error-box">
+      <ul class="error-list">
         <li v-for="(err, field) in apiErrors" :key="field">{{ err[0] }}</li>
       </ul>
     </div>
@@ -100,11 +97,8 @@
       v-if="!configStore.loading"
       @click="handleSubmit"
       :disabled="loading || !formStore.state.amount_from || formStore.state.amount_from === 0"
-      :class="['w-full py-5 font-bold rounded-[24px] shadow-lg transition-all active:scale-[0.98] text-lg cursor-pointer',
-               !formStore.isAmountValid 
-                ? 'bg-gradient-to-r from-gray-400 to-gray-500 text-white' 
-                : 'bg-gradient-to-r from-[#FF6B00] to-[#FF8A00] text-white hover:opacity-90 shadow-[0_10px_30px_rgba(255,107,0,0.3)]',
-               (!formStore.state.amount_from || formStore.state.amount_from === 0) ? 'opacity-50' : '']"
+      :class="['primary-btn', !formStore.isAmountValid ? 'btn-error' : 'btn-active']"
+      :style="(!formStore.state.amount_from || formStore.state.amount_from === 0) ? { opacity: 0.5 } : {}"
     >
       <span v-if="loading">{{ $t('orders.exchange.processing') }}</span>
       <span v-else-if="!formStore.isAmountValid">
@@ -112,7 +106,7 @@
       </span>
       <span v-else>{{ authStore.user ? $t('orders.exchange.createOrderSell') : $t('orders.exchange.loginAndExchange') }}</span>
     </button>
-    <div v-else class="h-16 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
+    <div v-else class="pulse-loader btn-pulse"></div>
   </div>
 </template>
 
@@ -196,6 +190,147 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Field & Label */
+.input-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #9ca3af; /* text-gray-400 */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 4px;
+  margin-bottom: 8px;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Input Group Header */
+.selected-method-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f9fafb;
+  border: 1px solid #f3f4f6;
+  border-radius: 16px;
+}
+
+:deep(.dark) .selected-method-display {
+  background-color: #111827;
+  border-color: #374151;
+}
+
+.method-icon-container {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+:deep(.dark) .method-icon-container {
+  background-color: #1f2937;
+}
+
+.method-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.fallback-icon {
+  width: 16px;
+  height: 16px;
+  color: #9ca3af;
+}
+
+.method-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.method-arrow {
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  color: #9ca3af;
+}
+
+/* Input Elements */
+.input-group {
+  display: flex;
+  align-items: center;
+  background-color: #f9fafb;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 6px 8px;
+  transition: all 0.3s ease;
+}
+
+:deep(.dark) .input-group {
+  background-color: #111827;
+}
+
+.input-group:focus-within {
+  border-color: #6366f1; /* border-indigo-500 */
+  background-color: white;
+}
+
+:deep(.dark) .input-group:focus-within {
+  background-color: #1f2937;
+}
+
+.input-group.error {
+  border-color: #6366f1;
+  background-color: white;
+}
+
+:deep(.dark) .input-group.error {
+  background-color: #1f2937;
+}
+
+.amount-input {
+  flex: 1;
+  min-width: 0;
+  background-color: transparent;
+  border: none;
+  padding: 8px;
+  font-size: 24px;
+  font-weight: 700;
+  outline: none;
+  color: #111827;
+}
+
+:deep(.dark) .amount-input {
+  color: white;
+}
+
+.amount-input.output {
+  color: #9ca3af;
+}
+
+:deep(.dark) .amount-input.output {
+  color: #6b7280;
+}
+
 .no-spinner::-webkit-outer-spin-button,
 .no-spinner::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -207,11 +342,147 @@ onMounted(() => {
   appearance: textfield;
 }
 
+.currency-select-right {
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+/* Buttons */
+.primary-btn {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 24px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.primary-btn:active {
+  transform: scale(0.98);
+}
+
+.btn-active {
+  background-image: linear-gradient(to right, #FF6B00, #FF8A00);
+  color: white;
+  box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
+}
+
+.btn-active:hover {
+  opacity: 0.9;
+}
+
+.btn-error, .btn-inactive {
+  background-image: linear-gradient(to right, #9ca3af, #6b7280);
+  color: white;
+  box-shadow: none;
+}
+
+.btn-inactive {
+  opacity: 0.5;
+}
+
+/* Requisites Area */
+.requisites-section {
+  padding-top: 24px;
+  border-top: 1px dashed #e5e7eb;
+}
+
+:deep(.dark) .requisites-section {
+  border-color: #4b5563;
+}
+
+.requisites-textarea {
+  width: 100%;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 16px;
+  border: none;
+  outline: none;
+  color: #111827;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+:deep(.dark) .requisites-textarea {
+  background-color: #111827;
+  color: white;
+}
+
+.requisites-textarea:focus {
+  box-shadow: 0 0 0 2px #3b82f6; /* ring-2 ring-blue-500 */
+}
+
+/* Loaders & Errors */
+.pulse-loader {
+  background-color: #f9fafb;
+  border-radius: 16px;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+:deep(.dark) .pulse-loader {
+  background-color: #374151;
+}
+
+.pulse-loader.small {
+  height: 80px;
+}
+
+.btn-pulse {
+  height: 64px;
+}
+
+.error-box {
+  padding: 16px;
+  background-color: #fef2f2;
+  border-radius: 16px;
+}
+
+:deep(.dark) .error-box {
+  background-color: rgba(127, 29, 29, 0.3);
+}
+
+.error-list {
+  list-style-type: disc;
+  padding-left: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #dc2626;
+}
+
+:deep(.dark) .error-list {
+  color: #f87171;
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: .5; }
 }
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+/* Responsiveness for < 500px */
+@media (max-width: 500px) {
+  .amount-input {
+    font-size: 18px;
+    padding: 6px;
+  }
+
+  .primary-btn {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 16px;
+    border-radius: 20px;
+  }
+
+  .input-label {
+    font-size: 10px;
+  }
+
+  .input-group {
+    padding: 4px 6px;
+  }
 }
 </style>

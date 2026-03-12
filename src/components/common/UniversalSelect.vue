@@ -1,87 +1,65 @@
 <template>
-  <div class="relative" :class="borderless ? 'w-auto' : 'w-full'" ref="container">
+  <div class="select-root" :class="{ 'width-auto': borderless, 'width-full': !borderless }" ref="container">
     <!-- Selected Item Button -->
     <div 
       @click="isOpen = !isOpen"
-      :class="[
-        'flex items-center justify-between font-bold cursor-pointer transition-all',
-        borderless 
-          ? 'bg-transparent border-none shadow-none px-2 py-1' 
-          : 'bg-white dark:bg-gray-800 border shadow-sm rounded-xl px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 min-h-[44px]'
-      ]"
-      class="text-gray-700 dark:text-white"
+      :class="['selected-item-button', borderless ? 'borderless' : 'normal']"
     >
-      <div class="flex items-center min-w-0">
+      <div class="selected-content">
         <img v-if="selectedItemIcon" :src="getIconPath(selectedItemIcon)" 
-             class="w-5 h-5 mr-2 shrink-0" 
-             :class="rounded ? 'rounded-full object-cover' : 'rounded-none object-contain'" />
-        <span class="truncate">{{ selectedItemLabel || placeholder }}</span>
+             :class="['item-icon', rounded ? 'rounded-full' : 'rounded-none']" />
+        <span class="item-label">{{ selectedItemLabel || placeholder }}</span>
       </div>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform shrink-0" :class="{'rotate-180': isOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" :class="['arrow-icon', { 'is-open': isOpen }]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
     </div>
 
     <!-- Dropdown -->
-    <transition
-      enter-active-class="transition ease-out duration-100"
-      enter-from-class="transform opacity-0 scale-95"
-      enter-to-class="transform opacity-100 scale-100"
-      leave-active-class="transition ease-in duration-75"
-      leave-from-class="transform opacity-100 scale-100"
-      leave-to-class="transform opacity-0 scale-95"
-    >
-      <div 
-        v-if="isOpen" 
-        class="absolute z-50 mt-2 w-full min-w-[280px] right-0 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 overflow-hidden"
-      >
+    <transition name="dropdown">
+      <div v-if="isOpen" class="dropdown-panel">
         <!-- Search -->
-        <div class="p-3">
-          <div class="relative">
+        <div class="search-container">
+          <div class="search-input-wrapper">
             <input
               v-model="searchQuery"
               ref="searchInput"
               type="text"
               :placeholder="searchPlaceholder"
-              class="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-gray-900 border-2 border-[#FFD200] rounded-xl outline-none text-sm font-medium dark:text-white"
+              class="search-input"
             />
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
         </div>
 
         <!-- List -->
-        <div class="max-h-64 overflow-y-auto custom-scrollbar">
+        <div class="items-list custom-scrollbar">
           <div 
             v-for="item in filteredItems" 
             :key="item[itemKey]"
             @click="selectItem(item)"
-            class="flex items-center px-4 py-3 cursor-pointer transition-colors"
-            :class="[
-              modelValue === item[itemKey] ? 'bg-gray-50 dark:bg-gray-700' : 'hover:bg-gray-50 dark:hover:bg-gray-700'
-            ]"
+            :class="['list-item', { 'is-selected': modelValue === item[itemKey] }]"
           >
             <div 
               v-if="iconPath && item[iconPath]"
-              class="w-8 h-8 flex items-center justify-center mr-3 bg-gray-50 dark:bg-gray-900 overflow-hidden shrink-0"
-              :class="rounded ? 'rounded-full' : 'rounded-none'"
+              :class="['item-list-icon-container', rounded ? 'rounded-full' : 'rounded-none']"
             >
                <img :src="getIconPath(item[iconPath])" 
-                    class="w-6 h-6" 
-                    :class="rounded ? 'object-cover' : 'object-contain'" />
+                    :class="['item-list-icon', rounded ? 'object-cover' : 'object-contain']" />
             </div>
-            <div class="flex items-center space-x-2 truncate">
-              <span class="font-black text-gray-900 dark:text-white">{{ item[labelPath] }}</span>
-              <span v-if="sublabelPath && item[sublabelPath]" class="text-gray-400 font-medium truncate">{{ item[sublabelPath] }}</span>
+            <div class="item-text-container">
+              <span class="item-main-text">{{ item[labelPath] }}</span>
+              <span v-if="sublabelPath && item[sublabelPath]" class="item-sub-text">{{ item[sublabelPath] }}</span>
             </div>
-            <div v-if="modelValue === item[itemKey]" class="ml-auto shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+            <div v-if="modelValue === item[itemKey]" class="check-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" class="check-icon" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
             </div>
           </div>
-          <div v-if="filteredItems.length === 0" class="px-4 py-8 text-center text-gray-400 text-sm">
+          <div v-if="filteredItems.length === 0" class="no-results">
             Ничего не найдено
           </div>
         </div>
@@ -155,7 +133,6 @@ const selectItem = (item: any) => {
 
 const getIconPath = (path: string) => {
   if (!path) return '';
-  // Handle protocol-relative, absolute or root-relative paths
   if (path.startsWith('http') || path.startsWith('data:') || path.startsWith('/')) {
     return path;
   }
@@ -186,6 +163,240 @@ watch(isOpen, (newVal) => {
 </script>
 
 <style scoped>
+.select-root {
+  position: relative;
+}
+
+.width-auto {
+  width: auto;
+}
+
+.width-full {
+  width: 100%;
+}
+
+.selected-item-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #374151; /* text-gray-700 */
+}
+
+:deep(.dark) .selected-item-button {
+  color: white;
+}
+
+.selected-item-button.normal {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 8px 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  min-height: 44px;
+}
+
+:deep(.dark) .selected-item-button.normal {
+  background-color: #1f2937;
+  border-color: #374151;
+}
+
+.selected-item-button.normal:hover {
+  background-color: #f9fafb;
+}
+
+:deep(.dark) .selected-item-button.normal:hover {
+  background-color: #374151;
+}
+
+.selected-item-button.borderless {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 4px 8px;
+}
+
+.selected-content {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.item-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.item-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arrow-icon {
+  height: 16px;
+  width: 16px;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.arrow-icon.is-open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Panel */
+.dropdown-panel {
+  position: absolute;
+  z-index: 50;
+  margin-top: 8px;
+  width: 100%;
+  min-width: 280px;
+  right: 0;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid #f3f4f6;
+  overflow: hidden;
+}
+
+:deep(.dark) .dropdown-panel {
+  background-color: #1f2937;
+  border-color: #374151;
+}
+
+.search-container {
+  padding: 12px;
+}
+
+.search-input-wrapper {
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 40px 10px 16px;
+  background-color: white;
+  border: 2px solid #FFD200;
+  border-radius: 12px;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+:deep(.dark) .search-input {
+  background-color: #111827;
+  color: white;
+}
+
+.search-icon {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+/* Items List */
+.items-list {
+  max-height: 256px;
+  overflow-y: auto;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.list-item:hover {
+  background-color: #f9fafb;
+}
+
+:deep(.dark) .list-item:hover {
+  background-color: #374151;
+}
+
+.list-item.is-selected {
+  background-color: #f9fafb;
+}
+
+:deep(.dark) .list-item.is-selected {
+  background-color: #374151;
+}
+
+.item-list-icon-container {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  background-color: #f3f4f6;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+:deep(.dark) .item-list-icon-container {
+  background-color: #111827;
+}
+
+.item-list-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.item-text-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.item-main-text {
+  font-weight: 900;
+  color: #111827;
+}
+
+:deep(.dark) .item-main-text {
+  color: white;
+}
+
+.item-sub-text {
+  color: #9ca3af;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.check-icon-container {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.check-icon {
+  height: 20px;
+  width: 20px;
+  color: #3b82f6;
+}
+
+.no-results {
+  padding: 32px 16px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
@@ -196,10 +407,22 @@ watch(isOpen, (newVal) => {
   background: #e2e8f0;
   border-radius: 10px;
 }
-.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+:deep(.dark) .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #4a5568;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #cbd5e1;
+}
+
+/* Transitions */
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition: opacity 0.1s ease, transform 0.1s ease;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
 }
 </style>
