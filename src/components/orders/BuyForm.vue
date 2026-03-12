@@ -30,13 +30,13 @@
       <div class="space-y-2">
         <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">{{ $t('orders.exchange.youGive') }}</label>
         <div v-if="configStore.loading" class="h-20 bg-gray-50 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
-        <div v-else :class="['flex items-center bg-gray-50 dark:bg-gray-900 border-2 rounded-2xl p-2 transition-all',
+        <div v-else :class="['flex items-center bg-gray-50 dark:bg-gray-900 border-2 rounded-2xl px-2 py-1 transition-all',
                       !formStore.isAmountValid ? 'border-indigo-500 bg-white dark:bg-gray-800' : 'border-transparent focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-gray-800']">
           <input
             type="number"
             v-model.number="formStore.state.amount_from"
             @input="formStore.calculateTo"
-            class="flex-1 bg-transparent border-none p-2 text-2xl font-bold outline-none no-spinner dark:text-white"
+            class="flex-1 min-w-0 bg-transparent border-none p-2 text-xl md:text-2xl font-bold outline-none no-spinner dark:text-white"
             placeholder="0.00"
           />
           <UniversalSelect 
@@ -47,7 +47,8 @@
             sublabelPath="title"
             iconPath="icon"
             rounded
-            class="w-auto !bg-transparent !border-none !shadow-none"
+            borderless
+            class="shrink-0 ml-2"
           />
         </div>
       </div>
@@ -56,12 +57,12 @@
       <div class="space-y-2">
         <label class="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">{{ $t('orders.exchange.youGet') }}</label>
         <div v-if="configStore.loading" class="h-20 bg-gray-50 dark:bg-gray-700 animate-pulse rounded-2xl"></div>
-        <div v-else class="flex items-center bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-gray-800 rounded-2xl p-2 transition-all">
+        <div v-else class="flex items-center bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-gray-800 rounded-2xl px-2 py-1 transition-all">
           <input
             type="number"
             v-model.number="formStore.state.amount_to"
             @input="formStore.calculateFrom"
-            class="flex-1 bg-transparent border-none p-2 text-2xl font-bold text-gray-400 dark:text-gray-500 outline-none no-spinner"
+            class="flex-1 min-w-0 bg-transparent border-none p-2 text-xl md:text-2xl font-bold text-gray-400 dark:text-gray-500 outline-none no-spinner"
             placeholder="0.00"
           />
           <UniversalSelect 
@@ -72,8 +73,9 @@
             sublabelPath="title"
             iconPath="icon"
             rounded
+            borderless
             @change="formStore.calculateTo"
-            class="w-auto !bg-transparent !border-none !shadow-none"
+            class="shrink-0 ml-2"
           />
         </div>
       </div>

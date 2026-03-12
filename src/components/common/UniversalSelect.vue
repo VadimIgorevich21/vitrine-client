@@ -1,17 +1,23 @@
 <template>
-  <div class="relative inline-block text-left w-full" ref="container">
+  <div class="relative" :class="borderless ? 'w-auto' : 'w-full'" ref="container">
     <!-- Selected Item Button -->
     <div 
       @click="isOpen = !isOpen"
-      class="flex items-center justify-between bg-white dark:bg-gray-800 border shadow-sm rounded-xl px-4 py-2 font-bold text-gray-700 dark:text-white cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-all min-h-[44px]"
+      :class="[
+        'flex items-center justify-between font-bold cursor-pointer transition-all',
+        borderless 
+          ? 'bg-transparent border-none shadow-none px-2 py-1' 
+          : 'bg-white dark:bg-gray-800 border shadow-sm rounded-xl px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 min-h-[44px]'
+      ]"
+      class="text-gray-700 dark:text-white"
     >
-      <div class="flex items-center">
+      <div class="flex items-center min-w-0">
         <img v-if="selectedItemIcon" :src="getIconPath(selectedItemIcon)" 
-             class="w-5 h-5 mr-2" 
+             class="w-5 h-5 mr-2 shrink-0" 
              :class="rounded ? 'rounded-full object-cover' : 'rounded-none object-contain'" />
         <span class="truncate">{{ selectedItemLabel || placeholder }}</span>
       </div>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 transition-transform shrink-0" :class="{'rotate-180': isOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform shrink-0" :class="{'rotate-180': isOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
     </div>
@@ -97,12 +103,14 @@ const props = withDefaults(defineProps<{
   placeholder?: string;
   searchPlaceholder?: string;
   rounded?: boolean;
+  borderless?: boolean;
 }>(), {
   itemKey: 'code',
   labelPath: 'code',
   placeholder: 'Выберите...',
   searchPlaceholder: 'Поиск...',
-  rounded: false
+  rounded: false,
+  borderless: false
 });
 
 const emit = defineEmits<{
