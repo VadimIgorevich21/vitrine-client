@@ -307,6 +307,12 @@ onMounted(() => {
   background-color: #1f2937;
 }
 
+.amount-input::-webkit-outer-spin-button,
+.amount-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .amount-input {
   flex: 1;
   min-width: 0;
@@ -317,6 +323,8 @@ onMounted(() => {
   font-weight: 700;
   outline: none;
   color: #111827;
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 :deep(.dark) .amount-input {
