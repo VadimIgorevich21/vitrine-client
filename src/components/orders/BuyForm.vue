@@ -338,11 +338,6 @@ onMounted(() => {
   border-radius: 16px;
 }
 
-:deep(.dark) .selected-method-display {
-  background-color: #111827;
-  border-color: #374151;
-}
-
 .method-icon-container {
   width: 24px;
   height: 24px;
@@ -352,10 +347,6 @@ onMounted(() => {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-}
-
-:deep(.dark) .method-icon-container {
-  background-color: #1f2937;
 }
 
 .method-icon {
@@ -395,26 +386,14 @@ onMounted(() => {
   min-width: 0; /* Standard CSS fix for nested flex shrinking */
 }
 
-:deep(.dark) .input-group {
-  background-color: #111827;
-}
-
 .input-group:focus-within {
   border-color: #6366f1; /* border-indigo-500 */
   background-color: white;
 }
 
-:deep(.dark) .input-group:focus-within {
-  background-color: #1f2937;
-}
-
 .input-group.error {
   border-color: #6366f1;
   background-color: white;
-}
-
-:deep(.dark) .input-group.error {
-  background-color: #1f2937;
 }
 
 .amount-input::-webkit-outer-spin-button,
@@ -437,16 +416,8 @@ onMounted(() => {
   appearance: textfield;
 }
 
-:deep(.dark) .amount-input {
-  color: white;
-}
-
 .amount-input.output {
   color: #929AAA;
-}
-
-:deep(.dark) .amount-input.output {
-  color: #6b7280;
 }
 
 .currency-select-right {
@@ -534,10 +505,6 @@ onMounted(() => {
   background-color: #f3f4f6;
 }
 
-:deep(.dark) .back-btn:hover {
-  background-color: #374151;
-}
-
 .back-arrow {
   width: 24px;
   height: 24px;
@@ -546,12 +513,9 @@ onMounted(() => {
 
 .step-title {
   font-size: 24px;
-  font-weight: 700;
-  color: #111827;
-}
-
-:deep(.dark) .step-title {
-  color: white;
+  font-weight: 500;
+  color: #101828;
+  line-height: 150%;
 }
 
 .header-spacer {
@@ -576,7 +540,8 @@ onMounted(() => {
 
 .summary-label {
   font-weight: 500;
-  color: #6b7280;
+  color: #929AAA;
+  font-size: 12px;
 }
 
 .summary-value-group {
@@ -586,13 +551,9 @@ onMounted(() => {
 }
 
 .summary-amount {
-  font-size: 18px;
-  font-weight: 700;
-  color: #111827;
-}
-
-:deep(.dark) .summary-amount {
-  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  color: #101828;
 }
 
 .summary-badge {
@@ -601,10 +562,6 @@ onMounted(() => {
   background-color: #f9fafb;
   padding: 4px 8px;
   border-radius: 8px;
-}
-
-:deep(.dark) .summary-badge {
-  background-color: #111827;
 }
 
 .badge-icon {
@@ -625,10 +582,6 @@ onMounted(() => {
   align-items: center;
   padding-top: 8px;
   border-top: 1px solid #f3f4f6;
-}
-
-:deep(.dark) .summary-info-line {
-  border-color: #374151;
 }
 
 .summary-rate {
@@ -652,10 +605,6 @@ onMounted(() => {
   gap: 16px;
 }
 
-:deep(.dark) .fields-section {
-  border-color: #374151;
-}
-
 .wallet-input {
   width: 100%;
   padding: 16px;
@@ -667,11 +616,6 @@ onMounted(() => {
   color: #111827;
 }
 
-:deep(.dark) .wallet-input {
-  background-color: #111827;
-  color: white;
-}
-
 .wallet-input:focus {
   border-color: #6366f1;
 }
@@ -681,10 +625,6 @@ onMounted(() => {
   background-color: #f9fafb;
   border-radius: 16px;
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-:deep(.dark) .pulse-loader {
-  background-color: #374151;
 }
 
 .pulse-loader.small {
@@ -702,20 +642,12 @@ onMounted(() => {
   border-radius: 16px;
 }
 
-:deep(.dark) .error-box {
-  background-color: rgba(127, 29, 29, 0.3);
-}
-
 .error-list {
   list-style-type: disc;
   padding-left: 16px;
   font-size: 14px;
   font-weight: 500;
   color: #dc2626;
-}
-
-:deep(.dark) .error-list {
-  color: #f87171;
 }
 
 @keyframes spin-slow {
