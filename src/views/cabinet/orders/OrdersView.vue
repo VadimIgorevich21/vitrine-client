@@ -5,6 +5,9 @@ import { useI18n } from 'vue-i18n'
 import { orderService } from '@/services/orderService'
 import TransactionRow from '@/components/cabinet/orders/TransactionRow.vue'
 import BasePagination from '@/components/common/BasePagination.vue'
+// @ts-ignore – known exports resolution quirk in @vuepic/vue-datepicker
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -21,6 +24,28 @@ const filters = ref({
   date_from: '',
   date_to: ''
 })
+
+// --- Date range picker ---
+const dateRange = ref<[Date, Date] | null>(null)
+
+const onDateRangeUpdate = (range: [Date, Date] | null) => {
+  if (range && range[0] && range[1]) {
+    const fmt = (d: Date): string => d.toISOString().split('T')[0] ?? ''
+    filters.value.date_from = fmt(range[0])
+    filters.value.date_to = fmt(range[1])
+  } else {
+    filters.value.date_from = ''
+    filters.value.date_to = ''
+  }
+}
+
+const clearDates = () => {
+  dateRange.value = null
+  filters.value.date_from = ''
+  filters.value.date_to = ''
+  fetchOrders(1)
+}
+// --- end date range picker ---
 
 const fetchOrders = async (page = 1) => {
   loading.value = true
@@ -53,7 +78,7 @@ watch(() => filters.value.search, () => {
 })
 
 watch([() => filters.value.date_from, () => filters.value.date_to], () => {
-    fetchOrders(1)
+  fetchOrders(1)
 })
 
 onMounted(() => {
@@ -69,33 +94,58 @@ onMounted(() => {
         <h1 class="page-title">Transaction history</h1>
 
         <!-- Filters -->
-        <div class="flex items-center gap-3 w-full md:w-auto">
+        <div class="filters-row">
           <!-- Search -->
           <div class="search-wrapper">
              <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
              </svg>
-             <input 
-               v-model="filters.search" 
-               type="text" 
-               placeholder="Enter asset name" 
+             <input
+               v-model="filters.search"
+               type="text"
+               placeholder="Enter asset name"
                class="search-input"
              />
           </div>
 
-          <!-- Date Filter (Simple but Styled) -->
-          <div class="date-filter-wrapper">
-             <div class="date-inputs">
-                <input type="date" v-model="filters.date_from" class="date-input" title="From Date" />
-                <span class="date-sep">-</span>
-                <input type="date" v-model="filters.date_to" class="date-input" title="To Date" />
-             </div>
-             <button v-if="filters.date_from || filters.date_to" @click="filters.date_from = ''; filters.date_to = ''" class="clear-date">
-                &times;
-             </button>
-             <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-             </svg>
+          <!-- Date Range Picker (icon-only trigger) -->
+          <div class="date-picker-wrap">
+            <VueDatePicker
+              v-model="dateRange"
+              range
+              :enable-time-picker="false"
+              auto-apply
+              teleport="body"
+              position="left"
+              @update:model-value="onDateRangeUpdate"
+            >
+              <template #trigger>
+                <!-- calendar icon — opens the picker -->
+                <button
+                  class="calendar-icon-btn"
+                  :class="{ 'calendar-icon-btn--active': dateRange }"
+                  type="button"
+                  title="Select date range"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </button>
+              </template>
+            </VueDatePicker>
+
+            <!-- Clear button rendered OUTSIDE picker so it never blocks picker's click -->
+            <button
+              v-if="dateRange"
+              class="clear-date-btn"
+              type="button"
+              title="Clear dates"
+              @click="clearDates"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
@@ -169,9 +219,23 @@ onMounted(() => {
 }
 
 /* Search and Filters */
+.filters-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .filters-row {
+    width: auto;
+  }
+}
+
 .search-wrapper {
   position: relative;
-  flex-grow: 1;
+  flex: 1 1 0;
+  min-width: 0;
   max-width: 320px;
 }
 
@@ -201,43 +265,66 @@ onMounted(() => {
   border-color: #2563EB;
 }
 
-.date-filter-wrapper {
+.date-picker-wrap {
+  position: relative;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+}
+
+.calendar-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
   background-color: white;
   border: 1px solid #F2F2F6;
   border-radius: 10px;
-  padding: 4px 12px;
-  gap: 8px;
-  height: 42px;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
-.date-inputs {
+.calendar-icon-btn:hover {
+  border-color: #D0D5DD;
+  background-color: #F9FAFB;
+}
+
+.calendar-icon-btn--active {
+  border-color: #2563EB;
+  background-color: #EFF6FF;
+}
+
+.cal-icon {
+  width: 20px;
+  height: 20px;
+  color: #667085;
+}
+
+.calendar-icon-btn--active .cal-icon {
+  color: #2563EB;
+}
+
+/* Clear button overlaid on top-right of the calendar button */
+.clear-date-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
   display: flex;
   align-items: center;
-  gap: 4px;
-}
-
-.date-input {
-  border: none;
-  background: none;
-  font-size: 12px;
-  color: #667085;
-  outline: none;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background-color: #6B7280;
+  border-radius: 50%;
   cursor: pointer;
-  padding: 2px;
+  z-index: 1;
 }
 
-.date-sep {
-  color: #D0D5DD;
-}
-
-.clear-date {
-  color: #98A2B3;
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0 4px;
+.clear-date-btn .cal-icon {
+  width: 10px;
+  height: 10px;
+  color: white;
 }
 
 /* Table Design */
