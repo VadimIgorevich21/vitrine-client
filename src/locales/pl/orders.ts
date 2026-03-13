@@ -2,6 +2,11 @@ export default {
   title: 'Orders',
   inDevelopment: 'Section in development',
   backToCabinet: 'Back to cabinet',
+  history: {
+    emptyTitle: 'Nie masz jeszcze żadnych transakcji',
+    emptySubtitle: 'Zacznij handlować kryptowalutami już teraz',
+    buyBtn: 'Kup kryptowalutę'
+  },
   exchange: {
     buyCrypto: 'Kup',
     sellCrypto: 'Sprzedaj',

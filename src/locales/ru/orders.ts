@@ -2,6 +2,11 @@ export default {
   title: 'Заказы',
   inDevelopment: 'Раздел в разработке',
   backToCabinet: 'В кабинет',
+  history: {
+    emptyTitle: 'У вас пока нет транзакций',
+    emptySubtitle: 'Начните торговать криптой прямо сейчас',
+    buyBtn: 'Купить криптовалюту'
+  },
   exchange: {
     buyCrypto: 'Купить',
     sellCrypto: 'Продать',
