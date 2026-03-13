@@ -100,7 +100,7 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     // чтобы старые данные не улетели в новый заказ
     state.amount_from = null;
     state.amount_to = null;
-    state.payment_method = '';
+    state.payment_method = state.type === 'buy' ? 'visa_mastercard' : '';
     state.wallet_type = '';
     state.wallet_address = '';
     state.user_requisites = '';
