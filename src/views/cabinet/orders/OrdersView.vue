@@ -45,6 +45,20 @@ const clearDates = () => {
   filters.value.date_to = ''
   fetchOrders(1)
 }
+
+/**
+ * RIGHT edge of popup = RIGHT edge of the icon button.
+ * translateX(-100%) shifts the popup leftward by its own width — no hardcoding needed.
+ */
+const altPosition = (el: HTMLElement | null) => {
+  if (!el) return { top: 0, left: 0 }
+  const rect = el.getBoundingClientRect()
+  return {
+    top: rect.bottom + window.scrollY + 8,
+    left: rect.right + window.scrollX,
+    transform: 'translateX(-100%)'
+  }
+}
 // --- end date range picker ---
 
 const fetchOrders = async (page = 1) => {
@@ -116,7 +130,7 @@ onMounted(() => {
               :enable-time-picker="false"
               auto-apply
               teleport="body"
-              position="left"
+              :alt-position="altPosition"
               @update:model-value="onDateRangeUpdate"
             >
               <template #trigger>
