@@ -186,6 +186,12 @@
         </div>
       </div>
 
+      <!-- Errors -->
+      <div v-if="apiErrors" class="error-box">
+        <ul class="error-list">
+          <li v-for="(err, field) in apiErrors" :key="field">{{ err[0] }}</li>
+        </ul>
+      </div>
       <!-- Final Submit Button -->
       <button
         @click="handleSubmit"
@@ -196,13 +202,6 @@
         <span v-else-if="!formStore.state.wallet_type || !formStore.state.wallet_address">Please provide Receiving Wallet</span>
         <span v-else>{{ $t('orders.exchange.createOrder') }}</span>
       </button>
-    </div>
-
-    <!-- Errors -->
-    <div v-if="apiErrors" class="error-box">
-      <ul class="error-list">
-        <li v-for="(err, field) in apiErrors" :key="field">{{ err[0] }}</li>
-      </ul>
     </div>
   </div>
 </template>
