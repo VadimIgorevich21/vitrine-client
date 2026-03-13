@@ -176,6 +176,8 @@
              :items="configStore.walletTypes"
              itemKey="key"
              labelPath="label"
+             sublabelPath="title"
+             iconPath="icon"
              :placeholder="$t('orders.exchange.selectNetwork')"
            />
         </div>
