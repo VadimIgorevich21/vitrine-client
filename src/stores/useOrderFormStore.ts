@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { reactive, computed, watch } from 'vue';
+import { reactive, computed, watch, ref } from 'vue';
 import { useConfigStore } from '@/stores/syncConfigs';
 import { useRateStore } from './useRateStore';
 import { orderService } from '@/services/orderService';
@@ -7,6 +7,7 @@ import { orderService } from '@/services/orderService';
 export const useOrderFormStore = defineStore('orderForm', () => {
   const configStore = useConfigStore();
   const rateStore = useRateStore();
+  const step = ref(1);
 
   const state = reactive({
     type: 'buy' as 'buy' | 'sell',
@@ -104,6 +105,7 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     state.wallet_type = '';
     state.wallet_address = '';
     state.user_requisites = '';
+    step.value = 1;
   };
 
   const persist = () => localStorage.setItem('order_draft', JSON.stringify(state));
@@ -136,6 +138,7 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     persist,
     resetForm,
     submitOrder,
-    rateStore
+    rateStore,
+    step
   };
 });

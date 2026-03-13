@@ -1,6 +1,6 @@
 <template>
   <div class="form-wrapper">
-    <div v-if="step === 1" class="form-step">
+    <div v-if="formStore.step === 1" class="form-step">
       <!-- Payment Method Selector -->
       <div v-if="currentPaymentMethods.length > 1" class="field-container">
         <UniversalSelect 
@@ -98,7 +98,7 @@
       <!-- Continue Button / Minimum Error -->
       <button
         v-if="!configStore.loading"
-        @click="authStore.user ? step = 2 : handleSubmit()"
+        @click="authStore.user ? formStore.step = 2 : handleSubmit()"
         :disabled="loading || !formStore.state.amount_from || formStore.state.amount_from === 0"
         :class="['primary-btn', !formStore.isAmountValid ? 'btn-error' : 'btn-active']"
         :style="(!formStore.state.amount_from || formStore.state.amount_from === 0) ? { opacity: 0.5 } : {}"
@@ -111,9 +111,9 @@
       <div v-else class="pulse-loader btn-pulse"></div>
     </div>
 
-    <div v-if="step === 2" class="form-step">
+    <div v-else-if="formStore.step === 2" class="form-step">
       <div class="step-header">
-        <button @click="step = 1" class="back-btn">
+        <button @click="formStore.step = 1" class="back-btn">
           <svg xmlns="http://www.w3.org/2000/svg" class="back-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
@@ -219,7 +219,6 @@ const router = useRouter();
 const toast = useToast();
 const { t } = useI18n();
 
-const step = ref(1);
 const loading = ref(false);
 const apiErrors = ref<any>(null);
 

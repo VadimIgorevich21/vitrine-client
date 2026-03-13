@@ -2,7 +2,7 @@
   <div class="exchange-card">
     <!-- Tabs -->
     <div v-if="configStore.loading" class="loading-pulse-tabs mb-8"></div>
-    <div v-else class="tabs-container mb-6">
+    <div v-else-if="formStore.step === 1" class="tabs-container mb-6">
       <button
         v-for="t in (['buy', 'sell'] as const)" :key="t"
         @click="formStore.state.type = t"
