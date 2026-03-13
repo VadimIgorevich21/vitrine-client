@@ -85,6 +85,7 @@
           <RateCountdown 
             :duration="60" 
             :reset-trigger="formStore.rateStore.lastUpdated" 
+            :start-time="formStore.rateStore.lastUpdated"
           />
           <span class="rate-text">
             1 {{ formStore.state.to_currency }} ≈ {{ formStore.currentRate.final_rate }} {{ formStore.state.from_currency }}
@@ -156,6 +157,7 @@
             <RateCountdown 
               :duration="60" 
               :reset-trigger="formStore.rateStore.lastUpdated" 
+              :start-time="formStore.rateStore.lastUpdated"
             />
             <span class="summary-rate-text">
               1 {{ formStore.state.to_currency }} ≈ {{ formStore.currentRate.final_rate }} {{ formStore.state.from_currency }}

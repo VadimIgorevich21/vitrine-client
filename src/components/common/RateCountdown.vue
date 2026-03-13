@@ -30,6 +30,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 const props = withDefaults(defineProps<{
   duration?: number;
   resetTrigger?: any;
+  startTime?: number; // timestamp in ms
 }>(), {
   duration: 60
 });
@@ -43,16 +44,27 @@ const offset = computed(() => {
   return circumference * (1 - progress);
 });
 
+const calculateTimeLeft = () => {
+  if (props.startTime) {
+    const elapsed = (Date.now() - props.startTime) / 1000;
+    const remaining = Math.max(0, props.duration - elapsed);
+    timeLeft.value = remaining;
+  } else {
+    timeLeft.value = props.duration;
+  }
+};
+
 const startTimer = () => {
   if (timer) clearInterval(timer);
-  timeLeft.value = props.duration;
+  calculateTimeLeft();
   
   timer = setInterval(() => {
     if (timeLeft.value > 0) {
-      timeLeft.value -= 1;
-    } else {
-      // Stay at 0 or optionally restart
-      // For rate updates, we usually wait for the next resetTrigger
+      if (props.startTime) {
+         calculateTimeLeft();
+      } else {
+         timeLeft.value -= 1;
+      }
     }
   }, 1000);
 };
