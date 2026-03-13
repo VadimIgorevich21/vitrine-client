@@ -129,7 +129,10 @@
           <div class="summary-value-group">
             <span class="summary-amount">{{ formStore.state.amount_from?.toLocaleString() }}</span>
             <div class="summary-badge">
-               <img v-if="selectedFromCurrencyIcon" :src="selectedFromCurrencyIcon" class="badge-icon" />
+               <div v-if="selectedFromCurrencyIcon" 
+                    class="badge-icon is-fiat selected-rounded"
+                    :style="{ backgroundImage: `url(${selectedFromCurrencyIcon})` }">
+               </div>
                <span class="badge-text">{{ formStore.state.from_currency }}</span>
             </div>
           </div>
@@ -139,7 +142,10 @@
           <div class="summary-value-group">
             <span class="summary-amount">{{ formStore.state.amount_to }}</span>
             <div class="summary-badge">
-               <img v-if="selectedToCurrencyIcon" :src="selectedToCurrencyIcon" class="badge-icon" />
+               <div v-if="selectedToCurrencyIcon" 
+                    class="badge-icon is-crypto rounded-full"
+                    :style="{ backgroundImage: `url(${selectedToCurrencyIcon})` }">
+               </div>
                <span class="badge-text">{{ formStore.state.to_currency }}</span>
             </div>
           </div>
@@ -449,11 +455,11 @@ onMounted(() => {
 /* Buttons */
 .primary-btn {
   width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 18px;
+  padding-bottom: 18px;
   font-size: 18px;
-  font-weight: 700;
-  border-radius: 24px;
+  font-weight: 500;
+  border-radius: 50px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   cursor: pointer;
@@ -528,8 +534,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-top: 24px;
-  padding-bottom: 24px;
+  padding-top: 14px;
 }
 
 .summary-row {
@@ -559,29 +564,47 @@ onMounted(() => {
 .summary-badge {
   display: flex;
   align-items: center;
-  background-color: #f9fafb;
-  padding: 4px 8px;
+  padding: 0;
   border-radius: 8px;
 }
 
 .badge-icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   margin-right: 4px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+.badge-icon.is-fiat {
+  background-size: cover;
+  border-radius: 24px;
+}
+
+.badge-icon.is-crypto {
+  background-size: contain;
+  border-radius: 24px;
+}
+
+.selected-rounded {
+  border-radius: 2px;
+}
+
+.rounded-full {
   border-radius: 9999px;
 }
 
 .badge-text {
-  font-size: 10px;
-  font-weight: 900;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .summary-info-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 8px;
-  border-top: 1px solid #f3f4f6;
 }
 
 .summary-rate {
@@ -591,15 +614,13 @@ onMounted(() => {
 }
 
 .summary-rate-text, .summary-fee-text {
-  font-size: 10px;
-  font-weight: 600;
-  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 500;
+  color: #929AAA;
 }
 
 /* Fields Section */
 .fields-section {
-  padding-top: 16px;
-  border-top: 1px dashed #e5e7eb;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -607,13 +628,14 @@ onMounted(() => {
 
 .wallet-input {
   width: 100%;
-  padding: 16px;
-  background-color: #f9fafb;
-  border-radius: 16px;
-  border: 2px solid transparent;
   outline: none;
-  transition: border-color 0.2s;
-  color: #111827;
+  color: #101828;
+  background-color: #FAFAFA;
+  border: 1px solid #F2F2F6;
+  border-radius: 6px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  min-width: 0;
 }
 
 .wallet-input:focus {
@@ -671,7 +693,7 @@ onMounted(() => {
     padding-top: 16px;
     padding-bottom: 16px;
     font-size: 16px;
-    border-radius: 20px;
+    border-radius: 50px;
   }
 
   .step-title {
