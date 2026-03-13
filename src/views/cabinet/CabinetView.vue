@@ -19,12 +19,10 @@ const displayName = computed(() => {
 <template>
   <div class="cabinet-page-with-exchange-form flex items-center justify-center py-10 w-full">
     <div class="max-w-2xl w-full">
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-        {{ t('cabinet.title') }}
-      </h1>
-      <p class="text-gray-600 dark:text-gray-300">
-        {{ t('cabinet.welcome', { name: displayName }) }}
-      </p>
+      <h2 class="page-title-h2 text-center mb-6">
+        {{ t('cabinet.title_buy_and_sell') }}
+        <span class="text-orange-gradient"> {{ t('cabinet.title2_buy_and_sell') }}</span>
+      </h2>
       <ExchangeForm />
     </div>
   </div>

@@ -1,6 +1,8 @@
 export default {
   title: 'Cabinet',
   welcome: 'Welcome, {name}.',
+  title_buy_and_sell: 'Buy and Sell Crypto with',
+  title2_buy_and_sell: 'Best Rates',
   kyc_banner: 'Complete KYC verification to unlock access to crypto trading',
   sidebar: {
     trade_crypto: 'Trade Crypto',

@@ -286,12 +286,19 @@ const handleSubmit = async () => {
 
     toast.success(t("orders.exchange.orderCreated"));
     formStore.resetForm();
-    router.push({ name: 'order-details', params: { id: res.data.id } });
+    // router.push({ name: 'order-details', params: { id: res.data.id } });
   } catch (err: any) {
     if (err.response?.status === 422) {
       apiErrors.value = err.response.data.errors;
       toast.error(t("orders.exchange.checkInput"));
     } else {
+      console.log("EEERRRRORRRR");
+      console.log(err);
+      console.log(err);
+      console.log(err);
+      console.log(err);
+      console.log(err);
+      console.log("EEERRRRORRRR");
       toast.error(t("orders.exchange.errorCreatingOrder"));
     }
   } finally {
