@@ -1,16 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { orderService } from '@/services/orderService';
 
 const props = defineProps<{
   order: any;
 }>();
 
-const emit = defineEmits(['refresh']);
-
 const isOpen = ref(false);
-const isRegenerating = ref(false);
-const isCanceling = ref(false);
 
 const isBuy = computed(() => {
   // If we have access to order types, we should use them
@@ -36,61 +31,6 @@ const formatDate = (dateStr: string) => {
 const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text);
   // Optional: Add toast notification
-};
-
-const truncateMiddle = (str: string, startChars = 10, endChars = 8) => {
-  if (!str) return '';
-  if (str.length <= startChars + endChars) return str;
-  return `${str.substring(0, startChars)}...${str.substring(str.length - endChars)}`;
-};
-
-const handleRegeneratePayment = async () => {
-  if (isRegenerating.value) return;
-  
-  isRegenerating.value = true;
-  try {
-    const response = await orderService.regeneratePayment(props.order.id);
-    const payment = response.payment;
-    
-    if (payment && payment.action && payment.fields) {
-      const { action, fields } = payment;
-
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = action;
-
-      Object.entries(fields).forEach(([key, value]) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = String(value);
-        form.appendChild(input);
-      });
-
-      document.body.appendChild(form);
-      form.submit();
-    } else {
-      console.error('Invalid payment data received:', response);
-      isRegenerating.value = false;
-    }
-  } catch (error) {
-    console.error('Failed to regenerate payment:', error);
-    isRegenerating.value = false;
-  }
-};
-
-const handleCancelOrder = async () => {
-  if (isCanceling.value) return;
-  
-  isCanceling.value = true;
-  try {
-    await orderService.cancelOrder(props.order.id);
-    emit('refresh');
-  } catch (error) {
-    console.error('Failed to cancel order:', error);
-  } finally {
-    isCanceling.value = false;
-  }
 };
 </script>
 
@@ -142,23 +82,8 @@ const handleCancelOrder = async () => {
 
       <!-- Actions -->
       <div class="col-actions">
-        <button 
-          v-if="order.actions?.includes('regeneratePayment')" 
-          class="pay-btn"
-          :disabled="isRegenerating"
-          @click.stop="handleRegeneratePayment"
-        >
-          <div v-if="isRegenerating" class="mini-spinner"></div>
-          <span v-else>Оплатить</span>
-        </button>
-        <button 
-          v-else-if="order.actions?.includes('cancel')"
-          class="cancel-btn" 
-          :disabled="isCanceling"
-          @click.stop="handleCancelOrder"
-        >
-          <div v-if="isCanceling" class="cancel-spinner"></div>
-          <span v-else>Отменить</span>
+        <button class="cancel-btn" v-if="order.status === 'In progress' || !order.status">
+          Cancel
         </button>
       </div>
     </div>
@@ -184,7 +109,7 @@ const handleCancelOrder = async () => {
           <div class="detail-item full-width mt-4" v-if="order.wallet_address">
             <label>Receiving wallet</label>
             <div class="flex items-center gap-2">
-              <span class="truncate-address">{{ truncateMiddle(order.wallet_address, 4, 6) }}</span>
+              <span class="truncate-address">{{ order.wallet_address }}</span>
               <button @click.stop="copyToClipboard(order.wallet_address)" class="copy-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -201,7 +126,7 @@ const handleCancelOrder = async () => {
           <div class="detail-item mt-4" v-if="order.tx_hash">
             <label>Transaction Hash</label>
             <div class="flex items-center gap-2">
-              <span class="truncate-address">{{ truncateMiddle(order.tx_hash, 4, 6) }}</span>
+              <span class="truncate-address">{{ order.tx_hash }}</span>
               <button @click.stop="copyToClipboard(order.tx_hash)" class="copy-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -304,73 +229,12 @@ const handleCancelOrder = async () => {
   border-radius: 6px;
   border: 1px solid #E4E7EC;
   transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 80px;
-  background-color: transparent;
-  cursor: pointer;
 }
 
-.cancel-btn:hover:not(:disabled) {
+.cancel-btn:hover {
   background-color: #FEE4E2;
   color: #D92D20;
   border-color: #FDA29B;
-}
-
-.cancel-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.cancel-spinner {
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(152, 162, 179, 0.3);
-  border-top: 2px solid #98A2B3;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-.cancel-btn:hover:not(:disabled) .cancel-spinner {
-  border-color: rgba(217, 45, 32, 0.3);
-  border-top-color: #D92D20;
-}
-
-.pay-btn {
-  background: linear-gradient(135deg, #FF6B00 0%, #FF8A00 100%);
-  color: white;
-  padding: 6px 16px;
-  border-radius: 50px;
-  font-size: 13px;
-  font-weight: 600;
-  box-shadow: 0 4px 10px rgba(255, 107, 0, 0.2);
-  transition: all 0.2s;
-  cursor: pointer;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 80px;
-}
-
-.pay-btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 15px rgba(255, 107, 0, 0.3);
-}
-
-.pay-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.mini-spinner {
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top: 2px solid white;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
 }
 
 /* Details Section */
@@ -423,7 +287,6 @@ const handleCancelOrder = async () => {
   padding: 4px;
   border-radius: 4px;
   transition: all 0.2s;
-  cursor: pointer;
 }
 
 .copy-btn:hover {

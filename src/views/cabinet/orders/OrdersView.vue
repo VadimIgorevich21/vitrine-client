@@ -104,114 +104,111 @@ onMounted(() => {
   <div class="orders-container min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       
-      <div class="orders-main-card">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <h1 class="page-title">Transaction history</h1>
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <h1 class="page-title">Transaction history</h1>
 
-          <!-- Filters -->
-          <div class="filters-row">
-            <!-- Search -->
-            <div class="search-wrapper">
-               <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-               </svg>
-               <input
-                 v-model="filters.search"
-                 type="text"
-                 placeholder="Enter asset name"
-                 class="search-input"
-               />
-            </div>
-
-            <!-- Date Range Picker (icon-only trigger) -->
-            <div class="date-picker-wrap">
-              <VueDatePicker
-                v-model="dateRange"
-                range
-                :enable-time-picker="false"
-                auto-apply
-                teleport="body"
-                :alt-position="altPosition"
-                @update:model-value="onDateRangeUpdate"
-              >
-                <template #trigger>
-                  <!-- calendar icon — opens the picker -->
-                  <button
-                    class="calendar-icon-btn"
-                    :class="{ 'calendar-icon-btn--active': dateRange }"
-                    type="button"
-                    title="Select date range"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-                </template>
-              </VueDatePicker>
-
-              <!-- Clear button rendered OUTSIDE picker so it never blocks picker's click -->
-              <button
-                v-if="dateRange"
-                class="clear-date-btn"
-                type="button"
-                title="Clear dates"
-                @click="clearDates"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+        <!-- Filters -->
+        <div class="filters-row">
+          <!-- Search -->
+          <div class="search-wrapper">
+             <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+             </svg>
+             <input
+               v-model="filters.search"
+               type="text"
+               placeholder="Enter asset name"
+               class="search-input"
+             />
           </div>
-        </div>
 
-        <!-- Content -->
-        <div v-if="loading && orders.length === 0" class="flex justify-center items-center py-20">
-          <div class="loading-spinner"></div>
-        </div>
+          <!-- Date Range Picker (icon-only trigger) -->
+          <div class="date-picker-wrap">
+            <VueDatePicker
+              v-model="dateRange"
+              range
+              :enable-time-picker="false"
+              auto-apply
+              teleport="body"
+              :alt-position="altPosition"
+              @update:model-value="onDateRangeUpdate"
+            >
+              <template #trigger>
+                <!-- calendar icon — opens the picker -->
+                <button
+                  class="calendar-icon-btn"
+                  :class="{ 'calendar-icon-btn--active': dateRange }"
+                  type="button"
+                  title="Select date range"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </button>
+              </template>
+            </VueDatePicker>
 
-        <div v-else-if="orders.length === 0" class="empty-state-card text-center">
-          <div class="empty-content">
-            <img src="@/assets/img/transaction-history/empty-orders-img.png" alt="No orders" class="empty-img" />
-            <h2 class="page-title-h2">{{ t('orders.history.emptyTitle') }}</h2>
-            <p class="empty-subtitle">{{ t('orders.history.emptySubtitle') }}</p>
-            
-            <button @click="router.push('/cabinet')" class="buy-now-btn">
-              {{ t('orders.history.buyBtn') }}
+            <!-- Clear button rendered OUTSIDE picker so it never blocks picker's click -->
+            <button
+              v-if="dateRange"
+              class="clear-date-btn"
+              type="button"
+              title="Clear dates"
+              @click="clearDates"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
         </div>
+      </div>
 
-        <!-- Orders Table/List -->
-        <div v-else class="orders-wrapper">
-           <!-- Table Head -->
-           <div class="table-header-labels">
-              <div class="col-lbl col-chevron"></div>
-              <div class="col-lbl col-date uppercase">Date</div>
-              <div class="col-lbl col-type uppercase">Type</div>
-              <div class="col-lbl col-direction uppercase">Direction</div>
-              <div class="col-lbl col-amount uppercase text-right">Amount</div>
-              <div class="col-lbl col-status uppercase text-right">Status</div>
-              <div class="col-lbl col-actions"></div>
-           </div>
+      <!-- Content -->
+      <div v-if="loading && orders.length === 0" class="flex justify-center items-center py-20">
+        <div class="loading-spinner"></div>
+      </div>
 
-           <div class="orders-list-card">
-              <TransactionRow 
-                v-for="order in orders" 
-                :key="order.id" 
-                :order="order"
-                @refresh="fetchOrders(meta.current_page)"
-              />
-           </div>
-
-           <!-- Pagination -->
-           <BasePagination 
-             v-model="meta.current_page"
-             :total="meta.total"
-             :per-page="meta.per_page"
-             @update:model-value="fetchOrders"
-           />
+      <div v-else-if="orders.length === 0" class="empty-state-card text-center">
+        <div class="empty-content">
+          <img src="@/assets/img/transaction-history/empty-orders-img.png" alt="No orders" class="empty-img" />
+          <h2 class="page-title-h2">{{ t('orders.history.emptyTitle') }}</h2>
+          <p class="empty-subtitle">{{ t('orders.history.emptySubtitle') }}</p>
+          
+          <button @click="router.push('/cabinet')" class="buy-now-btn">
+            {{ t('orders.history.buyBtn') }}
+          </button>
         </div>
+      </div>
+
+      <!-- Orders Table/List -->
+      <div v-else class="orders-wrapper">
+         <!-- Table Head -->
+         <div class="table-header-labels">
+            <div class="col-lbl col-chevron"></div>
+            <div class="col-lbl col-date uppercase">Date</div>
+            <div class="col-lbl col-type uppercase">Type</div>
+            <div class="col-lbl col-direction uppercase">Direction</div>
+            <div class="col-lbl col-amount uppercase text-right">Amount</div>
+            <div class="col-lbl col-status uppercase text-right">Status</div>
+            <div class="col-lbl col-actions"></div>
+         </div>
+
+         <div class="orders-list-card">
+            <TransactionRow 
+              v-for="order in orders" 
+              :key="order.id" 
+              :order="order" 
+            />
+         </div>
+
+         <!-- Pagination -->
+         <BasePagination 
+           v-model="meta.current_page"
+           :total="meta.total"
+           :per-page="meta.per_page"
+           @update:model-value="fetchOrders"
+         />
       </div>
     </div>
   </div>
@@ -370,13 +367,7 @@ onMounted(() => {
   background-color: white;
   border-radius: 20px;
   overflow: hidden;
-}
-
-.orders-main-card {
-  background-color: white;
-  border-radius: 24px;
-  padding: 40px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   border: 1px solid #F2F2F6;
 }
 

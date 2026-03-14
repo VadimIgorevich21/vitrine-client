@@ -15,15 +15,5 @@ export const orderService = {
 
     const { data } = await apiClient.get(url);
     return data;
-  },
-
-  async regeneratePayment(orderId: number) {
-    const { data } = await apiClient.post(`/orders/${orderId}/regenerate-payment`);
-    return data;
-  },
-
-  async cancelOrder(orderId: number) {
-    const { data } = await apiClient.post(`/orders/${orderId}/cancel`);
-    return data;
   }
 };
