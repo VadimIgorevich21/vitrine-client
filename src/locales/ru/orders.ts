@@ -3,6 +3,7 @@ export default {
   inDevelopment: 'Раздел в разработке',
   backToCabinet: 'В кабинет',
   history: {
+    title: 'История транзакций',
     emptyTitle: 'У вас пока нет транзакций',
     emptySubtitle: 'Начните торговать криптой прямо сейчас',
     buyBtn: 'Купить криптовалюту'
@@ -26,5 +27,32 @@ export default {
     orderCreated: 'Заявка успешно создана!',
     checkInput: 'Проверьте введенные данные',
     errorCreatingOrder: 'Произошла ошибка при создании заказа',
+  },
+  statuses: {
+    pending: 'Ожидание оплаты',
+    verifying: 'Проверка оплаты',
+    paid: 'Оплачен',
+    processing: 'В обработке',
+    completed: 'Выполнен',
+    error: 'Ошибка платежа',
+    cancelled: 'Отменен',
+    expired: 'Просрочен',
+  },
+  details: {
+    amountPaid: 'Сумма оплаты',
+    exchangeRate: 'Курс обмена',
+    feePaid: 'Комиссия',
+    receivingWallet: 'Кошелек получения',
+    userRequisites: 'Реквизиты пользователя',
+    transactionHash: 'Хеш транзакции',
+    confirmation: 'Подтверждение',
+    viewReceipt: 'Посмотреть чек',
+    buy: 'Покупка',
+    sell: 'Продажа',
+    date: 'Дата',
+    type: 'Тип',
+    direction: 'Направление',
+    amount: 'Сумма',
+    status: 'Статус',
   }
 }

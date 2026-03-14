@@ -1,41 +1,52 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { orderService } from '@/services/orderService';
+import OrderStatus from './OrderStatus.vue';
 
 const props = defineProps<{
   order: any;
 }>();
 
 const emit = defineEmits(['refresh']);
+const { t } = useI18n();
 
 const isOpen = ref(false);
 const isRegenerating = ref(false);
 const isCanceling = ref(false);
 
-const isBuy = computed(() => {
-  // If we have access to order types, we should use them
-  // Assuming 'BuyUSDC' or similar for now, or based on model logic
-  // Typically, Buy = EUR to USDC, Sell = USDC to EUR
-  // Let's assume a simplified check for now
-  return props.order.to_currency === 'USDC' || props.order.to_currency === 'USDT' || props.order.to_currency === 'BTC';
-});
+const isBuy = computed(() => props.order.order_type === 'buy');
 
-const statusClass = computed(() => {
-  const status = props.order.status?.toLowerCase();
-  if (status === 'completed' || status === 'success') return 'status-completed';
-  if (status === 'failed' || status === 'rejected' || status === 'cancelled') return 'status-failed';
-  return 'status-pending';
-});
+const formatAmount = (info: any) => {
+  if (!info || info.amount === undefined || info.amount === null) return '0.00';
+  const amountValue = typeof info.amount === 'string' ? parseFloat(info.amount) : info.amount;
+  const precision = parseInt(info.precision) || 2;
+  
+  // Remove trailing zeros and handle precision
+  return amountValue.toLocaleString(undefined, {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: precision
+  });
+};
+
+const cryptoAmount = computed(() => formatAmount(props.order.crypto_amount_info));
+const cryptoCurrency = computed(() => props.order.crypto_amount_info?.currency_code || '');
+
+const fiatAmount = computed(() => formatAmount(props.order.fiat_amount_info));
+const fiatCurrency = computed(() => props.order.fiat_amount_info?.currency_code || '');
+
+const exchangeRate = computed(() => formatAmount(props.order.rate_info));
 
 const formatDate = (dateStr: string) => {
+  if (!dateStr) return '';
   const date = new Date(dateStr);
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + 
          date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
 };
 
 const copyToClipboard = (text: string) => {
+  if (!text) return;
   navigator.clipboard.writeText(text);
-  // Optional: Add toast notification
 };
 
 const truncateMiddle = (str: string, startChars = 10, endChars = 8) => {
@@ -119,25 +130,23 @@ const handleCancelOrder = async () => {
           <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
           </svg>
-          {{ isBuy ? 'Buy' : 'Sell' }}
+          {{ isBuy ? t('orders.details.buy') : t('orders.details.sell') }}
         </div>
       </div>
 
       <!-- Direction -->
       <div class="col-direction">
-        {{ order.from_currency }} to {{ order.to_currency }}
+        {{ order.direction || `${fiatCurrency} to ${cryptoCurrency}` }}
       </div>
 
       <!-- Amount -->
       <div class="col-amount font-bold text-gray-900">
-        {{ Number(order.amount_to).toLocaleString() }} {{ order.to_currency }}
+        {{ cryptoAmount }} {{ cryptoCurrency }}
       </div>
 
       <!-- Status -->
       <div class="col-status">
-        <span :class="['status-badge', statusClass]">
-          {{ order.status || 'In progress' }}
-        </span>
+        <OrderStatus :status="order.status" />
       </div>
 
       <!-- Actions -->
@@ -168,23 +177,23 @@ const handleCancelOrder = async () => {
       <div v-if="isOpen" class="transaction-details">
         <div class="details-grid">
           <div class="detail-item">
-            <label>Amount paid</label>
-            <span>{{ Number(order.amount_from).toLocaleString() }} {{ order.from_currency }}</span>
+            <label>{{ t('orders.details.amountPaid') }}</label>
+            <span>{{ fiatAmount }} {{ fiatCurrency }}</span>
           </div>
           <div class="detail-item">
-            <label>Exchange rate</label>
-            <span>1 {{ order.from_currency }} = {{ order.rate }} {{ order.to_currency }}</span>
+            <label>{{ t('orders.details.exchangeRate') }}</label>
+            <span>1 {{ isBuy ? fiatCurrency : cryptoCurrency }} = {{ exchangeRate }} {{ isBuy ? cryptoCurrency : fiatCurrency }}</span>
           </div>
           <div class="detail-item">
-            <label>Fee paid</label>
-            <span>25.00 {{ order.from_currency }}</span>
+            <label>{{ t('orders.details.feePaid') }}</label>
+            <span>0.00 {{ fiatCurrency }}</span>
           </div>
           
           <!-- Receiving details based on type -->
-          <div class="detail-item full-width mt-4" v-if="order.wallet_address">
-            <label>Receiving wallet</label>
+          <div class="detail-item full-width mt-4" v-if="isBuy && order.wallet_address">
+            <label>{{ t('orders.details.receivingWallet') }}</label>
             <div class="flex items-center gap-2">
-              <span class="truncate-address">{{ truncateMiddle(order.wallet_address, 4, 6) }}</span>
+              <span class="truncate-address">{{ truncateMiddle(order.wallet_address, 10, 8) }}</span>
               <button @click.stop="copyToClipboard(order.wallet_address)" class="copy-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -193,15 +202,16 @@ const handleCancelOrder = async () => {
             </div>
           </div>
           
-          <div class="detail-item full-width mt-4" v-if="order.user_requisites">
-            <label>Receiving Requisites</label>
+          <div class="detail-item full-width mt-4" v-if="!isBuy && order.user_requisites">
+            <label>{{ t('orders.details.userRequisites') }}</label>
             <span>{{ order.user_requisites }}</span>
           </div>
 
-          <div class="detail-item mt-4" v-if="order.tx_hash">
-            <label>Transaction Hash</label>
+          <!-- Transaction Hash (for Buy) -->
+          <div class="detail-item mt-4" v-if="isBuy && order.tx_hash">
+            <label>{{ t('orders.details.transactionHash') }}</label>
             <div class="flex items-center gap-2">
-              <span class="truncate-address">{{ truncateMiddle(order.tx_hash, 4, 6) }}</span>
+              <span class="truncate-address">{{ truncateMiddle(order.tx_hash, 10, 8) }}</span>
               <button @click.stop="copyToClipboard(order.tx_hash)" class="copy-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -210,10 +220,23 @@ const handleCancelOrder = async () => {
             </div>
           </div>
 
+          <!-- Confirmation (for Sell) -->
+           <div class="detail-item mt-4" v-if="!isBuy && order.tx_hash">
+             <label>{{ t('orders.details.confirmation') }}</label>
+             <div class="flex items-center gap-2">
+               <span class="truncate-address">{{ truncateMiddle(order.tx_hash, 10, 8) }}</span>
+                <button @click.stop="copyToClipboard(order.tx_hash)" class="copy-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </button>
+             </div>
+          </div>
+
            <div class="detail-item mt-4" v-if="order.payment_link">
-             <label>Confirmation</label>
+             <label>{{ t('orders.details.confirmation') }}</label>
              <a :href="order.payment_link" target="_blank" class="receipt-link">
-               View Receipt
+               {{ t('orders.details.viewReceipt') }}
                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                </svg>
@@ -283,18 +306,6 @@ const handleCancelOrder = async () => {
   background-color: #FEF3F2;
   color: #B42318;
 }
-
-.status-badge {
-  padding: 4px 12px;
-  border-radius: 99px;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: capitalize;
-}
-
-.status-completed { background-color: #ECFDF3; color: #027A48; }
-.status-failed { background-color: #FEF3F2; color: #B42318; }
-.status-pending { background-color: #FFF9E9; color: #B54708; }
 
 .cancel-btn {
   font-size: 13px;

@@ -102,11 +102,11 @@ onMounted(() => {
 
 <template>
   <div class="orders-container min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-7xl mx-auto">
       
       <div class="orders-main-card">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <h1 class="page-title">Transaction history</h1>
+          <h1 class="page-title">{{ t('orders.history.title') }}</h1>
 
           <!-- Filters -->
           <div class="filters-row">
@@ -187,11 +187,11 @@ onMounted(() => {
            <!-- Table Head -->
            <div class="table-header-labels">
               <div class="col-lbl col-chevron"></div>
-              <div class="col-lbl col-date uppercase">Date</div>
-              <div class="col-lbl col-type uppercase">Type</div>
-              <div class="col-lbl col-direction uppercase">Direction</div>
-              <div class="col-lbl col-amount uppercase text-right">Amount</div>
-              <div class="col-lbl col-status uppercase text-right">Status</div>
+              <div class="col-lbl col-date uppercase">{{ t('orders.details.date') }}</div>
+              <div class="col-lbl col-type uppercase">{{ t('orders.details.type') }}</div>
+              <div class="col-lbl col-direction uppercase">{{ t('orders.details.direction') }}</div>
+              <div class="col-lbl col-amount uppercase text-right">{{ t('orders.details.amount') }}</div>
+              <div class="col-lbl col-status uppercase text-right">{{ t('orders.details.status') }}</div>
               <div class="col-lbl col-actions"></div>
            </div>
 

@@ -3,6 +3,7 @@ export default {
   inDevelopment: 'Section in development',
   backToCabinet: 'Back to cabinet',
   history: {
+    title: 'Historia transakcji',
     emptyTitle: 'Nie masz jeszcze żadnych transakcji',
     emptySubtitle: 'Zacznij handlować kryptowalutami już teraz',
     buyBtn: 'Kup kryptowalutę'
@@ -26,5 +27,32 @@ export default {
     orderCreated: 'Zlecenie zostało pomyślnie utworzone!',
     checkInput: 'Sprawdź wprowadzone dane',
     errorCreatingOrder: 'Wystąpił błąd podczas tworzenia zlecenia',
+  },
+  statuses: {
+    pending: 'Oczekiwanie na płatność',
+    verifying: 'Weryfikacja płatności',
+    paid: 'Opłacone',
+    processing: 'W trakcie przetwarzania',
+    completed: 'Zakończone',
+    error: 'Błąd płatności',
+    cancelled: 'Anulowane',
+    expired: 'Wygasło',
+  },
+  details: {
+    amountPaid: 'Kwota fiat',
+    exchangeRate: 'Kurs wymiany',
+    feePaid: 'Prowizja',
+    receivingWallet: 'Portfel odbiorczy',
+    userRequisites: 'Dane użytkownika',
+    transactionHash: 'Hash transakcji',
+    confirmation: 'Potwierdzenie',
+    viewReceipt: 'Zobacz potwierdzenie',
+    buy: 'Kupno',
+    sell: 'Sprzedaż',
+    date: 'Data',
+    type: 'Typ',
+    direction: 'Kierunek',
+    amount: 'Kwota',
+    status: 'Status',
   }
 }

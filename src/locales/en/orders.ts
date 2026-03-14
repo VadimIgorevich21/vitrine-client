@@ -3,6 +3,7 @@ export default {
   inDevelopment: 'Section in development',
   backToCabinet: 'Back to cabinet',
   history: {
+    title: 'Transaction history',
     emptyTitle: "You don't have any transactions yet",
     emptySubtitle: "Start Trading Crypto Right Now",
     buyBtn: "Buy Crypto"
@@ -26,5 +27,32 @@ export default {
     orderCreated: 'Order successfully created!',
     checkInput: 'Check the input data',
     errorCreatingOrder: 'An error occurred while creating the order',
+  },
+  statuses: {
+    pending: 'Pending',
+    verifying: 'Verifying',
+    paid: 'Paid',
+    processing: 'Processing',
+    completed: 'Completed',
+    error: 'Error',
+    cancelled: 'Cancelled',
+    expired: 'Expired',
+  },
+  details: {
+    amountPaid: 'Fiat amount',
+    exchangeRate: 'Exchange rate',
+    feePaid: 'Fee',
+    receivingWallet: 'Receiving wallet',
+    userRequisites: 'User requisites',
+    transactionHash: 'Transaction hash',
+    confirmation: 'Confirmation',
+    viewReceipt: 'View Receipt',
+    buy: 'Buy',
+    sell: 'Sell',
+    date: 'Date',
+    type: 'Type',
+    direction: 'Direction',
+    amount: 'Amount',
+    status: 'Status',
   }
 }
