@@ -188,11 +188,11 @@ onMounted(() => {
            <!-- Table Head -->
            <div class="table-header-labels">
               <div class="col-lbl col-chevron"></div>
-              <div class="col-lbl col-date uppercase">{{ t('orders.details.date') }}</div>
-              <div class="col-lbl col-type uppercase">{{ t('orders.details.type') }}</div>
-              <div class="col-lbl col-direction uppercase">{{ t('orders.details.direction') }}</div>
-              <div class="col-lbl col-amount uppercase text-right">{{ t('orders.details.amount') }}</div>
-              <div class="col-lbl col-status uppercase text-right">{{ t('orders.details.status') }}</div>
+              <div class="col-lbl col-date">{{ t('orders.details.date') }}</div>
+              <div class="col-lbl col-type">{{ t('orders.details.type') }}</div>
+              <div class="col-lbl col-direction">{{ t('orders.details.direction') }}</div>
+              <div class="col-lbl col-amount text-right">{{ t('orders.details.amount') }}</div>
+              <div class="col-lbl col-status text-right">{{ t('orders.details.status') }}</div>
               <div class="col-lbl col-actions"></div>
            </div>
 
@@ -341,9 +341,8 @@ onMounted(() => {
 
 .col-lbl {
   font-size: 12px;
-  font-weight: 600;
-  color: #98A2B3;
-  letter-spacing: 0.05em;
+  font-weight: 500;
+  color: #B0B8C6;
 }
 
 .col-chevron { width: 24px; flex-shrink: 0; }

@@ -16,7 +16,7 @@ const toggleMobileMenu = () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex bg-[#F8F9FA] relative">
+  <div class="h-screen flex bg-[#F8F9FA] relative lg:overflow-hidden">
     <!-- Sidebar Overlay (Mobile) -->
     <div 
       v-if="isMobileMenuOpen" 
@@ -28,7 +28,7 @@ const toggleMobileMenu = () => {
     <Sidebar :is-mobile-open="isMobileMenuOpen" @close="isMobileMenuOpen = false" />
 
     <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col min-h-screen w-full">
+    <div class="flex-1 flex flex-col h-screen w-full overflow-y-auto">
       <!-- Mobile Header -->
       <header class="lg:hidden bg-[#0F1116] text-white p-4 flex items-center justify-between sticky top-0 z-30">
         <img :src="logoUrl" alt="IronBit Logo" class="h-6 w-auto" />

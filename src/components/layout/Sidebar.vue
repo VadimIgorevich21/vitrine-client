@@ -59,7 +59,7 @@ const handleLogout = async () => {
 
 <template>
   <aside 
-    class="fixed cabinet-sidebar inset-y-0 left-0 z-50 w-[280px] flex-shrink-0 bg-[#0F1116] text-gray-400 flex flex-col transition-transform lg:translate-x-0 lg:static lg:block"
+    class="fixed cabinet-sidebar inset-y-0 left-0 z-50 w-[280px] flex-shrink-0 bg-[#0F1116] text-gray-400 flex flex-col transition-transform lg:translate-x-0 lg:static lg:block overflow-y-auto"
     :class="isMobileOpen ? 'translate-x-0' : '-translate-x-full'"
   >
     <div class="flex flex-col h-full p-6">

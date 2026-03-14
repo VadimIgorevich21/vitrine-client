@@ -197,7 +197,7 @@ const handleCancelOrder = async () => {
           <!-- Receiving details based on type -->
           <div class="detail-item" v-if="isBuy && order.wallet_address">
             <label>{{ t('orders.details.receivingWallet') }}</label>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center">
               <span class="truncate-address">{{ truncateMiddle(order.wallet_address, 10, 8) }}</span>
               <button @click.stop="copyToClipboard(order.wallet_address)" class="copy-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -215,7 +215,7 @@ const handleCancelOrder = async () => {
           <!-- Transaction Hash (for Buy) -->
           <div class="detail-item" v-if="isBuy && order.tx_hash">
             <label>{{ t('orders.details.transactionHash') }}</label>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center">
               <span class="truncate-address">{{ truncateMiddle(order.tx_hash, 10, 8) }}</span>
               <button @click.stop="copyToClipboard(order.tx_hash)" class="copy-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -228,7 +228,7 @@ const handleCancelOrder = async () => {
           <!-- Confirmation (for Sell) -->
            <div class="detail-item" v-if="!isBuy && order.tx_hash">
              <label>{{ t('orders.details.confirmation') }}</label>
-             <div class="flex items-center gap-2">
+             <div class="flex items-center">
                <span class="truncate-address">{{ truncateMiddle(order.tx_hash, 10, 8) }}</span>
                 <button @click.stop="copyToClipboard(order.tx_hash)" class="copy-btn">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -274,10 +274,10 @@ const handleCancelOrder = async () => {
 }
 
 .col-chevron { width: 24px; flex-shrink: 0; }
-.col-date { width: 140px; color: #667085; font-size: 14px; flex-shrink: 0; }
+.col-date { width: 140px; color: #929AAA; font-size: 14px; flex-shrink: 0; }
 .col-type { width: 110px; flex-shrink: 0; }
 .col-direction { width: 16rem; color: #667085; font-size: 14px; flex-shrink: 1; }
-.col-amount { width: 180px; font-weight: 700; color: #101828; flex-shrink: 0; white-space: nowrap; }
+.col-amount { width: 180px; font-weight: 600; color: #101828; flex-shrink: 0; white-space: nowrap; }
 .col-status { width: 140px; flex-shrink: 0; display: flex; justify-content: flex-start; }
 .col-actions { width: 120px; flex-shrink: 0; display: flex; justify-content: flex-start; }
 
@@ -399,7 +399,7 @@ const handleCancelOrder = async () => {
 .details-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 20px;
 }
 
 .detail-item {
@@ -407,7 +407,7 @@ const handleCancelOrder = async () => {
   flex-direction: column;
   gap: 2px;
   flex: 0 0 auto;
-  min-width: 160px;
+  /*min-width: 160px;*/
   margin-bottom: 8px; /* mb-2 equivalent */
 }
 
@@ -417,17 +417,15 @@ const handleCancelOrder = async () => {
 /* Removed redundant mt-4 handled by gap */
 
 .detail-item label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
-  color: #98A2B3;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  color: #B0B8C6;
 }
 
 .detail-item span {
-  font-size: 15px;
-  font-weight: 600;
-  color: #101828;
+  font-size: 14px;
+  font-weight: 500;
+  color: #929AAA;
 }
 
 .truncate-address {
