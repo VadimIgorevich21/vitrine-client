@@ -195,7 +195,7 @@ const handleCancelOrder = async () => {
           </div>
           
           <!-- Receiving details based on type -->
-          <div class="detail-item full-width mt-4" v-if="isBuy && order.wallet_address">
+          <div class="detail-item" v-if="isBuy && order.wallet_address">
             <label>{{ t('orders.details.receivingWallet') }}</label>
             <div class="flex items-center gap-2">
               <span class="truncate-address">{{ truncateMiddle(order.wallet_address, 10, 8) }}</span>
@@ -207,13 +207,13 @@ const handleCancelOrder = async () => {
             </div>
           </div>
           
-          <div class="detail-item full-width mt-4" v-if="!isBuy && order.user_requisites">
+          <div class="detail-item" v-if="!isBuy && order.user_requisites">
             <label>{{ t('orders.details.userRequisites') }}</label>
             <span>{{ order.user_requisites }}</span>
           </div>
 
           <!-- Transaction Hash (for Buy) -->
-          <div class="detail-item mt-4" v-if="isBuy && order.tx_hash">
+          <div class="detail-item" v-if="isBuy && order.tx_hash">
             <label>{{ t('orders.details.transactionHash') }}</label>
             <div class="flex items-center gap-2">
               <span class="truncate-address">{{ truncateMiddle(order.tx_hash, 10, 8) }}</span>
@@ -226,7 +226,7 @@ const handleCancelOrder = async () => {
           </div>
 
           <!-- Confirmation (for Sell) -->
-           <div class="detail-item mt-4" v-if="!isBuy && order.tx_hash">
+           <div class="detail-item" v-if="!isBuy && order.tx_hash">
              <label>{{ t('orders.details.confirmation') }}</label>
              <div class="flex items-center gap-2">
                <span class="truncate-address">{{ truncateMiddle(order.tx_hash, 10, 8) }}</span>
@@ -238,7 +238,7 @@ const handleCancelOrder = async () => {
              </div>
           </div>
 
-           <div class="detail-item mt-4" v-if="order.payment_link">
+           <div class="detail-item" v-if="order.payment_link">
              <label>{{ t('orders.details.confirmation') }}</label>
              <a :href="order.payment_link" target="_blank" class="receipt-link">
                {{ t('orders.details.viewReceipt') }}
@@ -256,7 +256,7 @@ const handleCancelOrder = async () => {
 <style scoped>
 .transaction-row-container {
   background-color: white;
-  margin-bottom: 2px;
+  margin-bottom: 8px; /* mt-2 equivalent */
   transition: all 0.2s ease;
 }
 
@@ -275,11 +275,11 @@ const handleCancelOrder = async () => {
 
 .col-chevron { width: 24px; flex-shrink: 0; }
 .col-date { width: 140px; color: #667085; font-size: 14px; flex-shrink: 0; }
-.col-type { width: 100px; flex-shrink: 0; }
-.col-direction { width: 15rem; color: #667085; font-size: 14px; flex-shrink: 1; }
-.col-amount { width: 150px; font-weight: 700; color: #101828; flex-shrink: 0; text-align: right; }
-.col-status { width: 120px; flex-shrink: 0; display: flex; justify-content: flex-end; }
-.col-actions { width: 100px; flex-shrink: 0; display: flex; justify-content: flex-end; }
+.col-type { width: 110px; flex-shrink: 0; }
+.col-direction { width: 16rem; color: #667085; font-size: 14px; flex-shrink: 1; }
+.col-amount { width: 180px; font-weight: 700; color: #101828; flex-shrink: 0; white-space: nowrap; }
+.col-status { width: 140px; flex-shrink: 0; display: flex; justify-content: flex-start; }
+.col-actions { width: 120px; flex-shrink: 0; display: flex; justify-content: flex-start; }
 
 .chevron-icon {
   width: 20px;
@@ -397,20 +397,24 @@ const handleCancelOrder = async () => {
 }
 
 .details-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
 }
 
 .detail-item {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
+  flex: 0 0 auto;
+  min-width: 160px;
+  margin-bottom: 8px; /* mb-2 equivalent */
 }
 
 .detail-item.full-width {
-  grid-column: 1 / -1;
+  width: 100%;
 }
+/* Removed redundant mt-4 handled by gap */
 
 .detail-item label {
   font-size: 11px;
@@ -473,8 +477,33 @@ const handleCancelOrder = async () => {
 
 @media (max-width: 768px) {
   .col-date, .col-direction { display: none; }
-  .transaction-header { padding: 12px; gap: 8px; }
-  .col-amount { flex-grow: 1; text-align: left; }
-  .transaction-details { padding: 16px; }
+  .transaction-header { 
+    padding: 20px 16px; 
+    gap: 12px; 
+    flex-wrap: wrap; 
+  }
+  
+  /* Row 1: Chevron + Type */
+  .col-chevron { width: 24px; }
+  .col-type { flex: 1; }
+  
+  /* Row 2: Amount (full width) */
+  .col-amount { 
+    width: 100%; 
+    flex-basis: 100%;
+    font-size: 20px;
+    margin: 4px 0;
+  }
+  
+  /* Row 3: Status + Actions */
+  .col-status { 
+    width: auto;
+    flex-shrink: 0;
+  }
+  .col-actions {
+    flex: 1;
+  }
+  
+  .transaction-details { padding: 24px 16px; }
 }
 </style>

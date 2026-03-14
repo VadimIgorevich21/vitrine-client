@@ -361,11 +361,11 @@ onMounted(() => {
 
 .col-chevron { width: 24px; flex-shrink: 0; }
 .col-date { width: 140px; flex-shrink: 0; }
-.col-type { width: 100px; flex-shrink: 0; }
-.col-direction { width: 15rem; flex-shrink: 1; }
-.col-amount { width: 150px; flex-shrink: 0; text-align: right; }
-.col-status { width: 120px; flex-shrink: 0; display: flex; justify-content: flex-end; }
-.col-actions { width: 100px; flex-shrink: 0; }
+.col-type { width: 110px; flex-shrink: 0; }
+.col-direction { width: 16rem; flex-shrink: 1; }
+.col-amount { width: 180px; flex-shrink: 0; text-align: left; }
+.col-status { width: 140px; flex-shrink: 0; display: flex; justify-content: flex-start; }
+.col-actions { width: 120px; flex-shrink: 0; }
 
 .orders-list-card {
   background-color: white;
