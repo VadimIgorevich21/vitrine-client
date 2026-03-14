@@ -18,12 +18,16 @@ const isCanceling = ref(false);
 const isBuy = computed(() => props.order.order_type === 'buy');
 
 const formatAmount = (info: any) => {
-  if (!info || info.amount === undefined || info.amount === null) return '0.00';
-  const amountValue = typeof info.amount === 'string' ? parseFloat(info.amount) : info.amount;
-  const precision = parseInt(info.precision) || 2;
+  if (!info) return '0.00';
+  const val = info.amount !== undefined && info.amount !== null ? info.amount : info.rate;
+  if (val === undefined || val === null) return '0.00';
   
-  // Remove trailing zeros and handle precision
-  return amountValue.toLocaleString(undefined, {
+  const amountValue = typeof val === 'string' ? parseFloat(val) : val;
+  const precision = (info.precision !== undefined && info.precision !== null) ? parseInt(info.precision) : 2;
+  
+  // Use en-US locale for consistent number formatting (period as decimal separator)
+  // while respecting the dynamic precision and removing redundant trailing zeros.
+  return amountValue.toLocaleString('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: precision
   });
