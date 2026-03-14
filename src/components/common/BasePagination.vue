@@ -120,8 +120,14 @@ const setPage = (page: number) => {
 }
 
 .pagination-btn.active {
+  /*
   background-color: #2563EB;
   border-color: #2563EB;
+  #cdcdcd
+  #a6aebe
+  */
+  background-color: #cdcdcd;
+  border-color: #cdcdcd;
   color: white;
   cursor: default;
 }
@@ -141,22 +147,5 @@ const setPage = (page: number) => {
 
 .pagination-dots-btn:hover {
   color: #101828;
-}
-
-:deep(.dark) .pagination-btn {
-  background-color: #1f2937;
-  border-color: #374151;
-  color: #9ca3af;
-}
-
-:deep(.dark) .pagination-btn:hover:not(.active) {
-  background-color: #374151;
-  color: white;
-}
-
-:deep(.dark) .pagination-btn.active {
-  background-color: #3b82f6;
-  border-color: #3b82f6;
-  color: white;
 }
 </style>
