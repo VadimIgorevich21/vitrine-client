@@ -44,8 +44,9 @@ const exchangeRate = computed(() => formatAmount(props.order.rate_info));
 const formatDate = (dateStr: string) => {
   if (!dateStr) return '';
   const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + 
-         date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  const locale = useI18n().locale.value;
+  return date.toLocaleDateString(locale, { month: 'short', day: 'numeric' }) + ' ' + 
+         date.toLocaleTimeString(locale, { hour: 'numeric', minute: '2-digit' });
 };
 
 const copyToClipboard = (text: string) => {

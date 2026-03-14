@@ -128,6 +128,7 @@ onMounted(() => {
               <VueDatePicker
                 v-model="dateRange"
                 range
+                :locale="useI18n().locale.value"
                 :enable-time-picker="false"
                 auto-apply
                 teleport="body"
