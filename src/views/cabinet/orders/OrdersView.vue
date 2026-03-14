@@ -106,7 +106,7 @@ onMounted(() => {
       
       <div class="orders-main-card">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <h1 class="page-title">{{ t('orders.history.title') }}</h1>
+          <h1 class="page-title-h2">{{ t('orders.history.title') }}</h1>
 
           <!-- Filters -->
           <div class="filters-row">
@@ -174,7 +174,7 @@ onMounted(() => {
         <div v-else-if="orders.length === 0" class="empty-state-card text-center">
           <div class="empty-content">
             <img src="@/assets/img/transaction-history/empty-orders-img.png" alt="No orders" class="empty-img" />
-            <h2 class="page-title-h2">{{ t('orders.history.emptyTitle') }}</h2>
+            <h2 class="page-title-h2 mb-2">{{ t('orders.history.emptyTitle') }}</h2>
             <p class="empty-subtitle">{{ t('orders.history.emptySubtitle') }}</p>
             
             <button @click="router.push('/cabinet')" class="buy-now-btn">
@@ -221,19 +221,6 @@ onMounted(() => {
 <style scoped>
 .orders-container {
   background-color: #F9FAFB;
-}
-
-.page-title {
-  font-size: 30px;
-  font-weight: 700;
-  color: #111827;
-}
-
-.page-title-h2 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #1D2939;
-  margin-bottom: 8px;
 }
 
 /* Search and Filters */
@@ -383,14 +370,16 @@ onMounted(() => {
 
 /* Empty & Loading States */
 .empty-state-card {
+  /*
   background-color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  max-width: 448px;
+  */
   border-radius: 24px;
   padding: 80px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  max-width: 448px;
   margin: 0 auto;
 }
 
@@ -408,18 +397,18 @@ onMounted(() => {
 }
 
 .empty-subtitle {
-  color: #98A2B3;
+  color: #929AAA;
   font-size: 16px;
   margin-bottom: 32px;
 }
 
 .buy-now-btn {
-  background: linear-gradient(135deg, #FF6B00 0%, #FF8A00 100%);
+  background: linear-gradient(135deg, #FF4D00 0%, #FF8A00 100%);
   color: white;
   padding: 16px 48px;
   border-radius: 50px;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
   box-shadow: 0 10px 20px rgba(255, 107, 0, 0.2);
   transition: all 0.3s;
   cursor: pointer;

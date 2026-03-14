@@ -175,7 +175,7 @@ const handleAction = () => {
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   color: #929AAA;
   border: 1px solid #E5E7EB;
   background: white;
@@ -209,7 +209,7 @@ const handleAction = () => {
 
 .step-title {
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 500;
   color: #101828;
   margin-bottom: 8px;
 }
