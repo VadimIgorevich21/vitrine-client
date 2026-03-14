@@ -38,6 +38,12 @@ const copyToClipboard = (text: string) => {
   // Optional: Add toast notification
 };
 
+const truncateMiddle = (str: string, startChars = 10, endChars = 8) => {
+  if (!str) return '';
+  if (str.length <= startChars + endChars) return str;
+  return `${str.substring(0, startChars)}...${str.substring(str.length - endChars)}`;
+};
+
 const handleRegeneratePayment = async () => {
   if (isRegenerating.value) return;
   
@@ -178,7 +184,7 @@ const handleCancelOrder = async () => {
           <div class="detail-item full-width mt-4" v-if="order.wallet_address">
             <label>Receiving wallet</label>
             <div class="flex items-center gap-2">
-              <span class="truncate-address">{{ order.wallet_address }}</span>
+              <span class="truncate-address">{{ truncateMiddle(order.wallet_address, 4, 6) }}</span>
               <button @click.stop="copyToClipboard(order.wallet_address)" class="copy-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -195,7 +201,7 @@ const handleCancelOrder = async () => {
           <div class="detail-item mt-4" v-if="order.tx_hash">
             <label>Transaction Hash</label>
             <div class="flex items-center gap-2">
-              <span class="truncate-address">{{ order.tx_hash }}</span>
+              <span class="truncate-address">{{ truncateMiddle(order.tx_hash, 4, 6) }}</span>
               <button @click.stop="copyToClipboard(order.tx_hash)" class="copy-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -417,6 +423,7 @@ const handleCancelOrder = async () => {
   padding: 4px;
   border-radius: 4px;
   transition: all 0.2s;
+  cursor: pointer;
 }
 
 .copy-btn:hover {
