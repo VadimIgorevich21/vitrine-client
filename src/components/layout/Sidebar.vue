@@ -2,9 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/authStore'
 import logoUrl from '@/assets/img/logo-sidebar.png'
-import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
-import logo from "@/assets/img/logo.png";
-import { RouterLink } from "vue-router";
+
 
 defineProps<{
   isMobileOpen?: boolean
@@ -60,7 +58,7 @@ const handleLogout = async () => {
 
 <template>
   <aside 
-    class="fixed cabinet-sidebar inset-y-0 left-0 z-50 w-[280px] bg-[#0F1116] text-gray-400 flex flex-col transition-transform lg:translate-x-0 lg:static lg:block"
+    class="fixed shrink-0 cabinet-sidebar inset-y-0 left-0 z-50 w-[280px] bg-[#0F1116] text-gray-400 flex flex-col transition-transform lg:translate-x-0 lg:static lg:block"
     :class="isMobileOpen ? 'translate-x-0' : '-translate-x-full'"
   >
     <div class="flex flex-col h-full p-6">

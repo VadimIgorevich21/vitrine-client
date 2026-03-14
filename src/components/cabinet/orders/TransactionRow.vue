@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { orderService } from '@/services/orderService';
 
 const props = defineProps<{
   order: any;
 }>();
 
+const emit = defineEmits(['refresh']);
+
 const isOpen = ref(false);
+const isRegenerating = ref(false);
+const isCanceling = ref(false);
 
 const isBuy = computed(() => {
   // If we have access to order types, we should use them
@@ -31,6 +36,55 @@ const formatDate = (dateStr: string) => {
 const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text);
   // Optional: Add toast notification
+};
+
+const handleRegeneratePayment = async () => {
+  if (isRegenerating.value) return;
+  
+  isRegenerating.value = true;
+  try {
+    const response = await orderService.regeneratePayment(props.order.id);
+    const payment = response.payment;
+    
+    if (payment && payment.action && payment.fields) {
+      const { action, fields } = payment;
+
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = action;
+
+      Object.entries(fields).forEach(([key, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = String(value);
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+    } else {
+      console.error('Invalid payment data received:', response);
+      isRegenerating.value = false;
+    }
+  } catch (error) {
+    console.error('Failed to regenerate payment:', error);
+    isRegenerating.value = false;
+  }
+};
+
+const handleCancelOrder = async () => {
+  if (isCanceling.value) return;
+  
+  isCanceling.value = true;
+  try {
+    await orderService.cancelOrder(props.order.id);
+    emit('refresh');
+  } catch (error) {
+    console.error('Failed to cancel order:', error);
+  } finally {
+    isCanceling.value = false;
+  }
 };
 </script>
 
@@ -82,8 +136,23 @@ const copyToClipboard = (text: string) => {
 
       <!-- Actions -->
       <div class="col-actions">
-        <button class="cancel-btn" v-if="order.status === 'In progress' || !order.status">
-          Cancel
+        <button 
+          v-if="order.actions?.includes('regeneratePayment')" 
+          class="pay-btn"
+          :disabled="isRegenerating"
+          @click.stop="handleRegeneratePayment"
+        >
+          <div v-if="isRegenerating" class="mini-spinner"></div>
+          <span v-else>Оплатить</span>
+        </button>
+        <button 
+          v-else-if="order.actions?.includes('cancel')"
+          class="cancel-btn" 
+          :disabled="isCanceling"
+          @click.stop="handleCancelOrder"
+        >
+          <div v-if="isCanceling" class="cancel-spinner"></div>
+          <span v-else>Отменить</span>
         </button>
       </div>
     </div>
@@ -229,12 +298,73 @@ const copyToClipboard = (text: string) => {
   border-radius: 6px;
   border: 1px solid #E4E7EC;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  background-color: transparent;
+  cursor: pointer;
 }
 
-.cancel-btn:hover {
+.cancel-btn:hover:not(:disabled) {
   background-color: #FEE4E2;
   color: #D92D20;
   border-color: #FDA29B;
+}
+
+.cancel-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.cancel-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(152, 162, 179, 0.3);
+  border-top: 2px solid #98A2B3;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.cancel-btn:hover:not(:disabled) .cancel-spinner {
+  border-color: rgba(217, 45, 32, 0.3);
+  border-top-color: #D92D20;
+}
+
+.pay-btn {
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8A00 100%);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(255, 107, 0, 0.2);
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+}
+
+.pay-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(255, 107, 0, 0.3);
+}
+
+.pay-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.mini-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 /* Details Section */
