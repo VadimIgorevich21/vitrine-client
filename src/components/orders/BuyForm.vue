@@ -87,8 +87,9 @@
             :reset-trigger="formStore.rateStore.lastUpdated" 
             :start-time="formStore.rateStore.lastUpdated"
           />
+          <span class="rate-label">{{ $t('orders.details.exchangeRate') }}:</span>
           <span class="rate-text">
-            1 {{ formStore.state.to_currency }} ≈ {{ formStore.currentRate.final_rate }} {{ formStore.state.from_currency }}
+            1 {{ formStore.state.to_currency }} ≈ {{ (1 / formStore.currentRate.final_rate).toLocaleString('en-US', { maximumFractionDigits: 2 }) }} {{ formStore.state.from_currency }}
           </span>
         </div>
         <div class="fee-text">
@@ -160,7 +161,7 @@
               :start-time="formStore.rateStore.lastUpdated"
             />
             <span class="summary-rate-text">
-              1 {{ formStore.state.to_currency }} ≈ {{ formStore.currentRate.final_rate }} {{ formStore.state.from_currency }}
+              {{ $t('orders.details.exchangeRate') }}: 1 {{ formStore.state.to_currency }} ≈ {{ (1 / formStore.currentRate.final_rate).toLocaleString('en-US', { maximumFractionDigits: 2 }) }} {{ formStore.state.from_currency }}
             </span>
           </div>
           <div class="summary-fee-text">
@@ -456,10 +457,14 @@ onMounted(() => {
   gap: 8px;
 }
 
-.rate-text, .fee-text {
+.rate-text, .fee-text, .rate-label {
   font-size: 12px;
   font-weight: 600;
   color: #9ca3af;
+}
+
+.rate-label {
+  margin-right: -4px;
 }
 
 /* Buttons */

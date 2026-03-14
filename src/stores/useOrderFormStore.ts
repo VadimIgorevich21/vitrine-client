@@ -127,6 +127,14 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     calculateTo();
   });
 
+  // Следим за обновлением курсов (через Pusher или polling)
+  watch(() => currentRate.value, () => {
+    // При обновлении курса пересчитываем "To", если заполнено "From"
+    if (state.amount_from !== null) {
+      calculateTo();
+    }
+  });
+
   return {
     state,
     currentRate,
