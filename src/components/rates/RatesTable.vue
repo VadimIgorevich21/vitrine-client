@@ -1,12 +1,12 @@
 <template>
   <div class="rates-container">
-    <div v-if="rateStore.loading" class="loader">Загрузка актуальных курсов...</div>
+    <div v-if="rateStore.loading" class="loader">{{ t('home.ratesTable.loading') }}</div>
     <table v-else class="min-w-full text-left">
       <thead>
       <tr>
-        <th class="px-4 py-2">Направление</th>
-        <th class="px-4 py-2">Курс</th>
-        <th class="px-4 py-2">Минимум</th>
+        <th class="px-4 py-2">{{ t('home.ratesTable.direction') }}</th>
+        <th class="px-4 py-2">{{ t('home.ratesTable.rate') }}</th>
+        <th class="px-4 py-2">{{ t('home.ratesTable.minimum') }}</th>
       </tr>
       </thead>
       <tbody>
@@ -26,5 +26,8 @@
 
 <script setup lang="ts">
 import { useRateStore } from '@/stores/useRateStore';
+import { useI18n } from 'vue-i18n';
+
 const rateStore = useRateStore();
+const { t } = useI18n();
 </script>

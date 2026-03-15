@@ -54,5 +54,16 @@ export default {
     direction: 'Direction',
     amount: 'Amount',
     status: 'Status',
+  },
+  actions: {
+    pay: 'Pay',
+    cancel: 'Cancel',
+  },
+  successPayment: {
+    subtitle: 'Manage your orders and create new ones',
+    closeForm: 'Close form',
+    createNewExchange: 'Create new exchange',
+    newExchangeTitle: 'New exchange order',
+    placeholderTable: 'Transaction table will be here...',
   }
 }

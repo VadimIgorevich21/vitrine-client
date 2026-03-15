@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps<{
   total: number;
@@ -35,7 +38,7 @@ const setPage = (page: number) => {
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>
-      <span class="ml-1 hidden sm:inline">Назад</span>
+      <span class="ml-1 hidden sm:inline">{{ t('common.back') }}</span>
     </button>
 
     <div class="flex items-center space-x-2">
@@ -87,7 +90,7 @@ const setPage = (page: number) => {
       @click="setPage(modelValue + 1)" 
       class="pagination-btn arrow"
     >
-      <span class="mr-1 hidden sm:inline">Вперед</span>
+      <span class="mr-1 hidden sm:inline">{{ t('common.next') }}</span>
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
       </svg>

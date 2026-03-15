@@ -163,7 +163,7 @@ const handleCancelOrder = async () => {
           @click.stop="handleRegeneratePayment"
         >
           <div v-if="isRegenerating" class="mini-spinner"></div>
-          <span v-else>Оплатить</span>
+          <span v-else>{{ t('orders.actions.pay') }}</span>
         </button>
         <button 
           v-else-if="order.actions?.includes('cancel')"
@@ -172,7 +172,7 @@ const handleCancelOrder = async () => {
           @click.stop="handleCancelOrder"
         >
           <div v-if="isCanceling" class="cancel-spinner"></div>
-          <span v-else>Отменить</span>
+          <span v-else>{{ t('orders.actions.cancel') }}</span>
         </button>
       </div>
     </div>

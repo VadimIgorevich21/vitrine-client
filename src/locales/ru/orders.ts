@@ -54,5 +54,16 @@ export default {
     direction: 'Направление',
     amount: 'Сумма',
     status: 'Статус',
+  },
+  actions: {
+    pay: 'Оплатить',
+    cancel: 'Отменить',
+  },
+  successPayment: {
+    subtitle: 'Управляйте вашими заявками и создавайте новые',
+    closeForm: 'Закрыть форму',
+    createNewExchange: 'Создать новый обмен',
+    newExchangeTitle: 'Новая заявка на обмен',
+    placeholderTable: 'Тут будет таблица заказов...',
   }
 }

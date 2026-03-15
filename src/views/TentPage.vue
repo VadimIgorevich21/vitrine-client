@@ -12,13 +12,16 @@
     <input name="account" :value="account" />
     <input name="signature" :value="signature" />
 
-    <button type="submit">Оплатить</button>
+    <button type="submit">{{ t('orders.actions.pay') }}</button>
   </form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue"
+import { useI18n } from "vue-i18n";
 import md5 from "md5" // npm install md5
+
+const { t } = useI18n();
 
 const amount = "210.23"
 const amountcurr = "USD"
@@ -39,7 +42,7 @@ const secret2 = "prTEDYepqGTOOghTKJM@"
 
 
 const description = encodeURIComponent(
-  `Тестовая оплата на ${amount} ${amountcurr}`
+  `${t('orders.successPayment.newExchangeTitle')} (${amount} ${amountcurr})`
 )
 
 const signature = computed(() => {

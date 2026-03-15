@@ -1,19 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { useAuthStore } from '@/stores/authStore.ts'
-import { computed } from 'vue'
-// import KycWidget from "@/components/kyc/KycWidget.vue";
-import KycComponent from "@/components/kyc/KycComponent.vue";
 import ExchangeForm from "@/components/orders/ExchangeForm.vue";
 
 const { t } = useI18n()
-const authStore = useAuthStore()
-
-const displayName = computed(() => {
-  const u = authStore.user
-  if (!u) return ''
-  return (u.name as string) || (u.email as string) || t('header.userDefault')
-})
 </script>
 
 <template>

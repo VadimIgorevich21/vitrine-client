@@ -25,7 +25,7 @@ const toggleLocale = () => {
   <div class="!hidden default-container px-4 py-20 border-t border-white/5">
     <div class="grid grid-cols-1 gap-12">
       <section class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm shadow-xl rounded-[2rem] p-8 border border-white/20">
-        <h2 class="text-2xl font-bold mb-6 dark:text-white">Все направления обмена</h2>
+        <h2 class="text-2xl font-bold mb-6 dark:text-white">{{ t('home.allExchangeDirections') }}</h2>
         <RatesTable />
       </section>
     </div>

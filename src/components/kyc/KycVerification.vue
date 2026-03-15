@@ -2,23 +2,26 @@
   <div class="kyc-container">
     <div v-if="step === 'idle'">
       <button @click="startKyc" :disabled="loading" class="btn-start">
-        {{ loading ? 'Загрузка...' : 'Подтвердить личность' }}
+        {{ loading ? t('cabinet.verification_page.loading') : t('cabinet.verification_page.verifyIdentity') }}
       </button>
     </div>
 
     <div v-show="step === 'process'" ref="sdkContainer" class="sdk-mount-point"></div>
 
     <div v-if="step === 'completed'">
-      <h3>Проверка завершена</h3>
-      <p>Ожидайте обновления статуса в личном кабинете.</p>
+      <h3>{{ t('cabinet.verification_page.verificationCompleted') }}</h3>
+      <p>{{ t('cabinet.verification_page.awaitStatus') }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onBeforeUnmount } from 'vue';
+import { useI18n } from 'vue-i18n';
 import Allpass from '@allpass/web-sdk'; // Импортируем из NPM
 import axios from 'axios';
+
+const { t } = useI18n();
 
 const step = ref('idle'); // idle, process, completed
 const loading = ref(false);
@@ -37,7 +40,7 @@ const startKyc = async () => {
     }
   } catch (err) {
     console.error('Ошибка сессии:', err);
-    alert('Не удалось инициализировать проверку');
+    alert(t('cabinet.verification_page.initError'));
   } finally {
     loading.value = false;
   }

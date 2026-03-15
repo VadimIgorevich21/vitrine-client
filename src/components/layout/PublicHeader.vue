@@ -2,18 +2,11 @@
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/authStore'
-import { computed } from 'vue'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import logo from "@/assets/img/logo.png";
 
 const { t } = useI18n()
 const authStore = useAuthStore()
-
-const displayName = computed(() => {
-  const u = authStore.user
-  if (!u) return ''
-  return (u.name as string) || (u.email as string) || t('header.userDefault')
-})
 </script>
 
 <template>

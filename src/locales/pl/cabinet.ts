@@ -34,6 +34,11 @@ export default {
     pending_title: 'Weryfikacja niekompletna',
     pending_description: 'Twoje dokumenty nie mogły zostać zweryfikowane w tej chwili. Możesz ponownie przesłać swoje informacje, aby kontynuować proces weryfikacji i odzyskać dostęp do handlu.',
     submit_kyc: 'Prześlij KYC',
+    loading: 'Ładowanie...',
+    verifyIdentity: 'Potwierdź tożsamość',
+    verificationCompleted: 'Weryfikacja zakończona',
+    awaitStatus: 'Proszę czekać na aktualizację statusu w panelu klienta.',
+    initError: 'Nie udało się zainicjować weryfikacji',
   },
   restricted_page: {
     title: 'Konto ograniczone',

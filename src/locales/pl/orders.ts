@@ -54,5 +54,16 @@ export default {
     direction: 'Kierunek',
     amount: 'Kwota',
     status: 'Status',
+  },
+  actions: {
+    pay: 'Zapłać',
+    cancel: 'Anuluj',
+  },
+  successPayment: {
+    subtitle: 'Zarządzaj swoimi zleceniami i twórz nowe',
+    closeForm: 'Zamknij formularz',
+    createNewExchange: 'Utwórz nową wymianę',
+    newExchangeTitle: 'Nowe zlecenie wymiany',
+    placeholderTable: 'Tu znajdzie się tabela transakcji...',
   }
 }

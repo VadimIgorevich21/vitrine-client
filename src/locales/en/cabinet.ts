@@ -14,6 +14,17 @@ export default {
     refund: 'Refund Policy',
     contact: 'Contact Us',
   },
+  actions: {
+    pay: 'Pay',
+    cancel: 'Cancel',
+  },
+  successPayment: {
+    subtitle: 'Manage your orders and create new ones',
+    closeForm: 'Close form',
+    createNewExchange: 'Create new exchange',
+    newExchangeTitle: 'New exchange order',
+    placeholderTable: 'Transaction table will be here...',
+  },
   account_page: {
     turnover_title: 'Your Turnover',
     crypto_purchased: 'Total Crypto Purchased',
@@ -37,6 +48,11 @@ export default {
     pending_description_part1: 'Your documents could not be verified at this time.',
     pending_description_part2: 'You may resubmit your information to continue the verification process and regain access to trading.',
     submit_kyc: 'Submit KYC',
+    loading: 'Loading...',
+    verifyIdentity: 'Verify Identity',
+    verificationCompleted: 'Verification Completed',
+    awaitStatus: 'Please wait for the status update in your account.',
+    initError: 'Failed to initialize verification',
   },
   restricted_page: {
     title: 'Account Restricted',

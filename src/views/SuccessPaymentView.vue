@@ -16,29 +16,29 @@ const showCreateOrder = ref(false) // Переключатель для пока
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
           {{ t('orders.title') }}
         </h1>
-        <p class="text-gray-500 mt-1">1111111111111Управляйте вашими заявками и создавайте новые</p>
+        <p class="text-gray-500 mt-1">{{ t('orders.successPayment.subtitle') }}</p>
       </div>
-
+ 
       <button
         @click="showCreateOrder = !showCreateOrder"
         class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl font-bold transition-all shadow-lg shadow-blue-100"
       >
-        {{ showCreateOrder ? 'Закрыть форму' : 'Создать новый обмен' }}
+        {{ showCreateOrder ? t('orders.successPayment.closeForm') : t('orders.successPayment.createNewExchange') }}
       </button>
     </div>
-
+ 
     <transition name="slide">
       <div v-if="showCreateOrder" class="mb-12 bg-blue-50 dark:bg-gray-800 p-8 rounded-3xl border-2 border-blue-100 dark:border-gray-700">
-        <h2 class="text-xl font-bold mb-6 text-blue-900 dark:text-white text-center">Новая заявка на обмен</h2>
+        <h2 class="text-xl font-bold mb-6 text-blue-900 dark:text-white text-center">{{ t('orders.successPayment.newExchangeTitle') }}</h2>
         <ExchangeForm />
       </div>
     </transition>
-
+ 
     <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-700">
       <p class="text-gray-600 dark:text-gray-300 mb-4 text-center py-10">
         {{ t('orders.inDevelopment') }}
         <br>
-        тут будет таблица заказов, которую мы писали ранее...
+        {{ t('orders.successPayment.placeholderTable') }}
       </p>
 
       <div class="text-center">

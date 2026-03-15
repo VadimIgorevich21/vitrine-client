@@ -11,7 +11,7 @@
              :class="{ 'is-fiat': isFiat, 'is-crypto': !isFiat, 'rounded-full': rounded && !isFiat, 'selected-rounded': rounded && isFiat }"
              :style="{ backgroundImage: `url(${getIconPath(selectedItemIcon)})` }">
         </div>
-        <span class="item-label">{{ selectedItemLabel || placeholder }}</span>
+        <span class="item-label">{{ selectedItemLabel || t('common.select') }}</span>
       </div>
       <svg xmlns="http://www.w3.org/2000/svg" :class="['arrow-icon', { 'is-open': isOpen }]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -28,7 +28,7 @@
               v-model="searchQuery"
               ref="searchInput"
               type="text"
-              :placeholder="searchPlaceholder"
+              :placeholder="searchPlaceholder || t('common.search')"
               class="search-input"
             />
             <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -62,7 +62,7 @@
             </div>
           </div>
           <div v-if="filteredItems.length === 0" class="no-results">
-            Ничего не найдено
+            {{ t('common.nothingFound') }}
           </div>
         </div>
       </div>
@@ -72,6 +72,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = withDefaults(defineProps<{
   modelValue: string | number;
@@ -88,8 +91,8 @@ const props = withDefaults(defineProps<{
 }>(), {
   itemKey: 'code',
   labelPath: 'code',
-  placeholder: 'Выберите...',
-  searchPlaceholder: 'Поиск...',
+  placeholder: 'Select...',
+  searchPlaceholder: 'Search...',
   rounded: false,
   borderless: false,
   isFiat: false
@@ -112,6 +115,8 @@ const selectedItem = computed(() => {
 const selectedItemLabel = computed(() => {
   return selectedItem.value ? selectedItem.value[props.labelPath] : '';
 });
+
+// Since defaults in withDefaults can't use t(), we handle it in the template or computed
 
 const selectedItemIcon = computed(() => {
   return (props.iconPath && selectedItem.value) ? selectedItem.value[props.iconPath] : null;
