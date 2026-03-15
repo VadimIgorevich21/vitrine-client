@@ -1,5 +1,5 @@
 <template>
-  <section class="support-contact-section">
+  <section id="support" class="support-contact-section">
     <div class="default-container px-4 py-32 text-center">
       <div class="support-content">
         <h2 class="page-title-h1 white-color mb-12">

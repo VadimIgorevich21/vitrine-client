@@ -25,10 +25,10 @@ const { t } = useI18n()
         <div>
           <h3 class="font-semibold mb-6">{{ t('footer.platform') }}</h3>
           <ul class="space-y-4 text-sm text-gray-400">
-            <li><a href="#" class="hover:text-white transition-colors">{{ t('footer.buyCrypto') }}</a></li>
-            <li><a href="#" class="hover:text-white transition-colors">{{ t('footer.sellCrypto') }}</a></li>
-            <li><a href="#" class="hover:text-white transition-colors">{{ t('footer.howItWorks') }}</a></li>
-            <li><RouterLink to="/contacts" class="hover:text-white transition-colors">{{ t('footer.contactUs') }}</RouterLink></li>
+            <li><a href="/#platform" class="hover:text-white transition-colors">{{ t('footer.buyCrypto') }}</a></li>
+            <li><a href="/#platform" class="hover:text-white transition-colors">{{ t('footer.sellCrypto') }}</a></li>
+            <li><a href="/#how-it-works" class="hover:text-white transition-colors">{{ t('footer.howItWorks') }}</a></li>
+            <li><a href="/#support" class="hover:text-white transition-colors">{{ t('footer.contactUs') }}</a></li>
           </ul>
         </div>
 

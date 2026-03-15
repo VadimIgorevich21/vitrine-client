@@ -17,10 +17,10 @@ const toggleLocale = () => {
 </script>
 
 <template>
-  <HomeHero />
+  <HomeHero id="platform" />
   <RatesTicker />
   <InstantRegistration />
-  <SimpleProcess />
+  <SimpleProcess id="how-it-works" />
   <!-- Bottom section (Original contents, adjusted) -->
   <div class="!hidden default-container px-4 py-20 border-t border-white/5">
     <div class="grid grid-cols-1 gap-12">

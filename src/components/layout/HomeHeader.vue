@@ -20,8 +20,8 @@ const authStore = useAuthStore()
 
         <!-- Navigation (Center) -->
         <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600 dark:text-gray-300">
-          <a href="#" class="header-nav-link transition-colors">{{ t('header.howItWorks') }}</a>
-          <RouterLink to="/contacts" class="header-nav-link transition-colors">{{ t('header.contactUs') }}</RouterLink>
+          <a href="/#how-it-works" class="header-nav-link transition-colors">{{ t('header.howItWorks') }}</a>
+          <a href="/#support" class="header-nav-link transition-colors">{{ t('header.contactUs') }}</a>
         </nav>
 
         <!-- Right Side: Lang + Sign In -->
