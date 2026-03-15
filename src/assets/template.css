@@ -2,6 +2,8 @@
 html, body {
     margin: 0;
     padding: 0;
+    /* Smooth scrolling for anchor links */
+    scroll-behavior: smooth;
     /* Ставим Inter первым, а стандартный sans-serif вторым на случай ошибки */
     font-family: 'Inter', sans-serif;
 
