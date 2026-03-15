@@ -81,7 +81,7 @@ export async function authenticated(
   const requiresAuth = !!meta.requiresAuth
   const requiresKyc = !!meta.requiresVerification
 
-  if (authStore.user?.kyc_status === 'rejected') {
+  if (authStore.user?.kyc_status === 'rejected' || authStore.user?.has_access === false) {
     if (requiresAuth && to.path !== '/cabinet/restricted') {
       return { path: '/cabinet/restricted' }
     }

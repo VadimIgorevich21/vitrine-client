@@ -3,6 +3,8 @@ export interface User {
   name?: string
   email?: string
   kyc_verified?: boolean
+  kyc_status?: string
+  has_access?: boolean
   roles: string[]
   permissions: string[]
   isAdmin?: boolean

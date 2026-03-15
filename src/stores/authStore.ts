@@ -201,7 +201,7 @@ export const useAuthStore = defineStore('auth', () => {
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(data.user))
 
       // Автоматический редирект при изменении статуса
-      if (data.user.kyc_status === 'rejected') {
+      if (data.user.kyc_status === 'rejected' || data.user.has_access === false) {
         router.push('/cabinet/restricted')
       } else if (data.user.kyc_status === 'completed' || data.user.kyc_status === 'approved') {
         // Если верификация пройдена — отписываемся от канала
