@@ -20,6 +20,9 @@ import {
 } from './middleware'
 import TentPage from "@/views/TentPage.vue";
 import HomeLayout from "@/layouts/HomeLayout.vue";
+import RefundPolicyView from "@/views/public-pages/RefundPolicyView.vue";
+import KycPolicyView from "@/views/public-pages/KycPolicyView.vue";
+import RiskDisclosurePolicyView from "@/views/public-pages/RiskDisclosurePolicyView.vue";
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -53,16 +56,34 @@ const routes: RouteRecordRaw[] = [
       },
 
       {
-        path: 'privacy',
-        name: 'privacy',
+        path: 'privacy-policy',
+        name: 'privacy-policy',
         component: PrivacyPolicyView,
         meta: { title: 'Privacy Policy' },
+      },
+      {
+        path: 'refund-policy',
+        name: 'refund-policy',
+        component: RefundPolicyView,
+        meta: { title: 'Refund Policy' },
+      },
+      {
+        path: 'aml-and-kyc-policy',
+        name: 'aml-and-kyc-policy',
+        component: KycPolicyView,
+        meta: { title: 'AML and KYC Policy' },
+      },
+      {
+        path: 'risk-disclosure-policy',
+        name: 'risk-disclosure-policy',
+        component: RiskDisclosurePolicyView,
+        meta: { title: 'Risk Disclosure Policy' },
       },
       {
         path: 'terms',
         name: 'terms',
         component: TermsOfServiceView,
-        meta: { title: 'Terms of Service' },
+        meta: { title: 'Terms & Conditions' },
       },
       {
         path: 'contacts',
