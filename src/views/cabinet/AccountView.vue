@@ -426,7 +426,11 @@ const goToVerification = () => {
 .info-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 12px;
+}
+
+.info-item {
+  min-width: 0; /* Allow grid to shrink items even if content is long */
 }
 
 .info-label {
@@ -472,7 +476,15 @@ const goToVerification = () => {
   font-size: 18px;
   font-weight: 500;
   color: #101828;
-  height: 48px; /* Align with select height */
+  height: 48px;
+  min-width: 0;
+}
+
+.value-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
 }
 
 .edit-btn {
@@ -518,8 +530,9 @@ const goToVerification = () => {
 .edit-mode-wrapper {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 5px;
   width: 100%;
+  min-width: 0;
 }
 
 .input-with-actions {
@@ -527,7 +540,8 @@ const goToVerification = () => {
   align-items: center;
   gap: 12px;
   width: 100%;
-  max-width: 320px;
+  max-width: 100%;
+  min-width: 0;
   position: relative;
 }
 
@@ -547,14 +561,12 @@ const goToVerification = () => {
 .edit-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 
 .save-btn, .cancel-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
   transition: opacity 0.2s;
 }
 
