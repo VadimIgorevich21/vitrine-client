@@ -60,33 +60,37 @@ const truncateMiddle = (str: string, startChars = 10, endChars = 8) => {
   return `${str.substring(0, startChars)}...${str.substring(str.length - endChars)}`;
 };
 
+const submitPaymentForm = (payment: any) => {
+  if (!payment || !payment.action || !payment.fields) {
+    console.error('Invalid payment data received:', payment);
+    return false;
+  }
+
+  const { action, fields } = payment;
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = action;
+
+  Object.entries(fields).forEach(([key, value]) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = String(value);
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+  return true;
+};
+
 const handleRegeneratePayment = async () => {
   if (isRegenerating.value) return;
   
   isRegenerating.value = true;
   try {
     const response = await orderService.regeneratePayment(props.order.id);
-    const payment = response.payment;
-    
-    if (payment && payment.action && payment.fields) {
-      const { action, fields } = payment;
-
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = action;
-
-      Object.entries(fields).forEach(([key, value]) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = String(value);
-        form.appendChild(input);
-      });
-
-      document.body.appendChild(form);
-      form.submit();
-    } else {
-      console.error('Invalid payment data received:', response);
+    if (!submitPaymentForm(response.payment)) {
       isRegenerating.value = false;
     }
   } catch (error) {
@@ -100,11 +104,17 @@ const handleCancelOrder = async () => {
   
   isCanceling.value = true;
   try {
-    await orderService.cancelOrder(props.order.id);
-    emit('refresh');
+    const response = await orderService.cancelOrder(props.order.id);
+    if (response.payment) {
+      if (!submitPaymentForm(response.payment)) {
+        isCanceling.value = false;
+      }
+    } else {
+      emit('refresh');
+      isCanceling.value = false;
+    }
   } catch (error) {
     console.error('Failed to cancel order:', error);
-  } finally {
     isCanceling.value = false;
   }
 };
