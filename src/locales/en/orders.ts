@@ -65,6 +65,7 @@ export default {
     cancelConfirm: 'Are you sure you want to cancel the order?',
     confirm: 'Confirm',
     close: 'Close',
+    errorOccurred: 'An error occurred. Please contact support.',
   },
   successPayment: {
     subtitle: 'Manage your orders and create new ones',

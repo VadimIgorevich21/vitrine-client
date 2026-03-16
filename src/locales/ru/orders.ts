@@ -65,6 +65,7 @@ export default {
     cancelConfirm: 'Вы действительно хотите отменить заказ?',
     confirm: 'Подтвердить',
     close: 'Закрыть',
+    errorOccurred: 'Возникла ошибка - обратитесь в поддержку',
   },
   successPayment: {
     subtitle: 'Управляйте вашими заявками и создавайте новые',

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useToast } from "vue-toastification";
 import { orderService } from '@/services/orderService';
 import OrderStatus from './OrderStatus.vue';
 
@@ -10,6 +11,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['refresh']);
 const { t } = useI18n();
+const toast = useToast();
 
 const isOpen = ref(false);
 const isRegenerating = ref(false);
@@ -93,10 +95,12 @@ const handleRegeneratePayment = async () => {
     const response = await orderService.regeneratePayment(props.order.id);
     if (!submitPaymentForm(response.payment)) {
       isRegenerating.value = false;
+      toast.error(t('orders.actions.errorOccurred'));
     }
   } catch (error) {
     console.error('Failed to regenerate payment:', error);
     isRegenerating.value = false;
+    toast.error(t('orders.actions.errorOccurred'));
   }
 };
 
@@ -114,6 +118,7 @@ const confirmCancel = async () => {
     if (response.payment) {
       if (!submitPaymentForm(response.payment)) {
         isCanceling.value = false;
+        toast.error(t('orders.actions.errorOccurred'));
       }
     } else {
       emit('refresh');
@@ -122,6 +127,7 @@ const confirmCancel = async () => {
   } catch (error) {
     console.error('Failed to cancel order:', error);
     isCanceling.value = false;
+    toast.error(t('orders.actions.errorOccurred'));
   }
 };
 </script>

@@ -65,6 +65,7 @@ export default {
     cancelConfirm: 'Czy na pewno chcesz anulować zamówienie?',
     confirm: 'Potwierdź',
     close: 'Zamknij',
+    errorOccurred: 'Wystąpił błąd – skontaktuj się z pomocą techniczną',
   },
   successPayment: {
     subtitle: 'Zarządzaj swoimi zleceniami i twórz nowe',
