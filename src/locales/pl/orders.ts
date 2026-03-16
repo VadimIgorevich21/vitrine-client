@@ -62,6 +62,9 @@ export default {
   actions: {
     pay: 'Zapłać',
     cancel: 'Anuluj',
+    cancelConfirm: 'Czy na pewno chcesz anulować zamówienie?',
+    confirm: 'Potwierdź',
+    close: 'Zamknij',
   },
   successPayment: {
     subtitle: 'Zarządzaj swoimi zleceniami i twórz nowe',

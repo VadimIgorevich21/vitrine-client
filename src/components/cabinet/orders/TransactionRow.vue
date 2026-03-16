@@ -14,6 +14,7 @@ const { t } = useI18n();
 const isOpen = ref(false);
 const isRegenerating = ref(false);
 const isCanceling = ref(false);
+const showCancelModal = ref(false);
 
 const isBuy = computed(() => props.order.order_type === 'buy');
 
@@ -99,7 +100,12 @@ const handleRegeneratePayment = async () => {
   }
 };
 
-const handleCancelOrder = async () => {
+const handleCancelOrder = () => {
+  showCancelModal.value = true;
+};
+
+const confirmCancel = async () => {
+  showCancelModal.value = false;
   if (isCanceling.value) return;
   
   isCanceling.value = true;
@@ -256,6 +262,25 @@ const handleCancelOrder = async () => {
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                </svg>
              </a>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <!-- Cancellation Confirmation Modal -->
+    <transition name="fade">
+      <div v-if="showCancelModal" class="modal-overlay" @click="showCancelModal = false">
+        <div class="modal-content" @click.stop>
+          <div class="modal-header">
+            <h3 class="modal-title">{{ t('orders.actions.cancelConfirm') }}</h3>
+          </div>
+          <div class="modal-footer">
+            <button class="modal-btn-secondary" @click="showCancelModal = false">
+              {{ t('orders.actions.close') }}
+            </button>
+            <button class="modal-btn-primary" @click="confirmCancel">
+              {{ t('orders.actions.confirm') }}
+            </button>
           </div>
         </div>
       </div>
@@ -513,5 +538,85 @@ const handleCancelOrder = async () => {
   }
   
   .transaction-details { padding: 24px 16px; }
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 24px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.modal-header {
+  margin-bottom: 24px;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  text-align: center;
+  margin: 0;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.modal-btn-primary, .modal-btn-secondary {
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  min-width: 120px;
+}
+
+.modal-btn-primary {
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8A00 100%);
+  color: white;
+  box-shadow: 0 4px 6px rgba(255, 107, 0, 0.2);
+}
+
+.modal-btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.modal-btn-secondary {
+  background-color: #F3F4F6;
+  color: #4B5563;
+}
+
+.modal-btn-secondary:hover {
+  background-color: #E5E7EB;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s;
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
 </style>

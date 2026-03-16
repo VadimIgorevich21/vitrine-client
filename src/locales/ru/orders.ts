@@ -62,6 +62,9 @@ export default {
   actions: {
     pay: 'Оплатить',
     cancel: 'Отменить',
+    cancelConfirm: 'Вы действительно хотите отменить заказ?',
+    confirm: 'Подтвердить',
+    close: 'Закрыть',
   },
   successPayment: {
     subtitle: 'Управляйте вашими заявками и создавайте новые',

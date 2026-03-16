@@ -62,6 +62,9 @@ export default {
   actions: {
     pay: 'Pay',
     cancel: 'Cancel',
+    cancelConfirm: 'Are you sure you want to cancel the order?',
+    confirm: 'Confirm',
+    close: 'Close',
   },
   successPayment: {
     subtitle: 'Manage your orders and create new ones',
