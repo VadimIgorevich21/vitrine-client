@@ -68,6 +68,11 @@ textarea {
     color: #101828;
 }
 
+.last-updated-text {
+    color: #929aaa;
+    font-style: italic;
+}
+
 .page-subtitle-gradient {
     background: linear-gradient(92.01deg, #929AAA 35.6%, #D8E0F0 95.78%);
     /* Обрезаем фон по контуру текста */
