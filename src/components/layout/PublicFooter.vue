@@ -37,10 +37,10 @@ const { t } = useI18n()
           <h3 class="font-semibold mb-6">{{ t('footer.legal') }}</h3>
           <ul class="space-y-4 text-sm text-gray-400">
             <li><RouterLink to="/terms" class="hover:text-white transition-colors">{{ t('footer.terms') }}</RouterLink></li>
-            <li><RouterLink to="/privacy" class="hover:text-white transition-colors">{{ t('footer.privacy') }}</RouterLink></li>
-            <li><a href="#" class="hover:text-white transition-colors">{{ t('footer.refundPolicy') }}</a></li>
-            <li><a href="#" class="hover:text-white transition-colors">{{ t('footer.riskDisclosure') }}</a></li>
-            <li><a href="#" class="hover:text-white transition-colors">{{ t('footer.amlKyc') }}</a></li>
+            <li><RouterLink to="/privacy-policy" class="hover:text-white transition-colors">{{ t('footer.privacy') }}</RouterLink></li>
+            <li><RouterLink to="/refund-policy" class="hover:text-white transition-colors">{{ t('footer.refundPolicy') }}</RouterLink></li>
+            <li><RouterLink to="/risk-disclosure-policy" class="hover:text-white transition-colors">{{ t('footer.riskDisclosure') }}</RouterLink></li>
+            <li><RouterLink to="/aml-and-kyc-policy" class="hover:text-white transition-colors">{{ t('footer.amlKyc') }}</RouterLink></li>
           </ul>
         </div>
 

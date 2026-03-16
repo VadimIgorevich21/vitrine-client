@@ -1,6 +1,8 @@
 export default {
-  title: 'Cabinet',
-  welcome: 'Welcome, {name}.',
+  title: 'Dashboard',
+  welcome: 'Witaj, {name}.',
+  title_buy_and_sell: 'Kupuj i sprzedawaj kryptowaluty z',
+  title2_buy_and_sell: 'najlepszymi kursami',
   kyc_banner: 'Ukończ weryfikację KYC, aby odblokować dostęp do handlu kryptowalutami',
   sidebar: {
     trade_crypto: 'Handluj Kryptowalutami',
@@ -11,6 +13,17 @@ export default {
     terms: 'Regulamin',
     refund: 'Polityka Zwrotów',
     contact: 'Skontaktuj się z Nami',
+  },
+  actions: {
+    pay: 'Zapłać',
+    cancel: 'Anuluj',
+  },
+  successPayment: {
+    subtitle: 'Zarządzaj swoimi zleceniami i twórz nowe',
+    closeForm: 'Zamknij formularz',
+    createNewExchange: 'Utwórz nową wymianę',
+    newExchangeTitle: 'Nowe zlecenie wymiany',
+    placeholderTable: 'Tu znajdzie się tabela transakcji...',
   },
   account_page: {
     turnover_title: 'Twój Obrót',
@@ -32,7 +45,8 @@ export default {
     continue: 'Kontynuuj',
     powered_by: 'Obsługiwane przez',
     pending_title: 'Weryfikacja niekompletna',
-    pending_description: 'Twoje dokumenty nie mogły zostać zweryfikowane w tej chwili. Możesz ponownie przesłać swoje informacje, aby kontynuować proces weryfikacji i odzyskać dostęp do handlu.',
+    pending_description_part1: 'Twoje dokumenty nie mogły zostać zweryfikowane w tej chwili.',
+    pending_description_part2: 'Możesz ponownie przesłać swoje informacje, aby kontynuować proces weryfikacji i odzyskać dostęp do handlu.',
     submit_kyc: 'Prześlij KYC',
     loading: 'Ładowanie...',
     verifyIdentity: 'Potwierdź tożsamość',
@@ -42,7 +56,9 @@ export default {
   },
   restricted_page: {
     title: 'Konto ograniczone',
-    description: 'Nie jesteśmy w stanie zakończyć procesu weryfikacji Twojego konta. W rezultacie dostęp do usług handlowych został ograniczony. Jeśli uważasz, że jest to błąd, skontaktuj się z naszym zespołem pomocy technicznej w celu uzyskania dalszej pomocy.',
+    description_part_1: 'Nie jesteśmy w stanie zakończyć procesu weryfikacji Twojego konta.',
+    description_part_2: 'W rezultacie dostęp do usług handlowych został ograniczony.',
+    description_part_3: 'Jeśli uważasz, że jest to błąd, skontaktuj się z naszym zespołem pomocy technicznej w celu uzyskania dalszej pomocy.',
     contact_support: 'Skontaktuj się z pomocą',
   },
 }
