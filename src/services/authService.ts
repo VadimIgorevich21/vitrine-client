@@ -156,4 +156,8 @@ export default {
       default_currency: currency,
     })
   },
+
+  updateProfile(data: Partial<import('@/types/auth').User>) {
+    return apiClient.post<{ data: import('@/types/auth').User }>('/auth/user/update', data)
+  },
 }

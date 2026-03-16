@@ -31,6 +31,7 @@ export interface Currency {
 }
 
 export interface Country {
+    id: number;
     code: string;
     phone_code: string;
     flag: string;

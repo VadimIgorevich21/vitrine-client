@@ -8,8 +8,9 @@
       <div class="selected-content">
         <div v-if="selectedItemIcon" 
              class="item-icon" 
-             :class="{ 'is-fiat': isFiat, 'is-crypto': !isFiat, 'rounded-full': rounded && !isFiat, 'selected-rounded': rounded && isFiat }"
-             :style="{ backgroundImage: `url(${getIconPath(selectedItemIcon)})` }">
+             :class="{ 'is-fiat': isFiat, 'is-crypto': !isFiat, 'rounded-full': rounded && !isFiat, 'selected-rounded': rounded && isFiat }">
+          <span v-if="!isUrl(selectedItemIcon)" class="icon-text">{{ selectedItemIcon }}</span>
+          <div v-else class="icon-image" :style="{ backgroundImage: `url(${getIconPath(selectedItemIcon)})` }"></div>
         </div>
         <span class="item-label">{{ selectedItemLabel || t('common.select') }}</span>
       </div>
@@ -49,7 +50,8 @@
               v-if="iconPath && item[iconPath]"
               class="item-list-icon-container"
             >
-                <img :src="getIconPath(item[iconPath])" class="item-list-icon object-contain" />
+                <span v-if="!isUrl(item[iconPath])" class="list-icon-text">{{ item[iconPath] }}</span>
+                <img v-else :src="getIconPath(item[iconPath])" class="item-list-icon object-contain" />
             </div>
             <div class="item-text-container">
               <span class="item-main-text">{{ item[labelPath] }}</span>
@@ -140,6 +142,11 @@ const selectItem = (item: any) => {
   emit('change', val);
   isOpen.value = false;
   searchQuery.value = '';
+};
+
+const isUrl = (path: string) => {
+  if (!path) return false;
+  return path.startsWith('http') || path.startsWith('data:') || path.startsWith('/') || path.includes('.');
 };
 
 const getIconPath = (path: string) => {
@@ -253,6 +260,21 @@ watch(isOpen, (newVal) => {
 
 .item-icon.is-crypto {
   background-size: contain;
+}
+
+.icon-image {
+  width: 100%;
+  height: 100%;
+  background-size: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.icon-text {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .selected-rounded {
@@ -390,6 +412,10 @@ watch(isOpen, (newVal) => {
   width: 24px;
   height: 24px;
   object-fit: contain;
+}
+
+.list-icon-text {
+  font-size: 20px;
 }
 
 .item-text-container {

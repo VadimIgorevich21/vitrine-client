@@ -52,15 +52,49 @@
         <div class="info-item">
           <span class="info-label">{{ t('cabinet.account_page.country') }}</span>
           <div class="info-value-wrapper">
-            <div class="value-with-icon">
-              <span class="country-flag">🇺🇦</span>
-              <span class="value-text">Ukraine</span>
-              <button class="edit-btn">
+            <!-- Display Mode -->
+            <div v-if="editingField !== 'country_id'" class="value-with-icon">
+              <template v-if="currentCountry">
+                <span v-if="!isUrl(currentCountry.flag)" class="country-flag">{{ currentCountry.flag }}</span>
+                <div v-else class="country-flag-img">
+                  <img :src="getIconPath(currentCountry.flag)" :alt="currentCountry.name" />
+                </div>
+                <span class="value-text">{{ currentCountry.name }}</span>
+              </template>
+              <span v-else class="value-text">—</span>
+              <button @click="startEdit('country_id', authStore.user?.country_id)" class="edit-btn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M15.5 5L19 8.5M17.5 3L21 6.5L11.5 16H8V12.5L17.5 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M7 21H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
+            </div>
+            <!-- Edit Mode -->
+            <div v-else class="edit-mode-wrapper">
+              <UniversalSelect
+                :model-value="tempValues.country_id"
+                :items="configStore.countries"
+                item-key="id"
+                label-path="name"
+                icon-path="flag"
+                :borderless="false"
+                align="left"
+                @update:model-value="val => tempValues.country_id = val"
+                class="country-select"
+              />
+              <div class="edit-actions">
+                <button @click="saveField('country_id')" class="save-btn" :disabled="authStore.loading">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="10" cy="10" r="10" fill="#10B981"/>
+                    <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button @click="cancelEdit" class="cancel-btn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="#929AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -69,14 +103,41 @@
         <div class="info-item">
           <span class="info-label">{{ t('cabinet.account_page.phone_number') }}</span>
           <div class="info-value-wrapper">
-            <div class="value-with-icon">
+            <!-- Display Mode -->
+            <div v-if="editingField !== 'phone'" class="value-with-icon">
               <span class="value-text">{{ authStore.user?.phone || '—' }}</span>
-              <button class="edit-btn">
+              <button @click="startEdit('phone', authStore.user?.phone)" class="edit-btn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M15.5 5L19 8.5M17.5 3L21 6.5L11.5 16H8V12.5L17.5 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M7 21H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
+            </div>
+            <!-- Edit Mode -->
+            <div v-else class="edit-mode-wrapper">
+              <div class="input-with-actions">
+                <input
+                  v-model="tempValues.phone"
+                  type="text"
+                  class="edit-input"
+                  placeholder="+1234567890"
+                  @keyup.enter="saveField('phone')"
+                  @keyup.esc="cancelEdit"
+                />
+                <div class="edit-actions">
+                  <button @click="saveField('phone')" class="save-btn" :disabled="authStore.loading">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="10" cy="10" r="10" fill="#10B981"/>
+                      <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button @click="cancelEdit" class="cancel-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 6L6 18M6 6L18 18" stroke="#929AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -85,14 +146,41 @@
         <div class="info-item">
           <span class="info-label">{{ t('cabinet.account_page.email') }}</span>
           <div class="info-value-wrapper">
-            <div class="value-with-icon">
+            <!-- Display Mode -->
+            <div v-if="editingField !== 'email'" class="value-with-icon">
               <span class="value-text">{{ authStore.user?.email || '—' }}</span>
-              <button class="edit-btn">
+              <button @click="startEdit('email', authStore.user?.email)" class="edit-btn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M15.5 5L19 8.5M17.5 3L21 6.5L11.5 16H8V12.5L17.5 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M7 21H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
+            </div>
+            <!-- Edit Mode -->
+            <div v-else class="edit-mode-wrapper">
+              <div class="input-with-actions">
+                <input
+                  v-model="tempValues.email"
+                  type="email"
+                  class="edit-input"
+                  placeholder="email@example.com"
+                  @keyup.enter="saveField('email')"
+                  @keyup.esc="cancelEdit"
+                />
+                <div class="edit-actions">
+                  <button @click="saveField('email')" class="save-btn" :disabled="authStore.loading">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="10" cy="10" r="10" fill="#10B981"/>
+                      <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button @click="cancelEdit" class="cancel-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 6L6 18M6 6L18 18" stroke="#929AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -134,7 +222,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore';
@@ -150,6 +238,51 @@ onMounted(async () => {
   await authStore.updateUser();
   await configStore.getMainConfigs();
 });
+
+// --- Inline Editing ---
+const editingField = ref<string | null>(null);
+const tempValues = reactive<Record<string, any>>({
+  country_id: null,
+  phone: '',
+  email: '',
+});
+
+const currentCountry = computed(() => {
+  if (!authStore.user?.country_id) return null;
+  return configStore.countries.find(c => c.id === authStore.user?.country_id);
+});
+
+const startEdit = (field: string, initialValue: any) => {
+  editingField.value = field;
+  tempValues[field] = initialValue;
+};
+
+const cancelEdit = () => {
+  editingField.value = null;
+};
+
+const saveField = async (field: string) => {
+  try {
+    const payload = { [field]: tempValues[field] };
+    await authStore.updateProfile(payload);
+    editingField.value = null;
+  } catch (error) {
+    console.error(`Failed to save ${field}:`, error);
+  }
+};
+
+const isUrl = (path: string) => {
+  if (!path) return false;
+  return path.startsWith('http') || path.startsWith('data:') || path.startsWith('/') || path.includes('.');
+};
+
+const getIconPath = (path: string) => {
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('data:') || path.startsWith('/')) {
+    return path;
+  }
+  return `/${path}`;
+};
 
 const isVerified = computed(() => authStore.user?.kyc_verified === true);
 
@@ -364,6 +497,83 @@ const goToVerification = () => {
   align-items: center;
   justify-content: center;
   font-size: 24px;
+}
+
+.country-flag-img {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.country-flag-img img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Edit Mode Styles */
+.edit-mode-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.input-with-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 320px;
+  position: relative;
+}
+
+.edit-input {
+  width: 100%;
+  height: 48px;
+  padding: 8px 16px;
+  background: #F8F9FA;
+  border: 1px solid #7F56D9; /* Purple border from mockup */
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #101828;
+  outline: none;
+}
+
+.edit-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.save-btn, .cancel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: opacity 0.2s;
+}
+
+.save-btn:hover, .cancel-btn:hover {
+  opacity: 0.8;
+}
+
+.save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.country-select {
+  flex: 1;
+  max-width: 240px;
+}
+
+:deep(.country-select .selected-item-button.normal) {
+  border-color: #7F56D9; /* Purple border from mockup */
 }
 
 .kyc-status {

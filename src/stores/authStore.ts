@@ -203,6 +203,28 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function updateProfile(payload: Partial<User>): Promise<void> {
+    try {
+      loading.value = true
+      const response = await authService.updateProfile(payload)
+      const data = response.data.data
+      if (user.value) {
+        // Обновляем только пришедшие поля
+        Object.keys(payload).forEach((key) => {
+          if (key in data) {
+            ;(user.value as any)[key] = (data as any)[key]
+          }
+        })
+        localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user.value))
+      }
+    } catch (err) {
+      error.value = getError(err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   const kycChannel = ref<string | null>(null)
 
   function listenKycStatus(): void {
@@ -256,5 +278,6 @@ export const useAuthStore = defineStore('auth', () => {
     cleanUserStorage,
     setToLogout,
     changeDefaultCurrency,
+    updateProfile,
   }
 })
