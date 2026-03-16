@@ -150,4 +150,10 @@ export default {
     }
     return data
   },
+
+  changeDefaultCurrency(currency: string) {
+    return apiClient.post<{ data: import('@/types/auth').User }>('/users/change-default-currency', {
+      default_currency: currency,
+    })
+  },
 }

@@ -185,6 +185,24 @@ export const useAuthStore = defineStore('auth', () => {
     await logout()
   }
 
+  async function changeDefaultCurrency(currency: string): Promise<void> {
+    try {
+      loading.value = true
+      const response = await authService.changeDefaultCurrency(currency)
+      const data = response.data.data
+      if (user.value) {
+        user.value.default_currency = data.default_currency
+        user.value.default_currency_info = data.default_currency_info
+        localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user.value))
+      }
+    } catch (err) {
+      error.value = getError(err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   const kycChannel = ref<string | null>(null)
 
   function listenKycStatus(): void {
@@ -237,5 +255,6 @@ export const useAuthStore = defineStore('auth', () => {
     updateUser,
     cleanUserStorage,
     setToLogout,
+    changeDefaultCurrency,
   }
 })

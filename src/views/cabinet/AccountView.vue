@@ -33,12 +33,17 @@
         <div class="info-item">
           <span class="info-label">{{ t('cabinet.account_page.default_currency') }}</span>
           <div class="info-value-wrapper">
-            <div class="custom-select-trigger">
-              <span>{{ authStore.user?.default_currency || 'EUR' }}</span>
-              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L5 5L9 1" stroke="#929AAA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
+             <UniversalSelect
+               v-if="authStore.user"
+               :model-value="authStore.user.default_currency || 'EUR'"
+               :items="configStore.fiatCurrencies"
+               item-key="code"
+               label-path="code"
+               icon-path="icon"
+               :borderless="true"
+               @update:model-value="handleCurrencyChange"
+               class="currency-select"
+             />
           </div>
         </div>
 
@@ -128,14 +133,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore';
+import { useConfigStore } from '@/stores/syncConfigs';
+import UniversalSelect from '@/components/common/UniversalSelect.vue';
 
 const { t } = useI18n();
 const router = useRouter();
 const authStore = useAuthStore();
+const configStore = useConfigStore();
+
+onMounted(async () => {
+  await authStore.updateUser();
+  await configStore.getMainConfigs();
+});
 
 const isVerified = computed(() => authStore.user?.kyc_verified === true);
 
@@ -145,6 +158,14 @@ const formatCurrency = (value?: number) => {
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   }).format(value);
+};
+
+const handleCurrencyChange = async (currency: string) => {
+  try {
+    await authStore.changeDefaultCurrency(currency);
+  } catch (error) {
+    console.error('Failed to change default currency:', error);
+  }
 };
 
 const goToVerification = () => {
@@ -284,18 +305,26 @@ const goToVerification = () => {
   margin-bottom: 12px;
 }
 
-.custom-select-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #F8F9FA;
-  border: 1px solid #E9ECEF;
-  border-radius: 8px;
-  padding: 10px 14px;
-  width: 100px;
-  font-size: 15px;
+.currency-select {
+  width: auto;
+  min-width: 80px;
+}
+
+:deep(.currency-select .selected-item-button.borderless) {
+  padding: 0;
+  font-size: 16px;
   font-weight: 500;
-  cursor: pointer;
+  color: #0F1116;
+}
+
+:deep(.currency-select .item-label) {
+  color: #0F1116;
+}
+
+:deep(.currency-select .arrow-icon) {
+  color: #929AAA;
+  width: 12px;
+  height: 12px;
 }
 
 .value-with-icon {
