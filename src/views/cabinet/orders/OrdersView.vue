@@ -118,7 +118,7 @@ onMounted(() => {
                <input
                  v-model="filters.search"
                  type="text"
-                 placeholder="Enter asset name"
+                 :placeholder="t('orders.history.searchPlaceholder')"
                  class="search-input"
                />
             </div>
@@ -141,7 +141,7 @@ onMounted(() => {
                     class="calendar-icon-btn"
                     :class="{ 'calendar-icon-btn--active': dateRange }"
                     type="button"
-                    title="Select date range"
+                    :title="t('orders.history.selectDateRange')"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -155,7 +155,7 @@ onMounted(() => {
                 v-if="dateRange"
                 class="clear-date-btn"
                 type="button"
-                title="Clear dates"
+                :title="t('orders.history.clearDates')"
                 @click="clearDates"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">

@@ -6,7 +6,10 @@ export default {
     title: 'Historia transakcji',
     emptyTitle: 'Nie masz jeszcze żadnych transakcji',
     emptySubtitle: 'Zacznij handlować kryptowalutami już teraz',
-    buyBtn: 'Kup kryptowalutę'
+    buyBtn: 'Kup kryptowalutę',
+    searchPlaceholder: 'Wpisz nazwę aktywa',
+    selectDateRange: 'Wybierz zakres dat',
+    clearDates: 'Wyczyść daty',
   },
   exchange: {
     buyCrypto: 'Kup',
@@ -54,6 +57,7 @@ export default {
     direction: 'Kierunek',
     amount: 'Kwota',
     status: 'Status',
+    to: 'na',
   },
   actions: {
     pay: 'Zapłać',

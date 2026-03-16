@@ -6,7 +6,10 @@ export default {
     title: 'История транзакций',
     emptyTitle: 'У вас пока нет транзакций',
     emptySubtitle: 'Начните торговать криптой прямо сейчас',
-    buyBtn: 'Купить криптовалюту'
+    buyBtn: 'Купить криптовалюту',
+    searchPlaceholder: 'Введите название актива',
+    selectDateRange: 'Выберите диапазон дат',
+    clearDates: 'Очистить даты',
   },
   exchange: {
     buyCrypto: 'Купить',
@@ -54,6 +57,7 @@ export default {
     direction: 'Направление',
     amount: 'Сумма',
     status: 'Статус',
+    to: 'в',
   },
   actions: {
     pay: 'Оплатить',

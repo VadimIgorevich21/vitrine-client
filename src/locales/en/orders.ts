@@ -6,7 +6,10 @@ export default {
     title: 'Transaction history',
     emptyTitle: "You don't have any transactions yet",
     emptySubtitle: "Start Trading Crypto Right Now",
-    buyBtn: "Buy Crypto"
+    buyBtn: "Buy Crypto",
+    searchPlaceholder: 'Enter asset name',
+    selectDateRange: 'Select date range',
+    clearDates: 'Clear dates',
   },
   exchange: {
     buyCrypto: 'Buy',
@@ -54,6 +57,7 @@ export default {
     direction: 'Direction',
     amount: 'Amount',
     status: 'Status',
+    to: 'to',
   },
   actions: {
     pay: 'Pay',

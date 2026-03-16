@@ -141,7 +141,7 @@ const handleCancelOrder = async () => {
 
       <!-- Direction -->
       <div class="col-direction">
-        {{ order.direction || `${fiatCurrency} to ${cryptoCurrency}` }}
+        {{ order.direction || `${fiatCurrency} ${t('orders.details.to')} ${cryptoCurrency}` }}
       </div>
 
       <!-- Amount -->
