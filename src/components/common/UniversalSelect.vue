@@ -252,6 +252,10 @@ watch(isOpen, (newVal) => {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  overflow: hidden; /* Ensure clipping for child elements */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .item-icon.is-fiat {
@@ -260,6 +264,14 @@ watch(isOpen, (newVal) => {
 
 .item-icon.is-crypto {
   background-size: contain;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.selected-rounded {
+  border-radius: 9999px; /* Changed to 9999px for perfect circle regardless of size */
 }
 
 .icon-image {
