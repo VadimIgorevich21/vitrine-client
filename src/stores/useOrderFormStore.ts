@@ -135,6 +135,23 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     }
   });
 
+  // Auto-select network based on crypto currency
+  watch(() => state.to_currency, (newVal) => {
+    if (state.type !== 'buy') return;
+    
+    const mapping: Record<string, string> = {
+      'btc': 'btc',
+      'eth': 'erc',
+      'trx': 'trc',
+      'usdc': 'erc'
+    };
+
+    const currencyLower = newVal.toLowerCase();
+    if (mapping[currencyLower]) {
+      state.wallet_type = mapping[currencyLower];
+    }
+  });
+
   return {
     state,
     currentRate,

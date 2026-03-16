@@ -180,6 +180,7 @@
              labelPath="label"
              sublabelPath="title"
              iconPath="icon"
+             :disabled="isNetworkLocked"
              :placeholder="$t('orders.exchange.selectNetwork')"
            />
         </div>
@@ -253,6 +254,11 @@ const selectedToCurrencyIcon = computed(() => {
   const icon = selectedToItem.value?.icon;
   if (!icon) return null;
   return icon.startsWith('/') ? icon : `/${icon}`;
+});
+
+const isNetworkLocked = computed(() => {
+  const currency = formStore.state.to_currency?.toLowerCase();
+  return ['btc', 'eth', 'trx', 'usdc'].includes(currency);
 });
 
 const handleSubmit = async () => {

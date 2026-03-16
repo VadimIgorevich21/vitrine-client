@@ -2,8 +2,8 @@
   <div class="select-root" :class="{ 'width-auto': borderless, 'width-full': !borderless }" ref="container" style="min-width: 0;">
     <!-- Selected Item Button -->
     <div 
-      @click="isOpen = !isOpen"
-      :class="['selected-item-button', borderless ? 'borderless' : 'normal']"
+      @click="!disabled && (isOpen = !isOpen)"
+      :class="['selected-item-button', borderless ? 'borderless' : 'normal', { 'is-disabled': disabled }]"
     >
       <div class="selected-content">
         <div v-if="selectedItemIcon" 
@@ -91,6 +91,7 @@ const props = withDefaults(defineProps<{
   borderless?: boolean;
   isFiat?: boolean;
   align?: 'left' | 'right';
+  disabled?: boolean;
 }>(), {
   itemKey: 'code',
   labelPath: 'code',
@@ -99,7 +100,8 @@ const props = withDefaults(defineProps<{
   rounded: false,
   borderless: false,
   isFiat: false,
-  align: 'right'
+  align: 'right',
+  disabled: false
 });
 
 const emit = defineEmits<{
@@ -229,6 +231,11 @@ watch(isOpen, (newVal) => {
 
 :deep(.dark) .selected-item-button.normal:hover {
   background-color: #374151;
+}
+
+.selected-item-button.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .selected-item-button.borderless {
