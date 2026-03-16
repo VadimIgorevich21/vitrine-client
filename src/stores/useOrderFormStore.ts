@@ -39,11 +39,56 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     return state.amount_from >= currentRate.value.min_amount;
   });
 
+  const computeCommission = (amountFrom: number | null) => {
+    const rate = currentRate.value;
+    if (!rate || amountFrom === null || amountFrom <= 0) {
+      return { fee: 0, percentOfAmount: 0 };
+    }
+
+    const minCommission = Number(rate.min_commission ?? 0);
+    const commissionPercent = Number(rate.commission_percent ?? 0);
+    const commissionFromAmount = Number(rate.commission_from_amount ?? 0);
+
+    let fee: number;
+
+    if (commissionFromAmount > 0 && amountFrom >= commissionFromAmount && commissionPercent > 0) {
+      fee = amountFrom * (commissionPercent / 100);
+    } else {
+      fee = minCommission;
+    }
+
+    if (!Number.isFinite(fee) || fee < 0) {
+      fee = 0;
+    }
+
+    const percentOfAmount = amountFrom > 0 ? (fee / amountFrom) * 100 : 0;
+
+    return { fee, percentOfAmount };
+  };
+
+  const feeAmount = computed(() => {
+    if (state.amount_from === null || !currentRate.value) return null;
+    const { fee } = computeCommission(state.amount_from);
+    return fee;
+  });
+
+  const feePercent = computed(() => {
+    if (state.amount_from === null || !currentRate.value) return null;
+    const { percentOfAmount } = computeCommission(state.amount_from);
+    return percentOfAmount;
+  });
+
   // --- Actions ---
   const calculateTo = () => {
     const rate = currentRate.value;
     if (rate && state.amount_from !== null) {
-      const res = state.amount_from * rate.final_rate;
+      const { fee } = computeCommission(state.amount_from);
+      const netAmount = state.amount_from - fee;
+      if (netAmount <= 0) {
+        state.amount_to = null;
+        return;
+      }
+      const res = netAmount * rate.final_rate;
       state.amount_to = Number(res.toFixed(rate.precision));
     } else {
       state.amount_to = null;
@@ -53,9 +98,35 @@ export const useOrderFormStore = defineStore('orderForm', () => {
   const calculateFrom = () => {
     const rate = currentRate.value;
     if (rate && state.amount_to !== null && rate.final_rate > 0) {
-      const res = state.amount_to / rate.final_rate;
+      const minCommission = Number(rate.min_commission ?? 0);
+      const commissionPercent = Number(rate.commission_percent ?? 0);
+      const commissionFromAmount = Number(rate.commission_from_amount ?? 0);
+
       const precision = state.type === 'buy' ? 2 : 8;
-      state.amount_from = Number(res.toFixed(precision));
+      const rateValue = rate.final_rate;
+
+      let gross: number;
+
+      if (commissionFromAmount > 0 && commissionPercent > 0) {
+        const percent = commissionPercent / 100;
+
+        const grossWithFixed = state.amount_to / rateValue + minCommission;
+
+        if (grossWithFixed < commissionFromAmount) {
+          gross = grossWithFixed;
+        } else {
+          const denominator = rateValue * (1 - percent);
+          if (denominator <= 0) {
+            gross = grossWithFixed;
+          } else {
+            gross = state.amount_to / denominator;
+          }
+        }
+      } else {
+        gross = state.amount_to / rateValue + minCommission;
+      }
+
+      state.amount_from = Number(gross.toFixed(precision));
     } else {
       state.amount_from = null;
     }
@@ -157,6 +228,8 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     currentRate,
     currentPaymentMethods, // Не забудь вернуть новый геттер
     isAmountValid,
+    feeAmount,
+    feePercent,
     calculateTo,
     calculateFrom,
     initDefaultValues,

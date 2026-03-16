@@ -91,8 +91,8 @@
             1 {{ formStore.state.to_currency }} ≈ {{ formStore.currentRate.final_rate }} {{ formStore.state.from_currency }}
           </span>
         </div>
-        <div class="fee-text">
-          Fee: 25 {{ formStore.state.from_currency }} (0.5%)
+        <div class="fee-text" v-if="formStore.feeAmount !== null && formStore.feePercent !== null">
+          Fee: {{ formStore.feeAmount.toFixed(2) }} {{ formStore.state.from_currency }} ({{ formStore.feePercent.toFixed(2) }}%)
         </div>
       </div>
 
@@ -163,8 +163,8 @@
               1 {{ formStore.state.to_currency }} ≈ {{ formStore.currentRate.final_rate }} {{ formStore.state.from_currency }}
             </span>
           </div>
-          <div class="summary-fee-text">
-            Fee: 25 {{ formStore.state.from_currency }} (0.5%)
+          <div class="summary-fee-text" v-if="formStore.feeAmount !== null && formStore.feePercent !== null">
+            Fee: {{ formStore.feeAmount.toFixed(2) }} {{ formStore.state.from_currency }} ({{ formStore.feePercent.toFixed(2) }}%)
           </div>
         </div>
       </div>
