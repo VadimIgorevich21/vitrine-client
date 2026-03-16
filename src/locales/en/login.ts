@@ -20,4 +20,11 @@ export default {
   passwordSwitchToOtp: 'Log in with email code',
   callbackProcessing: 'Signing you in…',
   callbackError: 'Sign-in failed. Invalid link or missing token.',
+  legalPrefix: 'By creating account you agree with IronBit ',
+  legalTerms: 'Terms and Conditions',
+  legalAml: 'AML and KYC Policy',
+  legalRefund: 'Refund Policy',
+  legalRisk: 'Risk Disclosure Policy',
+  legalPrivacy: 'Privacy Policy',
+  legalAnd: ' and ',
 }

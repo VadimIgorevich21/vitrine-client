@@ -20,4 +20,11 @@ export default {
   passwordSwitchToOtp: 'Zaloguj się kodem e-mail',
   callbackProcessing: 'Logowanie…',
   callbackError: 'Logowanie nieudane. Nieprawidłowy link lub brak tokena.',
+  legalPrefix: 'Tworząc konto, zgadzasz się z ',
+  legalTerms: 'Regulaminem',
+  legalAml: 'Polityką AML i KYC',
+  legalRefund: 'Polityką zwrotów',
+  legalRisk: 'Polityką ujawniania ryzyka',
+  legalPrivacy: 'Polityką prywatności',
+  legalAnd: ' i ',
 }

@@ -20,4 +20,11 @@ export default {
   passwordSwitchToOtp: 'Войти по коду на email',
   callbackProcessing: 'Вход выполняется…',
   callbackError: 'Не удалось войти. Неверная ссылка или токен отсутствует.',
+  legalPrefix: 'Создавая учетную запись, вы соглашаетесь с ',
+  legalTerms: 'Условиями использования',
+  legalAml: 'Политикой AML и KYC',
+  legalRefund: 'Политикой возврата',
+  legalRisk: 'Политикой раскрытия рисков',
+  legalPrivacy: 'Политикой конфиденциальности',
+  legalAnd: ' и ',
 }

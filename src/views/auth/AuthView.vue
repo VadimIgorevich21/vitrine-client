@@ -195,6 +195,17 @@ function goGoogle() {
         </svg>
         {{ t("login.loginWithGoogle") }}
       </button>
+
+      <!-- Legal Disclaimer -->
+      <div class="auth-legal">
+        {{ t("login.legalPrefix") }}
+        <router-link to="/terms" target="_blank" class="auth-legal__link">{{ t("login.legalTerms") }}</router-link>,
+        <router-link to="/aml-and-kyc-policy" target="_blank" class="auth-legal__link">{{ t("login.legalAml") }}</router-link>,
+        <router-link to="/refund-policy" target="_blank" class="auth-legal__link">{{ t("login.legalRefund") }}</router-link>,
+        <router-link to="/risk-disclosure-policy" target="_blank" class="auth-legal__link">{{ t("login.legalRisk") }}</router-link>
+        {{ t("login.legalAnd") }}
+        <router-link to="/privacy-policy" target="_blank" class="auth-legal__link">{{ t("login.legalPrivacy") }}</router-link>.
+      </div>
     </div>
 
     <!-- ── Step 2: OTP Verification ────────────────────────────────── -->
@@ -577,6 +588,25 @@ function goGoogle() {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
+}
+
+/* ── Legal Disclaimer ──────────────────────────────────── */
+.auth-legal {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #9CA3AF;
+  text-align: center;
+}
+
+.auth-legal__link {
+  color: #9CA3AF;
+  text-decoration: underline;
+  transition: color 0.15s;
+}
+
+.auth-legal__link:hover {
+  color: #F97316;
 }
 
 /* ── Footer ────────────────────────────────────────────── */
