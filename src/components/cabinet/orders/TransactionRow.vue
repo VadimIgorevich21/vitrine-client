@@ -213,7 +213,7 @@ const confirmCancel = async () => {
           </div>
           <div class="detail-item">
             <label>{{ t('orders.details.feePaid') }}</label>
-            <span>0.00 {{ fiatCurrency }}</span>
+            <span>{{ order.commission_amount || '0.00' }} {{ fiatCurrency }}</span>
           </div>
           
           <!-- Receiving details based on type -->

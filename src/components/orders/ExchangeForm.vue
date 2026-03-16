@@ -5,8 +5,9 @@
     <div v-else-if="formStore.step === 1" class="tabs-container mb-6">
       <button
         v-for="t in (['buy', 'sell'] as const)" :key="t"
-        @click="formStore.state.type = t"
-        :class="['tab-button', formStore.state.type === t ? 'active' : 'inactive']"
+        @click="t === 'buy' ? (formStore.state.type = t) : null"
+        :class="['tab-button', formStore.state.type === t ? 'active' : 'inactive', { 'disabled': t === 'sell' }]"
+        :disabled="t === 'sell'"
       >
         {{ t === 'buy' ? $t('orders.exchange.buyCrypto') : $t('orders.exchange.sellCrypto') }}
       </button>
@@ -86,8 +87,13 @@ onMounted(async () => {
 ; /* text-gray-400 */
 }
 
-.tab-button.inactive:hover {
+.tab-button.inactive:hover:not(.disabled) {
   color: #6b7280; /* text-gray-500 */
+}
+
+.tab-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .loading-pulse-tabs {

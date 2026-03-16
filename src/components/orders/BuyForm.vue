@@ -92,7 +92,7 @@
           </span>
         </div>
         <div class="fee-text" v-if="formStore.feeAmount !== null && formStore.feePercent !== null">
-          Fee: {{ formStore.feeAmount.toFixed(2) }} {{ formStore.state.from_currency }} ({{ formStore.feePercent.toFixed(2) }}%)
+          Fee: {{ parseFloat(formStore.feeAmount.toFixed(2)) }} {{ formStore.state.from_currency }}
         </div>
       </div>
 
@@ -164,7 +164,7 @@
             </span>
           </div>
           <div class="summary-fee-text" v-if="formStore.feeAmount !== null && formStore.feePercent !== null">
-            Fee: {{ formStore.feeAmount.toFixed(2) }} {{ formStore.state.from_currency }} ({{ formStore.feePercent.toFixed(2) }}%)
+            Fee: {{ parseFloat(formStore.feeAmount.toFixed(2)) }} {{ formStore.state.from_currency }}
           </div>
         </div>
       </div>
