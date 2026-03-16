@@ -9,14 +9,14 @@
           <div class="stat-item">
             <span class="stat-label">{{ t('cabinet.account_page.crypto_purchased') }}</span>
             <div class="stat-value">
-              10,345.12 <span class="currency-unit">EUR</span>
+              {{ formatCurrency(authStore.user?.default_currency_info?.buyTotal) }} <span class="currency-unit">{{ authStore.user?.default_currency }}</span>
             </div>
           </div>
 
           <div class="stat-item">
             <span class="stat-label">{{ t('cabinet.account_page.crypto_sold') }}</span>
             <div class="stat-value">
-              567.01 <span class="currency-unit">EUR</span>
+              {{ formatCurrency(authStore.user?.default_currency_info?.sellTotal) }} <span class="currency-unit">{{ authStore.user?.default_currency }}</span>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@
           <span class="info-label">{{ t('cabinet.account_page.default_currency') }}</span>
           <div class="info-value-wrapper">
             <div class="custom-select-trigger">
-              <span>EUR</span>
+              <span>{{ authStore.user?.default_currency || 'EUR' }}</span>
               <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 1L5 5L9 1" stroke="#929AAA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -64,7 +64,7 @@
           <span class="info-label">{{ t('cabinet.account_page.phone_number') }}</span>
           <div class="info-value-wrapper">
             <div class="value-with-icon">
-              <span class="value-text">+380632681072</span>
+              <span class="value-text">{{ authStore.user?.phone || '—' }}</span>
               <button class="edit-btn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -80,7 +80,7 @@
           <span class="info-label">{{ t('cabinet.account_page.email') }}</span>
           <div class="info-value-wrapper">
             <div class="value-with-icon">
-              <span class="value-text">{{ authStore.user?.email || 'alfatrader@catechange.io' }}</span>
+              <span class="value-text">{{ authStore.user?.email || '—' }}</span>
               <button class="edit-btn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -138,6 +138,14 @@ const router = useRouter();
 const authStore = useAuthStore();
 
 const isVerified = computed(() => authStore.user?.kyc_verified === true);
+
+const formatCurrency = (value?: number) => {
+  if (value === undefined || value === null) return '0.00';
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(value);
+};
 
 const goToVerification = () => {
   router.push('/cabinet/verification');
