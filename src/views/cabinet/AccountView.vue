@@ -685,6 +685,18 @@ const goToVerification = () => {
   .turnover-bg {
     opacity: 0.3;
   }
+
+  .turnover-card {
+    padding: 12px;
+  }
+
+  .info-card {
+    padding: 12px;
+  }
+
+  .edit-input {
+    padding: 8px;
+  }
 }
 </style>
 

@@ -152,12 +152,12 @@ export default {
   },
 
   changeDefaultCurrency(currency: string) {
-    return apiClient.post<{ data: import('@/types/auth').User }>('/users/change-default-currency', {
+    return apiClient.post<{ data: import('@/types/auth').User }>('/change-default-currency', {
       default_currency: currency,
     })
   },
 
   updateProfile(data: Partial<import('@/types/auth').User>) {
-    return apiClient.post<{ data: import('@/types/auth').User }>('/auth/user/update', data)
+    return apiClient.post<{ data: import('@/types/auth').User }>('/update-profile', data)
   },
 }
