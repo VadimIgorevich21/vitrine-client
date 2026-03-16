@@ -71,30 +71,33 @@
             </div>
             <!-- Edit Mode -->
             <div v-else class="edit-mode-wrapper">
-              <UniversalSelect
-                :model-value="tempValues.country_id"
-                :items="configStore.countries"
-                item-key="id"
-                label-path="name"
-                icon-path="flag"
-                :borderless="false"
-                align="left"
-                @update:model-value="val => tempValues.country_id = val"
-                class="country-select"
-              />
-              <div class="edit-actions">
-                <button @click="saveField('country_id')" class="save-btn" :disabled="authStore.loading">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="10" cy="10" r="10" fill="#10B981"/>
-                    <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-                <button @click="cancelEdit" class="cancel-btn">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 6L6 18M6 6L18 18" stroke="#929AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
+              <div class="edit-mode-controls">
+                <UniversalSelect
+                  :model-value="tempValues.country_id"
+                  :items="configStore.countries"
+                  item-key="id"
+                  label-path="name"
+                  icon-path="flag"
+                  :borderless="false"
+                  align="left"
+                  @update:model-value="val => tempValues.country_id = val"
+                  class="country-select"
+                />
+                <div class="edit-actions">
+                  <button @click="saveField('country_id')" class="save-btn" :disabled="authStore.loading">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="10" cy="10" r="10" fill="#10B981"/>
+                      <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button @click="cancelEdit" class="cancel-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 6L6 18M6 6L18 18" stroke="#929AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
+              <FormError v-if="fieldErrors.country_id" :error="fieldErrors.country_id" class="mt-1" />
             </div>
           </div>
         </div>
@@ -115,29 +118,32 @@
             </div>
             <!-- Edit Mode -->
             <div v-else class="edit-mode-wrapper">
-              <div class="input-with-actions">
-                <input
-                  v-model="tempValues.phone"
-                  type="text"
-                  class="edit-input"
-                  placeholder="+1234567890"
-                  @keyup.enter="saveField('phone')"
-                  @keyup.esc="cancelEdit"
-                />
-                <div class="edit-actions">
-                  <button @click="saveField('phone')" class="save-btn" :disabled="authStore.loading">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="10" cy="10" r="10" fill="#10B981"/>
-                      <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                  <button @click="cancelEdit" class="cancel-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 6L6 18M6 6L18 18" stroke="#929AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
+              <div class="edit-mode-controls">
+                <div class="input-with-actions">
+                  <input
+                    v-model="tempValues.phone"
+                    type="text"
+                    class="edit-input"
+                    placeholder="+1234567890"
+                    @keyup.enter="saveField('phone')"
+                    @keyup.esc="cancelEdit"
+                  />
+                  <div class="edit-actions">
+                    <button @click="saveField('phone')" class="save-btn" :disabled="authStore.loading">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="10" fill="#10B981"/>
+                        <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <button @click="cancelEdit" class="cancel-btn">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="#929AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
+              <FormError v-if="fieldErrors.phone" :error="fieldErrors.phone" class="mt-1" />
             </div>
           </div>
         </div>
@@ -158,29 +164,32 @@
             </div>
             <!-- Edit Mode -->
             <div v-else class="edit-mode-wrapper">
-              <div class="input-with-actions">
-                <input
-                  v-model="tempValues.email"
-                  type="email"
-                  class="edit-input"
-                  placeholder="email@example.com"
-                  @keyup.enter="saveField('email')"
-                  @keyup.esc="cancelEdit"
-                />
-                <div class="edit-actions">
-                  <button @click="saveField('email')" class="save-btn" :disabled="authStore.loading">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="10" cy="10" r="10" fill="#10B981"/>
-                      <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                  <button @click="cancelEdit" class="cancel-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 6L6 18M6 6L18 18" stroke="#929AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
+              <div class="edit-mode-controls">
+                <div class="input-with-actions">
+                  <input
+                    v-model="tempValues.email"
+                    type="email"
+                    class="edit-input"
+                    placeholder="email@example.com"
+                    @keyup.enter="saveField('email')"
+                    @keyup.esc="cancelEdit"
+                  />
+                  <div class="edit-actions">
+                    <button @click="saveField('email')" class="save-btn" :disabled="authStore.loading">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="10" fill="#10B981"/>
+                        <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <button @click="cancelEdit" class="cancel-btn">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="#929AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
+              <FormError v-if="fieldErrors.email" :error="fieldErrors.email" class="mt-1" />
             </div>
           </div>
         </div>
@@ -228,6 +237,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore';
 import { useConfigStore } from '@/stores/syncConfigs';
 import UniversalSelect from '@/components/common/UniversalSelect.vue';
+import FormError from '@/components/FormError.vue';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -241,6 +251,7 @@ onMounted(async () => {
 
 // --- Inline Editing ---
 const editingField = ref<string | null>(null);
+const fieldErrors = reactive<Record<string, any>>({});
 const tempValues = reactive<Record<string, any>>({
   country_id: null,
   phone: '',
@@ -255,6 +266,7 @@ const currentCountry = computed(() => {
 const startEdit = (field: string, initialValue: any) => {
   editingField.value = field;
   tempValues[field] = initialValue;
+  fieldErrors[field] = null; // Clear error when editing starts
 };
 
 const cancelEdit = () => {
@@ -263,11 +275,20 @@ const cancelEdit = () => {
 
 const saveField = async (field: string) => {
   try {
+    fieldErrors[field] = null;
     const payload = { [field]: tempValues[field] };
     await authStore.updateProfile(payload);
     editingField.value = null;
-  } catch (error) {
+  } catch (error: any) {
     console.error(`Failed to save ${field}:`, error);
+    // Extract validation errors from Laravel-style response
+    if (error.response?.data?.errors) {
+      fieldErrors[field] = error.response.data.errors[field];
+    } else if (error.response?.data?.message) {
+      fieldErrors[field] = error.response.data.message;
+    } else {
+      fieldErrors[field] = 'An error occurred while saving';
+    }
   }
 };
 
@@ -532,10 +553,22 @@ const goToVerification = () => {
 /* Edit Mode Styles */
 .edit-mode-wrapper {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 5px;
   width: 100%;
   min-width: 0;
+}
+
+.edit-mode-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.edit-mode-wrapper .form-error{
+  font-size: 12px;
 }
 
 .input-with-actions {
@@ -645,6 +678,7 @@ const goToVerification = () => {
   box-shadow: 0 12px 24px -5px rgba(255, 122, 0, 0.5);
   cursor: pointer;
 }
+
 
 @media (max-width: 1024px) {
   .info-grid {
