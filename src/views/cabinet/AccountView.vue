@@ -472,19 +472,21 @@ const goToVerification = () => {
 .value-with-icon {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 3px;
   font-size: 18px;
   font-weight: 500;
   color: #101828;
   height: 48px;
   min-width: 0;
+  max-width: 100%; /* Keeps the container within the grid cell */
 }
 
 .value-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  flex: 1;
+  flex: 0 1 auto; /* Doesn't force expansion, but allows shrinking */
+  min-width: 0; /* Necessary for truncation in flexbox */
 }
 
 .edit-btn {
@@ -495,6 +497,7 @@ const goToVerification = () => {
   justify-content: center;
   transition: all 0.2s;
   margin-left: 4px;
+  flex-shrink: 0; /* Prevents the button from being flattened */
 }
 
 .edit-btn:hover {
@@ -538,7 +541,7 @@ const goToVerification = () => {
 .input-with-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 5px;
   width: 100%;
   max-width: 100%;
   min-width: 0;
