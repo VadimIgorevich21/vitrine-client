@@ -40,7 +40,8 @@
                item-key="code"
                label-path="code"
                icon-path="icon"
-               :borderless="true"
+               :borderless="false"
+               align="left"
                @update:model-value="handleCurrencyChange"
                class="currency-select"
              />
@@ -55,9 +56,9 @@
               <span class="country-flag">🇺🇦</span>
               <span class="value-text">Ukraine</span>
               <button class="edit-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.5 5L19 8.5M17.5 3L21 6.5L11.5 16H8V12.5L17.5 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7 21H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
             </div>
@@ -71,9 +72,9 @@
             <div class="value-with-icon">
               <span class="value-text">{{ authStore.user?.phone || '—' }}</span>
               <button class="edit-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.5 5L19 8.5M17.5 3L21 6.5L11.5 16H8V12.5L17.5 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7 21H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
             </div>
@@ -87,9 +88,9 @@
             <div class="value-with-icon">
               <span class="value-text">{{ authStore.user?.email || '—' }}</span>
               <button class="edit-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.5 5L19 8.5M17.5 3L21 6.5L11.5 16H8V12.5L17.5 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7 21H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
             </div>
@@ -307,46 +308,62 @@ const goToVerification = () => {
 
 .currency-select {
   width: auto;
-  min-width: 80px;
+  min-width: 140px;
 }
 
-:deep(.currency-select .selected-item-button.borderless) {
-  padding: 0;
-  font-size: 16px;
-  font-weight: 500;
-  color: #0F1116;
+:deep(.currency-select .selected-item-button.normal) {
+  background-color: #F8F9FA;
+  border: 1px solid #F2F2F6;
+  border-radius: 8px;
+  padding: 8px 16px;
+  min-height: 48px;
+  max-width: 150px;
 }
 
 :deep(.currency-select .item-label) {
-  color: #0F1116;
+  color: #929AAA;
+  font-weight: 500;
+  font-size: 16px;
 }
 
 :deep(.currency-select .arrow-icon) {
   color: #929AAA;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
 }
 
 .value-with-icon {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 16px;
+  gap: 12px;
+  font-size: 18px;
   font-weight: 500;
-  color: #0F1116;
+  color: #101828;
+  height: 48px; /* Align with select height */
 }
 
 .edit-btn {
-  color: #B0B8C6;
+  color: #929AAA;
   padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s;
+  transition: all 0.2s;
+  margin-left: 4px;
 }
 
 .edit-btn:hover {
-  color: #F6851B;
+  color: #101828;
+  transform: scale(1.1);
+}
+
+.country-flag {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
 }
 
 .kyc-status {

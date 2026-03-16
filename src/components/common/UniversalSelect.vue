@@ -20,7 +20,7 @@
 
     <!-- Dropdown -->
     <transition name="dropdown">
-      <div v-if="isOpen" class="dropdown-panel">
+      <div v-if="isOpen" class="dropdown-panel" :style="{ [align]: 0 }">
         <!-- Search -->
         <div class="search-container">
           <div class="search-input-wrapper">
@@ -88,6 +88,7 @@ const props = withDefaults(defineProps<{
   rounded?: boolean;
   borderless?: boolean;
   isFiat?: boolean;
+  align?: 'left' | 'right';
 }>(), {
   itemKey: 'code',
   labelPath: 'code',
@@ -95,7 +96,8 @@ const props = withDefaults(defineProps<{
   searchPlaceholder: 'Search...',
   rounded: false,
   borderless: false,
-  isFiat: false
+  isFiat: false,
+  align: 'right'
 });
 
 const emit = defineEmits<{
@@ -282,12 +284,21 @@ watch(isOpen, (newVal) => {
   margin-top: 8px;
   width: 100%;
   min-width: 280px;
-  right: 0;
   background-color: white;
   border-radius: 16px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   border: 1px solid #f3f4f6;
   overflow: hidden;
+}
+
+.dropdown-panel[style*="left"] {
+  left: 0;
+  right: auto;
+}
+
+.dropdown-panel[style*="right"] {
+  right: 0;
+  left: auto;
 }
 
 :deep(.dark) .dropdown-panel {
