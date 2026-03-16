@@ -473,7 +473,7 @@ const goToVerification = () => {
   display: flex;
   align-items: center;
   gap: 3px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: #101828;
   height: 48px;

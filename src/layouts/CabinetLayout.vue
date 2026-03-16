@@ -45,7 +45,7 @@ const toggleMobileMenu = () => {
       </div>
 
       <!-- Main Content -->
-      <main class="flex-1 p-4 lg:p-6 lg:pb-10 flex flex-col">
+      <main class="flex-1 p-4 lg:p-6 lg:pb-10 flex flex-col mb-24">
         <div class="max-w-6xl mx-auto w-full flex-1 flex flex-col">
           <RouterView />
         </div>
