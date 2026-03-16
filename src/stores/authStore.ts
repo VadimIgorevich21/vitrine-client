@@ -101,9 +101,9 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       await authService.logout()
       user.value = null
-      router.push({ path: '/auth' })
       localStorage.removeItem(CONFIGS_KEY)
       localStorage.removeItem(USER_STORAGE_KEY)
+      router.push({ path: '/' })
     } catch (err) {
       user.value = null
       error.value = getError(err)
