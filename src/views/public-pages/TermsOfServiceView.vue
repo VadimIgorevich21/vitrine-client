@@ -49,7 +49,7 @@ const { t } = useI18n()
           <p class="page-content-text">
             3.1 You represent and warrant that:
           </p>
-          <ul>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
             <li>you are at least 18 years old (or the age of majority in your jurisdiction);</li>
             <li>you have legal capacity to enter into binding contracts;</li>
             <li>you are not a person located in or subject to the laws of any jurisdiction in which use of the Service would be prohibited by applicable law or regulation;</li>
@@ -180,7 +180,7 @@ const { t } = useI18n()
           <p class="page-content-text">
             12.1 You must not:
           </p>
-          <ul>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
             <li>use the Service for illegal purposes or to facilitate unlawful behaviour;</li>
             <li>provide false or misleading information; attempt to manipulate transaction systems or exploit vulnerabilities;</li>
             <li>infringe others’ rights, including intellectual property or privacy rights;</li>
@@ -298,7 +298,7 @@ const { t } = useI18n()
             NIP: <strong>5252939713</strong><br>
             REGON: <strong>524214646</strong><br>
             Registered office: <strong>ul. Żurawia 6, lok. 12, 00-503 Warszawa, Poland</strong><br>
-            Email: <a href="mailto:info@ironbit.io"><strong>info@ironbit.net</strong></a>
+            Email: <a href="mailto:info@ironbit.net"><strong>info@ironbit.net</strong></a>
           </p>
         </div>
       </div>

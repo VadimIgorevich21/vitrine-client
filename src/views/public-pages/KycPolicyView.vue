@@ -8,7 +8,7 @@ const lastUpdated = '2025-02-20'
 </script>
 
 <template>
-  <div class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+  <div class="public-layout-content">
     <!-- Main Content -->
     <article class="default-container">
       <h1 class="page-title-h1 mb-3">{{ t('privacy.title') }}</h1>

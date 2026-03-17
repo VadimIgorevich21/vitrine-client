@@ -8,7 +8,7 @@ const lastUpdated = '2025-02-20'
 </script>
 
 <template>
-  <div class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+  <div class="public-layout-content">
     <!-- Main Content -->
     <article class="default-container">
       <h1 class="page-title-h1 mb-10">Refund Policy</h1>
@@ -57,7 +57,7 @@ const lastUpdated = '2025-02-20'
       <div class="mb-8">
         <h3 class="page-title-h3 mb-3">3. How to Request a Refund</h3>
         <div class="space-y-4">
-          <p class="page-content-text">3.1 To request a refund, you must contact IRONBIT by email at <a href="mailto:info@ironbit.io"><strong>info@ironbit.net</strong></a> and include:</p>
+          <p class="page-content-text">3.1 To request a refund, you must contact IRONBIT by email at <a href="mailto:info@ironbit.net"><strong>info@ironbit.net</strong></a> and include:</p>
           <ul class="list-disc pl-5 space-y-2 page-content-text">
             <li>Full name and registered email;</li>
             <li>Transaction ID or reference number;</li>
@@ -110,7 +110,7 @@ const lastUpdated = '2025-02-20'
         <h3 class="page-title-h3 mb-3">6. Transaction Errors</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            6.1 If you believe that an error has occurred during your transaction, you must notify IRONBIT immediately by email at <a href="mailto:info@ironbit.io"><strong>info@ironbit.net</strong></a>.
+            6.1 If you believe that an error has occurred during your transaction, you must notify IRONBIT immediately by email at <a href="mailto:info@ironbit.net"><strong>info@ironbit.net</strong></a>.
           </p>
           <p class="page-content-text">
             6.2 We will investigate each case individually and inform you of the outcome as soon as reasonably possible.
@@ -181,7 +181,7 @@ const lastUpdated = '2025-02-20'
           <p class="page-content-text">
             <strong>IRONBIT Sp. z o.o.</strong><br>
             ul. Żurawia 6, lok. 12, 00-503 Warszawa, Poland<br>
-            Email: <a href="mailto:info@ironbit.io"><strong>info@ironbit.net</strong></a>
+            Email: <a href="mailto:info@ironbit.net"><strong>info@ironbit.net</strong></a>
           </p>
         </div>
       </div>
