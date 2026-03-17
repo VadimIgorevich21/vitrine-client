@@ -10,12 +10,12 @@ const authStore = useAuthStore()
 </script>
 
 <template>
-  <header class="public-header py-4 px-4 sm:px-6 lg:px-8">
+  <header class="public-header default-wrapper">
     <div class="default-container">
       <div class="home-page-header header-container backdrop-blur-sm px-6 h-16 flex justify-between items-center">
         <!-- Logo -->
         <RouterLink to="/" class="flex items-center">
-          <img :src="logo" alt="IronBit" class="h-8 w-auto" />
+          <img :src="logo" alt="IronBit" class="logo-img" />
         </RouterLink>
 
         <!-- Navigation (Center) -->
@@ -56,6 +56,12 @@ const authStore = useAuthStore()
   position: relative;
   z-index: 50;
 }
+
+.logo-img {
+  height: 2rem;  /* h-8 */
+  width: auto;   /* w-auto */
+}
+
 
 .header-container {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -131,6 +137,11 @@ const authStore = useAuthStore()
 @media screen and (max-width: 400px) {
   .public-header {
     padding: 5px;
+  }
+
+  .logo-img {
+    max-width: 80px;
+    height: auto;
   }
 }
 </style>

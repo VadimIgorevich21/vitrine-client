@@ -1,6 +1,6 @@
 <template>
-  <section id="support" class="support-contact-section">
-    <div class="default-container px-4 py-32 text-center">
+  <section id="support" class="support-contact-section default-wrapper">
+    <div class="default-container home-contacts-wrapper text-center">
       <div class="support-content">
         <h2 class="page-title-h1 white-color mb-12">
           {{ t('home.support_title_p1') }} <span class="text-orange-gradient">{{ t('home.support_title_p2') }}</span>
@@ -97,6 +97,22 @@ const handleContact = () => {
   pointer-events: none;
 }
 
+
+.page-title-h1.white-color {
+  color: #ffffff;
+}
+
+.home-contacts-wrapper {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
+@media (max-width: 1024px) {
+  .home-contacts-wrapper {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
 @media (max-width: 768px) {
   .support-title {
     font-size: 2.5rem;
@@ -108,7 +124,4 @@ const handleContact = () => {
   }
 }
 
-.page-title-h1.white-color {
-  color: #ffffff;
-}
 </style>

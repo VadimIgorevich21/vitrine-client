@@ -6,8 +6,8 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div class="home-hero-container">
-    <div class="default-container pt-12 pb-20">
+  <div class="home-hero-container default-wrapper">
+    <div class="default-container home-hero-wrapper">
       <div class="hero-grid">
         
         <!-- Left Side: Content -->
@@ -30,7 +30,7 @@ const { t } = useI18n()
         <!-- Right Side: Form Block -->
         <div class="hero-form-column">
           <div class="flex items-center justify-center w-full">
-            <div class="max-w-2xl w-full flex-1 p-4 lg:p-0">
+            <div class="max-w-2xl w-full flex-1 p-0">
               <ExchangeForm />
             </div>
           </div>
@@ -46,6 +46,11 @@ const { t } = useI18n()
   position: relative;
   /* overflow: hidden; */ /* Removed to prevent clipping currency dropdowns */
   z-index: 20; /* Keep hero above the rates ticker (which is z-index 10) */
+}
+
+.home-hero-wrapper {
+  padding-top: 3rem;    /* pt-12 */
+  padding-bottom: 5rem; /* pb-20 */
 }
 
 .hero-grid {
@@ -219,13 +224,17 @@ const { t } = useI18n()
   }
 }
 
-@media (max-width: 768px) {
-  .hero-content-block {
-    padding: 0 5px;
-  }
+@media (max-width: 1200px) {
   .hero-title {
     font-size: 48px;
   }
+
+  .home-hero-wrapper {
+    padding-bottom: 30px;
+  }
+}
+@media (max-width: 768px) {
+
 }
 
 @media (max-width: 525px) {
@@ -235,6 +244,12 @@ const { t } = useI18n()
 
   .hero-subtitle {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 24px;
   }
 }
 </style>

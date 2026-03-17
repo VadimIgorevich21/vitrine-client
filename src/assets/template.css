@@ -32,6 +32,27 @@ textarea {
     margin: 0 auto;    /* Центрирование контейнера */
 }
 
+.default-wrapper {
+    padding-top: 1rem;    /* py-4 */
+    padding-bottom: 1rem;
+    padding-left: 1rem;   /* px-4 */
+    padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+    .default-wrapper {
+        padding-left: 1.5rem; /* sm:px-6 */
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .default-wrapper {
+        padding-left: 2rem;   /* lg:px-8 */
+        padding-right: 2rem;
+    }
+}
+
 
 .font-14px {
     font-size: 14px;
@@ -129,6 +150,7 @@ textarea {
     }
 }
 
+
 @media (min-width: 1024px) {
     .public-layout-content {
         padding-left: 2rem;   /* lg:px-8 */
@@ -137,5 +159,23 @@ textarea {
 }
 
 
+@media (max-width: 1200px) {
+    .page-title-h1 {
+        font-size: 32px;
+    }
+    .page-subtitle-gradient {
+        font-size: 32px;
+    }
+}
+
+
+@media (max-width: 400px) {
+    .page-title-h1 {
+        font-size: 24px;
+    }
+    .page-subtitle-gradient {
+        font-size: 24px;
+    }
+}
 
 

@@ -1,6 +1,6 @@
 <template>
-  <section class="simple-process-section">
-    <div class="default-container px-4 py-24">
+  <section class="simple-process-section default-wrapper">
+    <div class="default-container simple-process-wrapper">
       <div class="process-grid">
         <!-- Left Content (Similar to InstantRegistration) -->
         <div class="process-content">
@@ -101,6 +101,11 @@ const handleAction = () => {
 <style scoped>
 .simple-process-section {
   background-color: #FAFAFA;
+}
+
+.simple-process-wrapper {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
 }
 
 :deep(.dark) .simple-process-section {
@@ -241,6 +246,19 @@ const handleAction = () => {
 /* .step-line dark removed */
 
 @media (max-width: 1024px) {
+  .simple-process-wrapper {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .step-title {
+    font-size: 20px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+  }
+
   .process-grid {
     grid-template-columns: 1fr;
     gap: 4rem;
@@ -255,6 +273,12 @@ const handleAction = () => {
 
   .step-item {
     gap: 1.5rem;
+  }
+}
+
+@media (max-width: 525px) {
+  .step-card {
+    padding: 15px 20px;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <section class="instant-reg-section">
+  <section class="instant-reg-section default-wrapper">
     <div class="default-container">
       <div class="reg-grid">
         <!-- Left Content -->
@@ -55,6 +55,7 @@ const handleAction = () => {
   background-position: center;
   overflow: hidden;
   background-color: #fff;
+  padding-bottom: 0;
 }
 
 :deep(.dark) .instant-reg-section {
@@ -153,6 +154,18 @@ const handleAction = () => {
   }
 }
 
+
+@media (max-width: 1200px) {
+  .reg-image-wrapper {
+    height: clamp(450px, 80vh, 900px);
+  }
+}
+@media (max-width: 1100px) {
+  .reg-image-wrapper {
+    height: clamp(400px, 80vh, 900px);
+  }
+}
+
 @media (max-width: 1024px) {
   .reg-grid {
     grid-template-columns: 1fr;
@@ -163,12 +176,13 @@ const handleAction = () => {
   .reg-content {
     align-items: center;
     margin-bottom: 2rem;
-    padding: 150px 0;
+    padding: 30px 0;
   }
 
   .reg-image-wrapper {
     height: 400px;
     justify-content: center;
+    display: none;
   }
 
   .reg-main-graphic {
