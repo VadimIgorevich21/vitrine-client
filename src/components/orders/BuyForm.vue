@@ -99,7 +99,7 @@
       <!-- Continue Button / Minimum Error -->
       <button
         v-if="!configStore.loading"
-        @click="authStore.user ? formStore.step = 2 : handleSubmit()"
+        @click="handleContinue"
         :disabled="loading || !formStore.state.amount_from || formStore.state.amount_from === 0"
         :class="['primary-btn', !formStore.isAmountValid ? 'btn-error' : 'btn-active']"
         :style="(!formStore.state.amount_from || formStore.state.amount_from === 0) ? { opacity: 0.5 } : {}"
@@ -260,6 +260,21 @@ const isNetworkLocked = computed(() => {
   const currency = formStore.state.to_currency?.toLowerCase();
   return ['btc', 'eth', 'trx', 'usdc'].includes(currency);
 });
+
+const handleContinue = () => {
+  if (!authStore.user) {
+    handleSubmit();
+    return;
+  }
+  
+  // if kyc_verified is false, redirect to verification
+  if (!authStore.user.kyc_verified) {
+    router.push({ name: 'verification' });
+    return;
+  }
+  
+  formStore.step = 2;
+};
 
 const handleSubmit = async () => {
   if (!authStore.user) {
