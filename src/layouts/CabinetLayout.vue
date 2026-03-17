@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import Sidebar from '@/components/layout/Sidebar.vue'
 import KycBanner from '@/components/common/KycBanner.vue'
 import { useAuthStore } from '@/stores/authStore'
-import { computed, ref } from 'vue'
 import logoUrl from '@/assets/img/logo.png'
 import { RouterLink } from "vue-router";
 
@@ -11,9 +12,19 @@ const showKycBanner = computed(() => authStore.user?.kyc_verified !== true && au
 
 const isMobileMenuOpen = ref(false)
 
+const route = useRoute()
+const scrollContainer = ref<HTMLElement | null>(null)
+
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
+
+// Reset scroll on route change
+watch(() => route.path, () => {
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollTop = 0
+  }
+})
 </script>
 
 <template>
@@ -29,7 +40,7 @@ const toggleMobileMenu = () => {
     <Sidebar :is-mobile-open="isMobileMenuOpen" @close="isMobileMenuOpen = false" />
 
     <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col h-screen w-full overflow-y-auto">
+    <div ref="scrollContainer" class="flex-1 flex flex-col h-screen w-full overflow-y-auto">
       <!-- Mobile Header -->
       <header class="lg:hidden bg-[#0F1116] text-white p-4 flex items-center justify-between sticky top-0 z-30">
         <RouterLink to="/" class="flex items-center">

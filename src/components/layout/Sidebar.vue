@@ -88,7 +88,7 @@ const handleLogout = async () => {
         >
           <a 
             :href="href"
-            @click="navigate"
+            @click="(e) => { navigate(e); $emit('close'); }"
             class="flex items-center gap-3 py-3 rounded-xl transition-all hover:text-white group"
             :class="(item.exact ? isExactActive : isActive) ? 'text-white font-medium' : ''"
           >
@@ -105,9 +105,8 @@ const handleLogout = async () => {
           <LanguageSwitcher class="sidebar-language-switcher" />
         </div>
 
-        <!-- Logout -->
         <button 
-          @click="handleLogout"
+          @click="() => { handleLogout(); $emit('close'); }"
           class="flex cursor-pointer items-center mb-6 gap-3 py-2 hover:text-white transition-colors w-full text-left"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="opacity-70">
@@ -123,6 +122,7 @@ const handleLogout = async () => {
             v-for="link in footerLinks" 
             :key="link.path" 
             :to="link.path"
+            @click="$emit('close')"
             class="cabinet-footer-link block text-xs text-gray-500 hover:text-white transition-colors"
           >
             {{ t(`cabinet.sidebar.${link.name}`) }}
