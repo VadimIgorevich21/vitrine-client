@@ -4,7 +4,7 @@
       <div v-for="(item, index) in displayItems" :key="`${item.main}-${item.from}-${index}`" class="ticker-item">
         <span class="ticker-pair">{{ item.main }}/{{ item.from }}</span>
         <span class="ticker-value">{{ formatPrice(item.rate.unit_price, item.from) }}</span>
-        <span class="!hidden ticker-change" :class="item.change >= 0 ? 'up' : 'down'">
+        <span class="ticker-change" :class="item.change >= 0 ? 'up' : 'down'">
           {{ item.change >= 0 ? '+' : '' }}{{ item.change }}%
         </span>
       </div>
@@ -12,7 +12,7 @@
       <div v-for="(item, index) in displayItems" :key="`${item.main}-${item.from}-dup-${index}`" class="ticker-item" aria-hidden="true">
         <span class="ticker-pair">{{ item.main }}/{{ item.from }}</span>
         <span class="ticker-value">{{ formatPrice(item.rate.unit_price, item.from) }}</span>
-        <span class="!hidden ticker-change" :class="item.change >= 0 ? 'up' : 'down'">
+        <span class="ticker-change" :class="item.change >= 0 ? 'up' : 'down'">
           {{ item.change >= 0 ? '+' : '' }}{{ item.change }}%
         </span>
       </div>
@@ -28,12 +28,12 @@ const rateStore = useRateStore();
 
 // Requested sequences
 const sequence1 = [
-  { main: 'BTC', from: 'USD', change: 2.4 },
-  { main: 'ETH', from: 'USD', change: 1.8 },
+  { main: 'BTC', from: 'USD', change: 0.2 },
+  { main: 'ETH', from: 'USD', change: 0.8 },
   { main: 'TRX', from: 'USD', change: -0.5 },
-  { main: 'USDC', from: 'USD', change: 0.1 },
-  { main: 'BTC', from: 'EUR', change: 2.1 },
-  { main: 'ETH', from: 'EUR', change: 1.5 },
+  { main: 'USDC', from: 'USD', change: 0.01 },
+  { main: 'BTC', from: 'EUR', change: 0.1 },
+  { main: 'ETH', from: 'EUR', change: 0.6 },
   { main: 'TRX', from: 'EUR', change: -0.3 },
   { main: 'USDC', from: 'EUR', change: 0.0 },
 ];
