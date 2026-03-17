@@ -3,16 +3,16 @@
     <div class="ticker-content" :style="{ animationDuration: animationDuration }">
       <div v-for="(item, index) in displayItems" :key="`${item.main}-${item.from}-${index}`" class="ticker-item">
         <span class="ticker-pair">{{ item.main }}/{{ item.from }}</span>
-        <span class="ticker-value">{{ formatPrice(item.rate.market_rate, item.from) }}</span>
-        <span class="ticker-change" :class="item.change >= 0 ? 'up' : 'down'">
+        <span class="ticker-value">{{ formatPrice(item.rate.unit_price, item.from) }}</span>
+        <span class="!hidden ticker-change" :class="item.change >= 0 ? 'up' : 'down'">
           {{ item.change >= 0 ? '+' : '' }}{{ item.change }}%
         </span>
       </div>
       <!-- Duplicate for seamless loop -->
       <div v-for="(item, index) in displayItems" :key="`${item.main}-${item.from}-dup-${index}`" class="ticker-item" aria-hidden="true">
         <span class="ticker-pair">{{ item.main }}/{{ item.from }}</span>
-        <span class="ticker-value">{{ formatPrice(item.rate.market_rate, item.from) }}</span>
-        <span class="ticker-change" :class="item.change >= 0 ? 'up' : 'down'">
+        <span class="ticker-value">{{ formatPrice(item.rate.unit_price, item.from) }}</span>
+        <span class="!hidden ticker-change" :class="item.change >= 0 ? 'up' : 'down'">
           {{ item.change >= 0 ? '+' : '' }}{{ item.change }}%
         </span>
       </div>
@@ -91,8 +91,8 @@ const formatPrice = (value: number, currency: string) => {
   width: 100%;
   overflow: hidden;
   background-color: white; /* Explicitly set background color */
-  border-top: 1px solid #f1f5f9;
-  border-bottom: 1px solid #f1f5f9;
+  //border-top: 1px solid #f1f5f9;
+  //border-bottom: 1px solid #f1f5f9;
   padding: 16px 0;
   position: relative;
   z-index: 10;
