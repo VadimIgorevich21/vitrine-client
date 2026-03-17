@@ -270,9 +270,9 @@ function goGoogle() {
       <div class="auth-footer__container default-container">
         <span class="auth-footer__copy">© 2026 IronBit. All rights reserved.</span>
         <nav class="auth-footer__nav">
-          <a href="#" class="auth-footer__link">{{ t("footer.buySell") }}</a>
-          <a href="#" class="auth-footer__link">{{ t("footer.contactUs") }}</a>
-          <a href="#" class="auth-footer__link">{{ t("footer.terms") }}</a>
+          <a href="/" class="auth-footer__link">{{ t("footer.buySell") }}</a>
+          <a href="/contacts" class="auth-footer__link">{{ t("footer.contactUs") }}</a>
+          <a href="/terms" class="auth-footer__link">{{ t("footer.terms") }}</a>
         </nav>
         <div class="auth-footer__right">
           <LanguageSwitcher />
