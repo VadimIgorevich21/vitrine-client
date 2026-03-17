@@ -1,6 +1,5 @@
 import { createI18n } from 'vue-i18n'
 import en from '@/locales/en'
-import ru from '@/locales/ru'
 import pl from '@/locales/pl'
 
 export const LOCALE_STORAGE_KEY = 'locale'
@@ -18,12 +17,6 @@ export const locales = {
     short: 'PL',
     flag: '/img/flags/PL.svg',
     messages: pl,
-  },
-  ru: {
-    label: 'Русский',
-    short: 'RU',
-    flag: '/img/flags/RU.svg',
-    messages: ru,
   },
 } as const
 

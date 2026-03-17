@@ -14,7 +14,7 @@ export default {
   instant_reg_button: 'Zarejestruj się teraz',
   process_title_p1: 'Prosty Proces',
   process_title_p2: 'Zakupu Krypto',
-  process_title_p3: 'Zacznij Handlować w Minutę',
+  process_title_p3: 'Zacznij w Minutę',
   process_description: 'Podążaj za jasnym procesem od rejestracji i weryfikacji do bezpiecznej dostawy kryptowalut',
   process_btn: 'Rozpocznij',
   process_step1_title: 'Zarejestruj Konto',

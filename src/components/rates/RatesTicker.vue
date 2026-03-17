@@ -21,12 +21,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRateStore } from '@/stores/useRateStore';
 
 const rateStore = useRateStore();
 
-// Requested sequences
+// Requested initial sequence data
 const sequence1 = [
   { main: 'BTC', from: 'USD', change: 0.2 },
   { main: 'ETH', from: 'USD', change: 0.8 },
@@ -38,35 +38,55 @@ const sequence1 = [
   { main: 'USDC', from: 'EUR', change: 0.0 },
 ];
 
-// Placeholder sequence (alternative)
-/*
-const sequence2 = [
-  { from: 'BTC', to: 'USD', change: 2.4 },
-  { from: 'BTC', to: 'EUR', change: 2.1 },
-  { from: 'ETH', to: 'USD', change: 1.8 },
-  { from: 'ETH', to: 'EUR', change: 1.5 },
-  { from: 'TRX', to: 'USD', change: -0.5 },
-  { from: 'TRX', to: 'EUR', change: -0.3 },
-  { from: 'USDC', to: 'USD', change: 0.1 },
-  { from: 'USDC', to: 'EUR', change: 0.0 },
-];
-*/
+/**
+ * Reactive state to track current changes and previous prices.
+ * We initialize changes from sequence1 as requested.
+ */
+const dynamicChanges = ref<Record<string, number>>(
+  Object.fromEntries(sequence1.map(s => [`${s.main}-${s.from}`, s.change]))
+);
 
+const previousPrices = ref<Record<string, number>>({});
 
-const activeSequence = sequence1;
+// Initialize previous prices if rates are already loaded
+rateStore.rates.forEach(rate => {
+  const key = `${rate.main}-${rate.from}`;
+  previousPrices.value[key] = rate.unit_price;
+});
+
+// Watch for store updates to calculate new changes
+watch(() => rateStore.lastUpdated, () => {
+  rateStore.rates.forEach(rate => {
+    const key = `${rate.main}-${rate.from}`;
+    const oldPrice = previousPrices.value[key];
+    const newPrice = rate.unit_price;
+
+    if (oldPrice !== undefined && oldPrice !== newPrice && oldPrice !== 0) {
+      // Calculate percentage change: ((new - old) / old) * 100
+      const change = parseFloat((((newPrice - oldPrice) / oldPrice) * 100).toFixed(2));
+      dynamicChanges.value[key] = change;
+    }
+    
+    // Update reference price for next update
+    previousPrices.value[key] = newPrice;
+  });
+}, { immediate: true });
 
 interface DisplayItem {
   main: string;
   from: string;
   change: number;
-  rate: any; // Using any for simplicity as it comes from CurrencyRate
+  rate: any;
 }
 
 const displayItems = computed<DisplayItem[]>(() => {
-  return activeSequence
+  return sequence1
     .map(pair => {
       const rate = rateStore.rates.find(r => r.main === pair.main && r.from === pair.from);
-      return rate ? { ...pair, rate } : null;
+      const key = `${pair.main}-${pair.from}`;
+      const change = dynamicChanges.value[key] ?? pair.change;
+      
+      return rate ? { ...pair, change, rate } : null;
     })
     .filter((item): item is DisplayItem => item !== null);
 });
@@ -77,7 +97,6 @@ const animationDuration = computed(() => {
 
 const formatPrice = (value: number, currency: string) => {
   const symbol = currency === 'USD' ? '$' : currency === 'EUR' ? '€' : currency;
-  // Use a fixed precision for fiat prices in the ticker, e.g., 2 decimal places
   const formattedValue = value.toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,

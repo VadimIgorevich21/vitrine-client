@@ -14,7 +14,7 @@ export default {
   instant_reg_button: 'Register Now',
   process_title_p1: 'Simple Process',
   process_title_p2: 'to Buy Crypto',
-  process_title_p3: 'Start Trading in Minutes',
+  process_title_p3: 'Start in Minutes',
   process_description: 'Follow our clear process from registration and verification to secure crypto delivery',
   process_btn: 'Get Started',
   process_step1_title: 'Register Account',
