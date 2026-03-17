@@ -1,17 +1,17 @@
 <template>
   <div class="ticker-wrapper">
     <div class="ticker-content" :style="{ animationDuration: animationDuration }">
-      <div v-for="(item, index) in displayItems" :key="`${item.from}-${item.to}-${index}`" class="ticker-item">
-        <span class="ticker-pair">{{ item.from }}/{{ item.to }}</span>
-        <span class="ticker-value">{{ formatPrice(item.rate.final_rate, item.rate.precision, item.to) }}</span>
+      <div v-for="(item, index) in displayItems" :key="`${item.main}-${item.from}-${index}`" class="ticker-item">
+        <span class="ticker-pair">{{ item.main }}/{{ item.from }}</span>
+        <span class="ticker-value">{{ formatPrice(item.rate.market_rate, item.from) }}</span>
         <span class="ticker-change" :class="item.change >= 0 ? 'up' : 'down'">
           {{ item.change >= 0 ? '+' : '' }}{{ item.change }}%
         </span>
       </div>
       <!-- Duplicate for seamless loop -->
-      <div v-for="(item, index) in displayItems" :key="`${item.from}-${item.to}-dup-${index}`" class="ticker-item" aria-hidden="true">
-        <span class="ticker-pair">{{ item.from }}/{{ item.to }}</span>
-        <span class="ticker-value">{{ formatPrice(item.rate.final_rate, item.rate.precision, item.to) }}</span>
+      <div v-for="(item, index) in displayItems" :key="`${item.main}-${item.from}-dup-${index}`" class="ticker-item" aria-hidden="true">
+        <span class="ticker-pair">{{ item.main }}/{{ item.from }}</span>
+        <span class="ticker-value">{{ formatPrice(item.rate.market_rate, item.from) }}</span>
         <span class="ticker-change" :class="item.change >= 0 ? 'up' : 'down'">
           {{ item.change >= 0 ? '+' : '' }}{{ item.change }}%
         </span>
@@ -28,14 +28,14 @@ const rateStore = useRateStore();
 
 // Requested sequences
 const sequence1 = [
-  { from: 'BTC', to: 'USD', change: 2.4 },
-  { from: 'ETH', to: 'USD', change: 1.8 },
-  { from: 'TRX', to: 'USD', change: -0.5 },
-  { from: 'USDC', to: 'USD', change: 0.1 },
-  { from: 'BTC', to: 'EUR', change: 2.1 },
-  { from: 'ETH', to: 'EUR', change: 1.5 },
-  { from: 'TRX', to: 'EUR', change: -0.3 },
-  { from: 'USDC', to: 'EUR', change: 0.0 },
+  { main: 'BTC', from: 'USD', change: 2.4 },
+  { main: 'ETH', from: 'USD', change: 1.8 },
+  { main: 'TRX', from: 'USD', change: -0.5 },
+  { main: 'USDC', from: 'USD', change: 0.1 },
+  { main: 'BTC', from: 'EUR', change: 2.1 },
+  { main: 'ETH', from: 'EUR', change: 1.5 },
+  { main: 'TRX', from: 'EUR', change: -0.3 },
+  { main: 'USDC', from: 'EUR', change: 0.0 },
 ];
 
 // Placeholder sequence (alternative)
@@ -52,11 +52,12 @@ const sequence2 = [
 ];
 */
 
+
 const activeSequence = sequence1;
 
 interface DisplayItem {
+  main: string;
   from: string;
-  to: string;
   change: number;
   rate: any; // Using any for simplicity as it comes from CurrencyRate
 }
@@ -64,7 +65,7 @@ interface DisplayItem {
 const displayItems = computed<DisplayItem[]>(() => {
   return activeSequence
     .map(pair => {
-      const rate = rateStore.rates.find(r => r.from === pair.from && r.to === pair.to);
+      const rate = rateStore.rates.find(r => r.main === pair.main && r.from === pair.from);
       return rate ? { ...pair, rate } : null;
     })
     .filter((item): item is DisplayItem => item !== null);
@@ -74,11 +75,12 @@ const animationDuration = computed(() => {
   return `${displayItems.value.length * 8}s`;
 });
 
-const formatPrice = (value: number, precision: number, currency: string) => {
+const formatPrice = (value: number, currency: string) => {
   const symbol = currency === 'USD' ? '$' : currency === 'EUR' ? '€' : currency;
+  // Use a fixed precision for fiat prices in the ticker, e.g., 2 decimal places
   const formattedValue = value.toLocaleString('en-US', {
-    minimumFractionDigits: precision,
-    maximumFractionDigits: precision,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
   return currency === 'USD' || currency === 'EUR' ? `${symbol}${formattedValue}` : `${formattedValue} ${symbol}`;
 };
@@ -88,9 +90,9 @@ const formatPrice = (value: number, precision: number, currency: string) => {
 .ticker-wrapper {
   width: 100%;
   overflow: hidden;
-  /* background: white; */
-  /* border-top: 1px solid #f1f5f9; */
-  /* border-bottom: 1px solid #f1f5f9; */
+  background-color: white; /* Explicitly set background color */
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
   padding: 16px 0;
   position: relative;
   z-index: 10;
