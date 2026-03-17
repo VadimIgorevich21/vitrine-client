@@ -19,6 +19,7 @@ export default {
     selectMethod: 'Select method...',
     youGive: 'You pay',
     minimum: 'Min. Trade Amount:',
+    maximum: 'Max. Trade Amount:',
     youGet: 'You get',
     selectNetwork: 'Select network...',
     walletAddress: 'Your wallet address',

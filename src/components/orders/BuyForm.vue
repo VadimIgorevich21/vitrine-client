@@ -105,7 +105,12 @@
         :style="(!formStore.state.amount_from || formStore.state.amount_from === 0) ? { opacity: 0.5 } : {}"
       >
         <span v-if="!formStore.isAmountValid">
-          {{ $t('orders.exchange.minimum') }} {{ formStore.currentRate?.min_amount }} {{ formStore.state.from_currency }}
+          <template v-if="formStore.amountLimitError === 'min'">
+            {{ $t('orders.exchange.minimum') }} {{ formStore.currentRate?.min_amount }} {{ formStore.state.from_currency }}
+          </template>
+          <template v-else-if="formStore.amountLimitError === 'max'">
+            {{ $t('orders.exchange.maximum') }} {{ formStore.currentRate?.max_amount }} {{ formStore.state.from_currency }}
+          </template>
         </span>
         <span v-else>{{ authStore.user ? 'Continue' : $t('orders.exchange.loginAndExchange') }}</span>
       </button>

@@ -34,10 +34,20 @@ export const useOrderFormStore = defineStore('orderForm', () => {
       : configStore.sellPaymentMethods;
   });
 
-  const isAmountValid = computed(() => {
-    if (!currentRate.value || state.amount_from === null || state.amount_from === 0) return true;
-    return state.amount_from >= currentRate.value.min_amount;
+  const amountLimitError = computed<'min' | 'max' | null>(() => {
+    const rate = currentRate.value;
+    const amount = state.amount_from;
+    if (!rate || amount === null || amount === 0) return null;
+
+    const min = Number(rate.min_amount ?? 0);
+    const max = Number(rate.max_amount ?? 0);
+
+    if (amount < min) return 'min';
+    if (max > 0 && amount > max) return 'max';
+    return null;
   });
+
+  const isAmountValid = computed(() => amountLimitError.value === null);
 
   const computeCommission = (amountFrom: number | null) => {
     const rate = currentRate.value;
@@ -228,6 +238,7 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     currentRate,
     currentPaymentMethods, // Не забудь вернуть новый геттер
     isAmountValid,
+    amountLimitError,
     feeAmount,
     feePercent,
     calculateTo,

@@ -8,7 +8,10 @@ export interface CurrencyRate {
   final_rate: number;
   precision: number;
   min_amount: number;
+  max_amount?: number; // 0/undefined = без ограничения
   min_commission: number;
+  commission_percent?: number;
+  commission_from_amount?: number;
   updated_at: string;
 }
 

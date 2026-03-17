@@ -19,6 +19,7 @@ export default {
     selectMethod: 'Wybierz metodę...',
     youGive: 'Płacisz',
     minimum: 'Min. kwota transakcji:',
+    maximum: 'Maks. kwota transakcji:',
     youGet: 'Otrzymujesz',
     selectNetwork: 'Wybierz sieć...',
     walletAddress: 'Adres portfela',

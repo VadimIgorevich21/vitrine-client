@@ -19,6 +19,7 @@ export default {
     selectMethod: 'Выберите метод...',
     youGive: 'Вы отдаете',
     minimum: 'Минимум:',
+    maximum: 'Максимум:',
     youGet: 'Вы получаете',
     selectNetwork: 'Выберите сеть...',
     walletAddress: 'Адрес вашего кошелька',
