@@ -128,4 +128,9 @@ const authStore = useAuthStore()
   transition: color 0.2s;
 }
 
+@media screen and (max-width: 400px) {
+  .public-header {
+    padding: 5px;
+  }
+}
 </style>

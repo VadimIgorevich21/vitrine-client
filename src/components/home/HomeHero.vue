@@ -218,4 +218,23 @@ const { t } = useI18n()
     max-width: 448px;
   }
 }
+
+@media (max-width: 768px) {
+  .hero-content-block {
+    padding: 0 5px;
+  }
+  .hero-title {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 525px) {
+  .hero-title {
+    font-size: 32px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+  }
+}
 </style>

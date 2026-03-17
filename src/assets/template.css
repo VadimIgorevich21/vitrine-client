@@ -113,3 +113,29 @@ textarea {
 
 
 
+
+.public-layout-content {
+    min-height: 100vh;      /* min-h-screen */
+    padding-top: 5rem;      /* py-20 */
+    padding-bottom: 5rem;
+    padding-left: 1rem;     /* px-4 */
+    padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+    .public-layout-content {
+        padding-left: 1.5rem; /* sm:px-6 */
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .public-layout-content {
+        padding-left: 2rem;   /* lg:px-8 */
+        padding-right: 2rem;
+    }
+}
+
+
+
+

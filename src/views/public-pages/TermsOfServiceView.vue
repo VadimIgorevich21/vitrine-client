@@ -4,7 +4,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div class="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+  <div class="public-layout-content">
     <!-- Main Content -->
     <article class="default-container">
       <h1 class="page-title-h1 mb-10">Terms & Conditions</h1>
