@@ -432,6 +432,25 @@ onMounted(() => {
   100% { transform: rotate(360deg); }
 }
 
+@media (max-width: 1280px) {
+  .orders-main-card {
+    padding: 20px;
+  }
+
+  .table-header-labels,
+  .transaction-header {
+    gap: 5px;
+  }
+
+  .col-date { width: 110px; }
+  .col-type { width: 80px; }
+  .col-direction { width: 80px; }
+}
+@media (max-width: 820px) {
+  .orders-main-card {
+    padding: 10px;
+  }
+}
 @media (max-width: 768px) {
   .table-header-labels { display: none; }
   .search-wrapper { max-width: none; }

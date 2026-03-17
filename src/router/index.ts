@@ -42,6 +42,7 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'home',
         component: HomeView,
+        meta: { title: 'Ironbit' },
       },
     ]
   },
@@ -53,6 +54,7 @@ const routes: RouteRecordRaw[] = [
         path: 'login',
         name: 'login',
         component: LoginView,
+        meta: { title: 'Auth' },
       },
 
       {
@@ -102,6 +104,7 @@ const routes: RouteRecordRaw[] = [
         path: 'account',
         name: 'account',
         component: () => import('@/views/cabinet/AccountView.vue'),
+        meta: { title: 'Account' },
       },
     ],
   },
@@ -115,7 +118,7 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'cabinet',
         component: CabinetView,
-        meta: { requiresVerification: true },
+        meta: { title: 'Exchange Crypto', requiresVerification: true },
       },
       {
         path: 'orders',
@@ -154,7 +157,7 @@ const routes: RouteRecordRaw[] = [
     path: '/success-payment',
     name: 'success-payment',
     component: TentPage,
-    meta: { title: 'success-payment' },
+    meta: { title: 'Success payment' },
   },
   {
     path: '/auth/callback',

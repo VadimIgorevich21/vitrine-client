@@ -625,4 +625,14 @@ const confirmCancel = async () => {
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
 }
+
+@media (max-width: 1280px) {
+  .transaction-header {
+    gap: 5px;
+  }
+
+  .col-date { width: 110px; }
+  .col-type { width: 80px; }
+  .col-direction { width: 80px; }
+}
 </style>
