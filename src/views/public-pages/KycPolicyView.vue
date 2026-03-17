@@ -70,62 +70,105 @@ const lastUpdated = '2025-02-20'
         <h3 class="page-title-h3 mb-3">4. Risk-Based Approach</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            IRONBIT applies a Risk-Based Approach (RBA) to assess the risks of money laundering and terrorist financing. We categorize customers and transactions into different risk levels (Low, Medium, High) based on factors such as country of residence, transaction volume, and business type. Enhanced Due Diligence (EDD) is applied to high-risk customers.
-          </p>
-        </div>
-      </div>
-
-      <div class="mb-8">
-        <h3 class="page-title-h3 mb-3">5. Customer Due Diligence (CDD)</h3>
-        <div class="space-y-4">
-          <p class="page-content-text">
-            IRONBIT identifies and verifies every customer before providing services. The CDD process includes:
+            IRONBIT applies a <strong>risk-based approach (RBA)</strong> to prevent money laundering and terrorist financing. This means that the level of KYC and monitoring applied to each customer depends on the level of risk posed by that customer, based on factors such as:
           </p>
           <ul class="list-disc pl-5 space-y-2 page-content-text">
-            <li><strong>Identification:</strong> Collecting full name, date of birth, nationality, and residential address.</li>
-            <li><strong>Verification:</strong> Requiring a valid government-issued ID (passport, national ID card) and proof of residence (utility bill or bank statement).</li>
-            <li><strong>Liveness Check:</strong> Using facial recognition or video verification tools to ensure the person is real.</li>
+            <li>Country of residence or incorporation;</li>
+            <li>Type of transaction or service used;</li>
+            <li>Source of funds and wealth;</li>
+            <li>Customer behavior and transaction patterns;</li>
           </ul>
-        </div>
-      </div>
-
-      <div class="mb-8">
-        <h3 class="page-title-h3 mb-3">6. Enhanced Due Diligence (EDD)</h3>
-        <div class="space-y-4">
           <p class="page-content-text">
-            For customers identified as high-risk, including Politically Exposed Persons (PEPs) or those from high-risk jurisdictions, IRONBIT performs additional checks, such as verifying the Source of Wealth (SoW) and Source of Funds (SoF).
+            Customers classified as high-risk are subject to enhanced due diligence procedures (EDD).
           </p>
         </div>
       </div>
 
       <div class="mb-8">
-        <h3 class="page-title-h3 mb-3">7. Sanctions and PEP Screening</h3>
+        <h3 class="page-title-h3 mb-3">5. Customer Identification and Verification (KYC)</h3>
         <div class="space-y-4">
-          <p class="page-content-text">
-            All customers are screened against international sanctions lists (UN, EU, OFAC) and PEP databases. IRONBIT does not provide services to individuals or entities subject to financial sanctions.
-          </p>
-        </div>
-      </div>
-
-      <div class="mb-8">
-        <h3 class="page-title-h3 mb-3">8. Transaction Monitoring</h3>
-        <div class="space-y-4">
-          <p class="page-content-text">
-            IRONBIT monitors all transactions in real-time to detect unusual patterns, such as:
-          </p>
+          <p class="page-content-text"><strong>5.1 Individual Customers</strong><br>Each customer must provide:</p>
           <ul class="list-disc pl-5 space-y-2 page-content-text">
-            <li>Transactions of unusually high value;</li>
-            <li>Frequent transactions in a short period;</li>
-            <li>Structuring (breaking down large transactions into smaller ones).</li>
+            <li>Full name</li>
+            <li>Date of birth</li>
+            <li>Residential address</li>
+            <li>Valid government-issued ID (passport, national ID card, or equivalent)</li>
+            <li>PESEL</li>
+            <li>Proof of address (utility bill or bank statement not older than 3 months)</li>
           </ul>
+
+          <p class="page-content-text"><strong>5.2 Corporate Customers</strong><br>Corporate clients must provide:</p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>Certificate of incorporation and company details (KRS, NIP, REGON if Polish entity)</li>
+            <li>Memorandum and Articles of Association</li>
+            <li>Proof of registered office address</li>
+            <li>List of directors and shareholders</li>
+            <li>Identification of Ultimate Beneficial Owners (UBOs) holding 25% or more of the company's shares or voting rights</li>
+            <li>Identity documents of UBOs and authorized signatories</li>
+          </ul>
+
+          <p class="page-content-text"><strong>5.3 Verification Methods</strong></p>
+          <p class="page-content-text">
+            IRONBIT may use third-party verification providers, public registries, and internal verification systems to confirm the authenticity of documents and information submitted.
+          </p>
+        </div>
+      </div>
+
+
+      <div class="mb-8">
+        <h3 class="page-title-h3 mb-3">6. Ongoing Monitoring</h3>
+        <div class="space-y-4">
+          <p class="page-content-text">
+            IRONBIT continuously monitors all transactions and customer behavior to identify unusual or suspicious activities.
+          </p>
+          <p class="page-content-text">Monitoring includes:</p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>Automated screening against sanction and PEP (Politically Exposed Person) lists;</li>
+            <li>Transaction pattern analysis;</li>
+            <li>Regular review of customer data and documentation;</li>
+          </ul>
+          <p class="page-content-text">
+            If suspicious activity is detected, the MLRO will evaluate and report it to competent authorities, in accordance with applicable law.
+          </p>
         </div>
       </div>
 
       <div class="mb-8">
-        <h3 class="page-title-h3 mb-3">9. Suspicious Activity Reporting (SAR)</h3>
+        <h3 class="page-title-h3 mb-3">7. Enhanced Due Diligence (EDD)</h3>
+        <div class="space-y-4">
+          <p class="page-content-text">IRONBIT applies enhanced due diligence to:</p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>High-risk jurisdictions;</li>
+            <li>Customers involved in complex or large transactions;</li>
+            <li>Transactions with unclear economic purpose;</li>
+            <li>Customers or entities listed on sanctions or PEP lists;</li>
+          </ul>
+          <p class="page-content-text">
+            EDD measures may include requesting additional documents, proof of source of funds, and managerial approval before proceeding with transactions.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="page-title-h3 mb-3">8. Record Keeping</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            If there is a suspicion that a transaction may be linked to criminal activity or terrorism financing, the MLRO must prepare and submit a Suspicious Activity Report (SAR) to the relevant authority, as required by Polish law. Employees are prohibited from "tipping off" customers about such reports.
+            All identification documents, transaction data, and internal reports related to AML/KYC are securely stored for a period of <strong>five (5) years</strong> after the end of the customer relationship or the completion of the transaction, in accordance with applicable law.
+          </p>
+          <p class="page-content-text">
+            Records are stored in digital form with restricted access and may be shared with competent authorities upon lawful request.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="page-title-h3 mb-3">9. Reporting Suspicious Activities</h3>
+        <div class="space-y-4">
+          <p class="page-content-text">
+            If IRONBIT suspects that a transaction may be linked to criminal activity, terrorism financing, or any other unlawful purpose, the MLRO must immediately prepare and submit a Suspicious Activity Report (SAR) to the relevant authority, as required by Polish law.
+          </p>
+          <p class="page-content-text">
+            All employees are required to promptly report any suspicious behavior or transaction to the MLRO.
           </p>
         </div>
       </div>
@@ -134,16 +177,28 @@ const lastUpdated = '2025-02-20'
         <h3 class="page-title-h3 mb-3">10. Employee Training and Awareness</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            IRONBIT ensures that all relevant employees receive AML/CTF training upon hiring and regularly thereafter to recognize suspicious behavior and understand reporting procedures.
+            IRONBIT ensures that all relevant employees receive AML/CTF training upon hiring and regularly thereafter.
+          </p>
+          <p class="page-content-text">Training includes:</p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>Recognizing suspicious transactions;</li>
+            <li>Understanding AML/CTF laws and obligations;</li>
+            <li>Reporting procedures and confidentiality obligations;</li>
+          </ul>
+          <p class="page-content-text">
+            Employees are required to sign a confirmation of training completion.
           </p>
         </div>
       </div>
 
       <div class="mb-8">
-        <h3 class="page-title-h3 mb-3">11. Data Protection and Record Keeping</h3>
+        <h3 class="page-title-h3 mb-3">11. Data Protection and Confidentiality</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            All personal and transaction data is processed in accordance with IRONBIT's Privacy Policy and GDPR. Records are maintained for at least five (5) years after the termination of the business relationship.
+            All personal and transaction data collected under this Policy is processed in accordance with IRONBIT’s <a href="/privacy-policy"><strong>Privacy Policy</strong></a> and applicable data protection laws (GDPR).
+          </p>
+          <p class="page-content-text">
+            Confidentiality is maintained at all times, except when disclosures are made to competent authorities as required by law.
           </p>
         </div>
       </div>
@@ -152,7 +207,10 @@ const lastUpdated = '2025-02-20'
         <h3 class="page-title-h3 mb-3">12. Policy Review and Updates</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            This Policy is reviewed at least annually or whenever there are significant changes to AML/CTF laws or IRONBIT's business model.
+            This Policy is reviewed at least annually or whenever there are significant changes to AML/CTF laws or IRONBIT’s business model.
+          </p>
+          <p class="page-content-text">
+            The MLRO ensures that updates are implemented promptly and communicated to all relevant employees.
           </p>
         </div>
       </div>
@@ -166,7 +224,7 @@ const lastUpdated = '2025-02-20'
           <p class="page-content-text">
             <strong>IRONBIT Sp. z o.o.</strong><br>
             ul. Żurawia 6, lok. 12, 00-503 Warszawa, Poland<br>
-            Email: <strong>info@ironbit.net</strong>
+            Email: <a href="mailto:info@ironbit.net"><strong>info@ironbit.net</strong></a>
           </p>
         </div>
       </div>
