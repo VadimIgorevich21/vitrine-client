@@ -47,8 +47,14 @@ const { t } = useI18n()
         <h3 class="page-title-h3 mb-3">3. Eligibility</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            3.1 You represent and warrant that: you are at least 18 years old (or the age of majority in your jurisdiction); you have legal capacity to enter into binding contracts; you are not a person located in or subject to the laws of any jurisdiction in which use of the Service would be prohibited by applicable law or regulation; and you will comply with all applicable laws, regulations and these Terms.
+            3.1 You represent and warrant that:
           </p>
+          <ul>
+            <li>you are at least 18 years old (or the age of majority in your jurisdiction);</li>
+            <li>you have legal capacity to enter into binding contracts;</li>
+            <li>you are not a person located in or subject to the laws of any jurisdiction in which use of the Service would be prohibited by applicable law or regulation;</li>
+            <li>and you will comply with all applicable laws, regulations and these Terms.</li>
+          </ul>
           <p class="page-content-text">
             3.2 If you act on behalf of a legal entity, you confirm that you have the authority to bind that entity to these Terms.
           </p>
@@ -59,7 +65,9 @@ const { t } = useI18n()
         <h3 class="page-title-h3 mb-3">4. Restricted / Non-Serviced Jurisdictions</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            The Service may not be available to users located in certain jurisdictions. We maintain a list of non-serviced countries and territories which may be updated from time to time. You must not use the Service if local laws prohibit the use of such services. IRONBIT reserves the right to restrict access to the Service or to certain features of the Service for users from particular jurisdictions.
+            The Service may not be available to users located in certain jurisdictions. We maintain a list of non-serviced countries and territories which may be updated from time to time. You must not use the Service if local laws prohibit the use of such services.
+          </p>
+          <p class="page-content-text">IRONBIT reserves the right to restrict access to the Service or to certain features of the Service for users from particular jurisdictions.
           </p>
         </div>
       </div>
@@ -170,8 +178,15 @@ const { t } = useI18n()
         <h3 class="page-title-h3 mb-3">12. Prohibited Conduct</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            12.1 You must not: use the Service for illegal purposes or to facilitate unlawful behaviour; provide false or misleading information; attempt to manipulate transaction systems or exploit vulnerabilities; infringe others’ rights, including intellectual property or privacy rights; operate multiple accounts to circumvent controls; or transfer funds or crypto on behalf of third parties (unless explicitly authorised).
+            12.1 You must not:
           </p>
+          <ul>
+            <li>use the Service for illegal purposes or to facilitate unlawful behaviour;</li>
+            <li>provide false or misleading information; attempt to manipulate transaction systems or exploit vulnerabilities;</li>
+            <li>infringe others’ rights, including intellectual property or privacy rights;</li>
+            <li>operate multiple accounts to circumvent controls;</li>
+            <li>or transfer funds or crypto on behalf of third parties (unless explicitly authorised).</li>
+          </ul>
           <p class="page-content-text">
             12.2 IRONBIT reserves the right to suspend or terminate accounts suspected of violating these Terms or applicable law.
           </p>
@@ -266,7 +281,10 @@ const { t } = useI18n()
         <h3 class="page-title-h3 mb-3">21. Miscellaneous</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            If any provision of these Terms is found invalid or unenforceable, the remaining provisions shall remain in full force and effect. Headings are for convenience only and do not affect interpretation.
+            21.1 If any provision of these Terms is found invalid or unenforceable, the remaining provisions shall remain in full force and effect.
+          </p>
+          <p class="page-content-text">
+            21.2 Headings are for convenience only and do not affect interpretation.
           </p>
         </div>
       </div>
@@ -276,38 +294,12 @@ const { t } = useI18n()
         <div class="space-y-4">
           <p class="page-content-text">
             IRONBIT Spółka z ograniczoną odpowiedzialnością<br>
-            KRS: 0001013919, NIP: 5252939713, REGON: 524214646<br>
-            Registered office: ul. Żurawia 6, lok. 12, 00-503 Warszawa, Poland<br>
-            Email: info@ironbit.net<br>
-            Last updated: 12 November 2025
+            KRS: <strong>0001013919</strong><br>
+            NIP: <strong>5252939713</strong><br>
+            REGON: <strong>524214646</strong><br>
+            Registered office: <strong>ul. Żurawia 6, lok. 12, 00-503 Warszawa, Poland</strong><br>
+            Email: <a href="mailto:info@ironbit.io"><strong>info@ironbit.net</strong></a>
           </p>
-        </div>
-      </div>
-
-      <div class="space-y-12">
-        <h2 class="page-title-h2 mb-6">{{ t('terms.blockTitle') }}</h2>
-
-        <div class="space-y-6">
-          <div>
-            <h3 class="page-title-h3 mb-3">{{ t('terms.subheading1') }}</h3>
-            <p class="page-content-text">
-              {{ t('terms.text1') }}
-            </p>
-          </div>
-
-          <div>
-            <h3 class="page-title-h3 mb-3">{{ t('terms.subheading2') }}</h3>
-            <div class="space-y-4">
-              <p class="page-content-text">
-                {{ t('terms.text2') }}
-              </p>
-              <p class="page-content-text">
-                {{ t('terms.text2') }}
-              </p>
-            </div>
-          </div>
-
-          <a href="#" class="page-orange-link font-14px transition-colors">{{ t('terms.link') }}</a>
         </div>
       </div>
     </article>
