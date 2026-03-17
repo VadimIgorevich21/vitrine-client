@@ -4,6 +4,7 @@ import KycBanner from '@/components/common/KycBanner.vue'
 import { useAuthStore } from '@/stores/authStore'
 import { computed, ref } from 'vue'
 import logoUrl from '@/assets/img/logo.png'
+import { RouterLink } from "vue-router";
 
 const authStore = useAuthStore()
 const showKycBanner = computed(() => authStore.user?.kyc_verified !== true && authStore.user?.kyc_status !== 'rejected')
@@ -31,7 +32,9 @@ const toggleMobileMenu = () => {
     <div class="flex-1 flex flex-col h-screen w-full overflow-y-auto">
       <!-- Mobile Header -->
       <header class="lg:hidden bg-[#0F1116] text-white p-4 flex items-center justify-between sticky top-0 z-30">
-        <img :src="logoUrl" alt="IronBit Logo" class="h-6 w-auto" />
+        <RouterLink to="/" class="flex items-center">
+          <img :src="logoUrl" alt="IronBit Logo" class="h-6 w-auto" />
+        </RouterLink>
         <button @click="toggleMobileMenu" class="p-2 text-gray-400 hover:text-white">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
