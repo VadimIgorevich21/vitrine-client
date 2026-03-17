@@ -437,16 +437,17 @@ onMounted(() => {
     padding: 20px;
   }
 
-  .table-header-labels,
-  .transaction-header {
+  .table-header-labels {
     gap: 5px;
+    padding: 0;
   }
 
   .col-date { width: 110px; }
   .col-type { width: 80px; }
   .col-direction { width: 80px; }
+  .col-amount { width: 150px; }
 }
-@media (max-width: 820px) {
+@media (max-width: 1100px) {
   .orders-main-card {
     padding: 10px;
   }

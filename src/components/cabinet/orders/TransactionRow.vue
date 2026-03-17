@@ -629,10 +629,25 @@ const confirmCancel = async () => {
 @media (max-width: 1280px) {
   .transaction-header {
     gap: 5px;
+    padding: 0;
   }
 
   .col-date { width: 110px; }
   .col-type { width: 80px; }
   .col-direction { width: 80px; }
+  .col-amount { width: 150px; }
 }
+
+@media (max-width: 768px) {
+  .transaction-row-container {
+    padding: 15px 10px;
+    border: 1px solid #98A2B3;
+    border-radius: 25px;
+  }
+
+  .transaction-header {
+    margin-bottom: 10px;
+  }
+}
+
 </style>
