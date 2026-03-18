@@ -43,7 +43,7 @@ watch(() => route.path, () => {
     <div ref="scrollContainer" class="flex-1 flex flex-col h-screen w-full overflow-y-auto">
       <!-- Mobile Header -->
       <header class="lg:hidden bg-[#0F1116] text-white p-4 flex items-center justify-between sticky top-0 z-30">
-        <RouterLink to="/" class="flex items-center">
+        <RouterLink to="/cabinet" class="flex items-center">
           <img :src="logoUrl" alt="IronBit Logo" class="h-6 w-auto" />
         </RouterLink>
         <button @click="toggleMobileMenu" class="p-2 text-gray-400 hover:text-white">

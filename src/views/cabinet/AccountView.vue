@@ -152,44 +152,8 @@
         <div class="info-item">
           <span class="info-label">{{ t('cabinet.account_page.email') }}</span>
           <div class="info-value-wrapper">
-            <!-- Display Mode -->
-            <div v-if="editingField !== 'email'" class="value-with-icon">
+            <div class="value-with-icon">
               <span class="value-text">{{ authStore.user?.email || '—' }}</span>
-              <button @click="startEdit('email', authStore.user?.email)" class="edit-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15.5 5L19 8.5M17.5 3L21 6.5L11.5 16H8V12.5L17.5 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M7 21H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-            <!-- Edit Mode -->
-            <div v-else class="edit-mode-wrapper">
-              <div class="edit-mode-controls">
-                <div class="input-with-actions">
-                  <input
-                    v-model="tempValues.email"
-                    type="email"
-                    class="edit-input"
-                    placeholder="email@example.com"
-                    @keyup.enter="saveField('email')"
-                    @keyup.esc="cancelEdit"
-                  />
-                  <div class="edit-actions">
-                    <button @click="saveField('email')" class="save-btn" :disabled="authStore.loading">
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="10" cy="10" r="10" fill="#10B981"/>
-                        <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </button>
-                    <button @click="cancelEdit" class="cancel-btn">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 6L6 18M6 6L18 18" stroke="#929AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <FormError v-if="fieldErrors.email" :error="fieldErrors.email" class="mt-1" />
             </div>
           </div>
         </div>
@@ -255,7 +219,6 @@ const fieldErrors = reactive<Record<string, any>>({});
 const tempValues = reactive<Record<string, any>>({
   country_id: null,
   phone: '',
-  email: '',
 });
 
 const currentCountry = computed(() => {
