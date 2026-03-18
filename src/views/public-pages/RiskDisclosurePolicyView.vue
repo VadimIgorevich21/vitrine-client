@@ -18,7 +18,7 @@ const lastUpdated = '2025-02-20'
           <p class="page-content-text">
             KRS: 0001013919 | NIP: 5252939713 | REGON: 524214646<br>
             Address: ul. Żurawia 6/12, 00-503 Warszawa, Poland<br>
-            E-mail: info@ironbit.io
+            E-mail: <a href="mailto:info@ironbit.net"><strong>info@ironbit.net</strong></a>
           </p>
         </div>
       </div>
@@ -27,16 +27,13 @@ const lastUpdated = '2025-02-20'
         <h3 class="page-title-h3 mb-3">Introduction and Purpose</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            This Risk Disclosure Policy (“Policy”) is established to provide users of IronBit (“the Platform”) with clear, comprehensive information regarding the risks associated with the use of custodial cryptocurrency wallet services, digital asset transactions, and related features offered by IronBit.
+            This Risk Disclosure Policy (“Policy”) is established to provide users of IronBit (“the Platform”) with clear, comprehensive information regarding the risks associated with the use of custodial cryptocurrency wallet services, digital asset transactions, and related features offered by IronBit. The purpose of this Policy is to ensure that all users are fully informed of the potential risks inherent in engaging with digital assets and to promote transparency, responsible usage, and informed decision-making.
           </p>
           <p class="page-content-text">
-            The purpose of this Policy is to ensure that all users are fully informed of the potential risks inherent in engaging with digital assets and to promote transparency, responsible usage, and informed decision-making. Cryptocurrency markets and technologies are subject to significant volatility, regulatory developments, and operational uncertainties.
+            Cryptocurrency markets and technologies are subject to significant volatility, regulatory developments, and operational uncertainties. By outlining these risks, IronBit seeks to protect its users and to comply with applicable legal and regulatory standards. Users are strongly encouraged to review this Policy carefully and to consider the risks described herein before utilizing any services provided by IronBit.
           </p>
           <p class="page-content-text">
-            By outlining these risks, IronBit seeks to protect its users and to comply with applicable legal and regulatory standards. Users are strongly encouraged to review this Policy carefully and to consider the risks described herein before utilizing any services provided by IronBit.
-          </p>
-          <p class="page-content-text">
-            This Policy forms an integral part of the user agreement between IronBit and its users. By accessing or using the Platform, users acknowledge their understanding of, and agreement to, the terms and disclosures set forth in this Policy.
+            This Policy forms an integral part of the user agreement between  IronBit and its users. By accessing or using the Platform, users acknowledge their understanding of, and agreement to, the terms and disclosures set forth in this Policy.
           </p>
         </div>
       </div>
@@ -45,7 +42,7 @@ const lastUpdated = '2025-02-20'
         <h3 class="page-title-h3 mb-3">Scope of the Policy</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            This Policy applies to all users of IronBit and governs the use of all products, services, and features provided by the Platform. The scope of this Policy includes, but is not limited to:
+            This Policy applies to all users of  IronBit and governs the use of all products, services, and features provided by the Platform. The scope of this Policy includes, but is not limited to:
           </p>
           <ul class="list-disc pl-5 space-y-2 page-content-text">
             <li>Custodial storage of digital assets within IronBit-managed wallets;</li>
@@ -56,10 +53,10 @@ const lastUpdated = '2025-02-20'
             <li>Any other ancillary or future services offered by IronBit that involve the custody, transfer, or management of digital assets.</li>
           </ul>
           <p class="page-content-text">
-            This Policy applies to all digital asset transactions and activities conducted through the Platform, regardless of the user’s jurisdiction, the type of digital asset involved, or the method of access (including web, mobile, or integrated applications).
+            This Policy applies to all digital asset transactions and activities conducted through the Platform, regardless of the user’s jurisdiction, the type of digital asset involved, or the method of access (including web, mobile, or integrated applications). The Policy is binding upon all users, employees, contractors, and any third parties acting on behalf of  IronBit in connection with the provision of its services.
           </p>
           <p class="page-content-text">
-            The Policy is binding upon all users, employees, contractors, and any third parties acting on behalf of IronBit in connection with the provision of its services.
+            By accessing or using any aspect of the Platform, users acknowledge that they are subject to the terms and disclosures set forth in this Policy.
           </p>
         </div>
       </div>
@@ -68,7 +65,7 @@ const lastUpdated = '2025-02-20'
         <h3 class="page-title-h3 mb-3">Nature of Risks</h3>
         <div class="space-y-4">
           <p class="page-content-text">
-            Users of IronBit should be aware that engaging in digital asset custody, transactions, and related services involves significant risks. The following subsections describe the principal risks associated with the use of the Platform. This list is not exhaustive, and users are encouraged to conduct their own due diligence and seek independent advice as appropriate.
+            Users of  IronBit should be aware that engaging in digital asset custody, transactions, and related services involves significant risks. The following subsections describe the principal risks associated with the use of the Platform. This list is not exhaustive, and users are encouraged to conduct their own due diligence and seek independent advice as appropriate.
           </p>
 
           <p class="page-content-text"><strong>1. Market and Price Volatility</strong><br>
