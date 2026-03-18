@@ -339,22 +339,22 @@ onMounted(() => {
   font-size: 18px;
   font-weight: 600;
   outline: none;
-  color: #101828;
+  color: var(--text-primary);
   -moz-appearance: textfield;
   appearance: textfield;
 }
 
 :deep(.dark) .amount-input {
-  color: white;
+  color: var(--text-primary);
 }
+
+/* Cleaned up hardcoded color */
 
 .amount-input.output {
-  color: #929AAA;
+  color: var(--text-secondary);
 }
 
-:deep(.dark) .amount-input.output {
-  color: #6b7280;
-}
+/* Cleaned up hardcoded color */
 
 .currency-select-right {
   flex-shrink: 1;
@@ -438,11 +438,11 @@ onMounted(() => {
 .requisites-textarea {
   width: 100%;
   padding: 16px;
-  background-color: #FAFAFA;
+  background-color: var(--bg-secondary);
   border-radius: 6px;
   border: 1px solid #F2F2F6;
   outline: none;
-  color: #101828;
+  color: var(--text-primary);
   font-size: 14px;
   transition: all 0.3s ease;
 }

@@ -100,7 +100,7 @@ const handleAction = () => {
 
 <style scoped>
 .simple-process-section {
-  background-color: #FAFAFA;
+  background-color: var(--bg-secondary);
 }
 
 .simple-process-wrapper {
@@ -108,10 +108,7 @@ const handleAction = () => {
   padding-bottom: 6rem;
 }
 
-:deep(.dark) .simple-process-section {
-  background-color: #0f172a;
-  border-color: rgba(255, 255, 255, 0.05);
-}
+/* Removed manual dark override for section background */
 
 .process-grid {
   display: grid;
@@ -129,12 +126,12 @@ const handleAction = () => {
   font-weight: 500;
   font-size: 36px;
   line-height: 120%;
-  color: #929AAA;
+  color: var(--text-secondary);
 }
 
 .btn-get-started {
-  background: #0f172a;
-  color: white;
+  background: var(--text-primary);
+  color: var(--bg-primary);
   padding: 18px 48px;
   border-radius: 999px;
   font-size: 18px;
@@ -142,7 +139,7 @@ const handleAction = () => {
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.3);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
 }
 
 .btn-get-started:hover {
@@ -181,9 +178,9 @@ const handleAction = () => {
   justify-content: center;
   font-size: 16px;
   font-weight: 500;
-  color: #929AAA;
+  color: var(--text-secondary);
   border: 1px solid #E5E7EB;
-  background: white;
+  background: var(--bg-primary);
   z-index: 2;
   transition: all 0.3s ease;
 }
@@ -198,7 +195,7 @@ const handleAction = () => {
 
 .step-card {
   flex: 1;
-  background: white;
+  background: var(--bg-primary);
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 20px;
   padding: 32px 40px;
@@ -215,7 +212,7 @@ const handleAction = () => {
 .step-title {
   font-size: 24px;
   font-weight: 500;
-  color: #101828;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
@@ -225,23 +222,7 @@ const handleAction = () => {
   line-height: 1.5;
 }
 
-:deep(.dark) .step-marker {
-  background: #1e293b;
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-:deep(.dark) .step-card {
-  background: #1e293b;
-  border-color: rgba(255, 255, 255, 0.05);
-}
-
-:deep(.dark) .step-title {
-  color: #f8fafc;
-}
-
-:deep(.dark) .step-desc {
-  color: #94a3b8;
-}
+/* Removed manual .dark step overrides */
 
 /* .step-line dark removed */
 

@@ -371,7 +371,7 @@ const goToVerification = () => {
 
 /* Card Styles */
 .turnover-card {
-  background: #ffffff;
+  background: var(--bg-primary);
   border-radius: 24px;
   padding: 32px;
   position: relative;
@@ -406,7 +406,7 @@ const goToVerification = () => {
   font-size: 18px;
   line-height: 150%;
   letter-spacing: 0;
-  color: #101828;
+  color: var(--text-primary);
 }
 
 .turnover-stats {
@@ -417,7 +417,7 @@ const goToVerification = () => {
 .stat-label {
   display: block;
   font-size: 14px;
-  color: #B0B8C6;
+  color: var(--text-secondary);
   margin-bottom: 12px;
   font-weight: 500;
   line-height: 150%;
@@ -429,16 +429,16 @@ const goToVerification = () => {
   font-size: 32px;
   line-height: 150%;
   letter-spacing: 0;
-  color: #101828;
+  color: var(--text-primary);
 }
 
 .currency-unit {
-  color: #929AAA;
+  color: var(--text-secondary);
   margin-left: 4px;
 }
 
 .info-card {
-  background: #ffffff;
+  background: var(--bg-primary);
   border-radius: 24px;
   padding: 32px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
@@ -460,7 +460,7 @@ const goToVerification = () => {
   line-height: 150%;
   letter-spacing: 0;
   display: block;
-  color: #B0B8C6;
+  color: var(--text-secondary);
   margin-bottom: 12px;
 }
 
@@ -470,7 +470,7 @@ const goToVerification = () => {
 }
 
 :deep(.currency-select .selected-item-button.normal) {
-  background-color: #F8F9FA;
+  background-color: var(--bg-secondary);
   border: 1px solid #F2F2F6;
   border-radius: 8px;
   padding: 8px 16px;
@@ -479,13 +479,13 @@ const goToVerification = () => {
 }
 
 :deep(.currency-select .item-label) {
-  color: #929AAA;
+  color: var(--text-secondary);
   font-weight: 500;
   font-size: 16px;
 }
 
 :deep(.currency-select .arrow-icon) {
-  color: #929AAA;
+  color: var(--text-secondary);
   width: 14px;
   height: 14px;
 }
@@ -496,7 +496,7 @@ const goToVerification = () => {
   gap: 3px;
   font-size: 16px;
   font-weight: 500;
-  color: #101828;
+  color: var(--text-primary);
   height: 48px;
   min-width: 0;
   max-width: 100%; /* Keeps the container within the grid cell */
@@ -511,7 +511,7 @@ const goToVerification = () => {
 }
 
 .edit-btn {
-  color: #929AAA;
+  color: var(--text-secondary);
   padding: 4px;
   display: flex;
   align-items: center;
@@ -522,7 +522,7 @@ const goToVerification = () => {
 }
 
 .edit-btn:hover {
-  color: #101828;
+  color: var(--text-primary);
   transform: scale(1.1);
 }
 
@@ -585,12 +585,12 @@ const goToVerification = () => {
   width: 100%;
   height: 48px;
   padding: 8px 16px;
-  background: #F8F9FA;
+  background: var(--bg-secondary);
   border: 1px solid #7F56D9; /* Purple border from mockup */
   border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
-  color: #101828;
+  color: var(--text-primary);
   outline: none;
 }
 
@@ -656,7 +656,7 @@ const goToVerification = () => {
 /* Unverified Card Styles */
 .unverified-text {
   font-size: 15px;
-  color: #0F1116;
+  color: var(--text-primary);
   font-weight: 500;
   max-width: 800px;
   margin-right: 20px;

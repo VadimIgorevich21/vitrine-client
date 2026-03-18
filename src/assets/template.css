@@ -1,3 +1,26 @@
+:root {
+    --text-primary: #101828;
+    --text-secondary: #929AAA;
+    --bg-primary: #ffffff;
+    --bg-secondary: #FAFAFA;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-primary: #F8FAFC;
+        --text-secondary: #94A3B8;
+        --bg-primary: #0F172A;
+        --bg-secondary: #111827;
+    }
+}
+
+.dark {
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --bg-primary: #0F172A;
+    --bg-secondary: #111827;
+}
+
 /* 1. Назначаем для всего документа */
 html, body {
     margin: 0;
@@ -13,6 +36,12 @@ html, body {
 
     /* Оптимизация отрисовки */
     text-rendering: optimizeLegibility;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+}
+
+.dark {
+    background-color: var(--bg-primary) !important;
 }
 
 /* 2. Нюанс: формы и кнопки НЕ всегда наследуют шрифт от body */
@@ -70,7 +99,7 @@ textarea {
     font-size: 48px;
     line-height: 120%;
     letter-spacing: 0;
-    color: #101828;
+    color: var(--text-primary);
 }
 
 .page-title-h2 {
@@ -78,7 +107,7 @@ textarea {
     font-size: 24px;
     line-height: 150%;
     letter-spacing: 0;
-    color: #101828;
+    color: var(--text-primary);
 }
 
 .page-title-h3 {
@@ -86,11 +115,11 @@ textarea {
     font-size: 20px;
     line-height: 150%;
     letter-spacing: 0;
-    color: #101828;
+    color: var(--text-primary);
 }
 
 .last-updated-text {
-    color: #929aaa;
+    color: var(--text-secondary);
     font-style: italic;
 }
 
@@ -112,7 +141,7 @@ textarea {
     font-size: 16px;
     line-height: 150%;
     letter-spacing: 0;
-    color: #929AAA;
+    color: var(--text-secondary);
 }
 
 .page-orange-link {

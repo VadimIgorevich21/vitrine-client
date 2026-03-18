@@ -428,6 +428,11 @@ onMounted(() => {
   min-width: 0; /* Standard CSS fix for nested flex shrinking */
 }
 
+:deep(.dark) .input-group {
+  background-color: var(--bg-secondary);
+  border-color: #1F2937;
+}
+
 .input-group:focus-within {
   border-color: #6366f1; /* border-indigo-500 */
   background-color: white;
@@ -453,13 +458,19 @@ onMounted(() => {
   font-size: 18px;
   font-weight: 600;
   outline: none;
-  color: #101828;
+  color: var(--text-primary);
   -moz-appearance: textfield;
   appearance: textfield;
 }
 
+:deep(.dark) .amount-input {
+  color: var(--text-primary);
+}
+
+/* Removed hardcoded color override for dark mode since it's now handled by var */
+
 .amount-input.output {
-  color: #929AAA;
+  color: var(--text-secondary);
 }
 
 .currency-select-right {
@@ -556,9 +567,11 @@ onMounted(() => {
 .step-title {
   font-size: 24px;
   font-weight: 500;
-  color: #101828;
+  color: var(--text-primary);
   line-height: 150%;
 }
+
+/* Removed hardcoded .dark step-title color */
 
 .header-spacer {
   width: 40px;
@@ -581,7 +594,7 @@ onMounted(() => {
 
 .summary-label {
   font-weight: 500;
-  color: #929AAA;
+  color: var(--text-secondary);
   font-size: 12px;
 }
 
@@ -594,8 +607,10 @@ onMounted(() => {
 .summary-amount {
   font-size: 16px;
   font-weight: 500;
-  color: #101828;
+  color: var(--text-primary);
 }
+
+/* Removed hardcoded .dark summary-amount color */
 
 .summary-badge {
   display: flex;
@@ -652,7 +667,7 @@ onMounted(() => {
 .summary-rate-text, .summary-fee-text {
   font-size: 12px;
   font-weight: 500;
-  color: #929AAA;
+  color: var(--text-secondary);
 }
 
 /* Fields Section */
@@ -665,8 +680,8 @@ onMounted(() => {
 .wallet-input {
   width: 100%;
   outline: none;
-  color: #101828;
-  background-color: #FAFAFA;
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
   border: 1px solid #F2F2F6;
   border-radius: 6px;
   padding: 16px;

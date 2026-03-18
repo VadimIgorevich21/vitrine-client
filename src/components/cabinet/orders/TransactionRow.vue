@@ -167,7 +167,7 @@ const confirmCancel = async () => {
       </div>
 
       <!-- Amount -->
-      <div class="col-amount font-bold text-gray-900">
+      <div class="col-amount font-bold">
         {{ cryptoAmount }} {{ cryptoCurrency }}
       </div>
 
@@ -301,6 +301,15 @@ const confirmCancel = async () => {
   transition: all 0.2s ease;
 }
 
+:deep(.dark) .transaction-row-container {
+  background-color: #111827;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+:deep(.dark) .transaction-row-container:hover {
+  background-color: #1F2937;
+}
+
 .transaction-row-container:hover {
   background-color: #F9FAFB;
 }
@@ -315,10 +324,12 @@ const confirmCancel = async () => {
 }
 
 .col-chevron { width: 24px; flex-shrink: 0; }
-.col-date { width: 140px; color: #929AAA; font-size: 14px; flex-shrink: 0; }
+.col-date { width: 140px; color: var(--text-secondary); font-size: 14px; flex-shrink: 0; }
 .col-type { width: 110px; flex-shrink: 0; }
 .col-direction { width: 16rem; color: #667085; font-size: 14px; flex-shrink: 1; }
-.col-amount { width: 180px; font-weight: 600; color: #101828; flex-shrink: 0; white-space: nowrap; }
+.col-amount { width: 180px; font-weight: 600; color: var(--text-primary); flex-shrink: 0; white-space: nowrap; }
+
+/* Removed hardcoded dark col-amount */
 .col-status { width: 140px; flex-shrink: 0; display: flex; justify-content: flex-start; }
 .col-actions { width: 120px; flex-shrink: 0; display: flex; justify-content: flex-start; }
 
@@ -433,9 +444,11 @@ const confirmCancel = async () => {
 /* Details Section */
 .transaction-details {
   padding: 24px 64px 32px 64px;
-  background-color: #FAFAFA;
+  background-color: var(--bg-secondary);
   border-top: 1px solid #F2F2F6;
 }
+
+/* Removed hardcoded dark transaction-details */
 
 .details-grid {
   display: flex;
@@ -466,7 +479,11 @@ const confirmCancel = async () => {
 .detail-item span {
   font-size: 14px;
   font-weight: 500;
-  color: #929AAA;
+  color: var(--text-secondary);
+}
+
+:deep(.dark) .detail-item span {
+  color: #F8FAFC;
 }
 
 .truncate-address {
@@ -569,6 +586,11 @@ const confirmCancel = async () => {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+:deep(.dark) .modal-content {
+  background-color: #111827;
+  border: 1px solid #1F2937;
+}
+
 .modal-header {
   margin-bottom: 24px;
 }
@@ -576,10 +598,12 @@ const confirmCancel = async () => {
 .modal-title {
   font-size: 18px;
   font-weight: 600;
-  color: #111827;
+  color: var(--text-primary);
   text-align: center;
   margin: 0;
 }
+
+/* Removed hardcoded dark modal-title */
 
 .modal-footer {
   display: flex;

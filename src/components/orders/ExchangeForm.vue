@@ -49,7 +49,7 @@ onMounted(async () => {
   max-width: 448px; /* max-w-md */
   width: 448px; /* max-w-md */
   margin: 0 auto;
-  background-color: white;
+  background-color: var(--bg-primary);
   border-radius: 16px;
   box-shadow: 0 10px 50px rgba(0,0,0,0.1);
   padding: 24px;
@@ -58,13 +58,17 @@ onMounted(async () => {
   opacity: 1;
 }
 
+/* Removed hardcoded dark exchange-card */
+
 .tabs-container {
   display: flex;
   padding: 4px;
-  background-color: #FAFAFA; /* bg-gray-50 */
+  background-color: var(--bg-secondary); /* bg-gray-50 */
   border-radius: 6px; /* rounded-2xl */
   border: 1px solid #F2F2F6;
 }
+
+/* Removed hardcoded dark tabs-container */
 
 .tab-button {
   flex: 1;
@@ -80,10 +84,12 @@ onMounted(async () => {
 }
 
 .tab-button.active {
-  background-color: white;
-  color: #101828; /* text-gray-900 */
+  background-color: var(--bg-primary);
+  color: var(--text-primary); /* text-gray-900 */
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+
+/* Removed hardcoded dark tab-button active */
 
 .tab-button.inactive {
   background-color: transparent;
@@ -146,10 +152,12 @@ onMounted(async () => {
 .buy-title {
   font-size: 24px;
   font-weight: 500;
-  color: #101828;
+  color: var(--text-primary);
   line-height: 150%;
   margin-left: 40px;
 }
+
+/* Removed hardcoded dark buy-title color */
 
 .buy-header-spacer {
   width: 40px;

@@ -107,9 +107,9 @@ const setPage = (page: number) => {
   height: 40px;
   padding: 0 12px;
   border-radius: 12px;
-  background-color: white;
+  background-color: var(--bg-primary);
   border: 1px solid #F2F2F6;
-  color: #667085;
+  color: var(--text-secondary);
   font-size: 14px;
   font-weight: 500;
   transition: all 0.2s ease;
@@ -117,9 +117,9 @@ const setPage = (page: number) => {
 }
 
 .pagination-btn:hover:not(.active) {
-  background-color: #F9FAFB;
+  background-color: var(--bg-secondary);
   border-color: #D0D5DD;
-  color: #101828;
+  color: var(--text-primary);
 }
 
 .pagination-btn.active {
@@ -149,6 +149,6 @@ const setPage = (page: number) => {
 }
 
 .pagination-dots-btn:hover {
-  color: #101828;
+  color: var(--text-primary);
 }
 </style>

@@ -220,7 +220,7 @@ onMounted(() => {
 
 <style scoped>
 .orders-container {
-  background-color: #F9FAFB;
+  background-color: var(--bg-secondary);
 }
 
 /* Search and Filters */
@@ -256,12 +256,12 @@ onMounted(() => {
 
 .search-input {
   width: 100%;
-  background-color: white;
+  background-color: var(--bg-primary);
   border: 1px solid #F2F2F6;
   border-radius: 10px;
   padding: 10px 12px 10px 40px;
   font-size: 14px;
-  color: #101828;
+  color: var(--text-primary);
   outline: none;
   transition: border-color 0.2s;
 }
@@ -283,7 +283,7 @@ onMounted(() => {
   justify-content: center;
   width: 42px;
   height: 42px;
-  background-color: white;
+  background-color: var(--bg-primary);
   border: 1px solid #F2F2F6;
   border-radius: 10px;
   cursor: pointer;
@@ -342,7 +342,7 @@ onMounted(() => {
 .col-lbl {
   font-size: 12px;
   font-weight: 500;
-  color: #B0B8C6;
+  color: var(--text-secondary);
 }
 
 .col-chevron { width: 24px; flex-shrink: 0; }
@@ -354,13 +354,13 @@ onMounted(() => {
 .col-actions { width: 120px; flex-shrink: 0; }
 
 .orders-list-card {
-  background-color: white;
+  background-color: var(--bg-primary);
   border-radius: 20px;
   overflow: hidden;
 }
 
 .orders-main-card {
-  background-color: white;
+  background-color: var(--bg-primary);
   border-radius: 24px;
   padding: 40px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
@@ -396,7 +396,7 @@ onMounted(() => {
 }
 
 .empty-subtitle {
-  color: #929AAA;
+  color: var(--text-secondary);
   font-size: 16px;
   margin-bottom: 32px;
 }
