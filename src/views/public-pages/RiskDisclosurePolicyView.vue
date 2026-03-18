@@ -238,6 +238,269 @@ const lastUpdated = '2025-02-20'
           </p>
         </div>
       </div>
+
+
+
+
+
+
+
+
+      <div class="mb-8">
+        <h3 class="page-title-h3 mb-3">Risk Management Measures</h3>
+        <div class="space-y-4">
+          <p class="page-content-text">
+            IronBit is committed to implementing robust risk management measures designed to mitigate the diverse risks associated with digital asset custody, transactions, and platform operations. The following subsections outline the principal controls, protocols, and procedures in place to safeguard user assets, ensure regulatory compliance, and maintain the integrity of the Platform.
+          </p>
+
+          <p class="page-content-text"><strong>1. Security Protocols</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li><strong>Encryption and Data Protection:</strong> All sensitive user data, including personal information and private keys, is protected using industry-standard encryption both in transit and at rest. Access to critical systems is restricted through multi-factor authentication and role-based access controls.</li>
+            <li><strong>Infrastructure Security:</strong> The Platform’s infrastructure is regularly tested for vulnerabilities through penetration testing, security audits, and continuous monitoring. Firewalls, intrusion detection systems, and anti-malware solutions are deployed to prevent unauthorized access and mitigate cyber threats.</li>
+            <li><strong>Wallet Management:</strong> Custodial wallets are managed using secure, segregated storage solutions, with private keys stored in hardware security modules (HSMs) or equivalent secure environments. Operational procedures are in place to minimize the risk of key compromise or unauthorized transactions.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>2. Anti-Money Laundering (AML) and Sanctions Compliance</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li><strong>Real-Time Screening:</strong> All users and transactions are subject to real-time AML and sanctions screening against relevant international lists. This includes onboarding checks, ongoing monitoring, and transaction-level reviews to detect and prevent illicit activity.</li>
+            <li><strong>Enhanced Due Diligence:</strong> Users identified as higher risk, or transactions exhibiting suspicious characteristics, are subject to enhanced due diligence and additional verification procedures.</li>
+            <li><strong>Escalation and Reporting:</strong> Any positive matches or suspected violations are escalated to the Compliance Officer for investigation. Where required, suspicious activity is reported to the appropriate authorities in accordance with law and international standards.</li>
+            <li><strong>Staff Training:</strong> All relevant personnel receive regular training on AML, sanctions compliance, and the identification of suspicious activity.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>3. Internal Controls and Compliance Procedures</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li><strong>Segregation of Duties:</strong> Key operational functions are segregated to prevent conflicts of interest and reduce the risk of internal fraud or error.</li>
+            <li><strong>Audit and Oversight:</strong> Regular internal and external audits are conducted to assess the effectiveness of risk management controls, compliance with policies, and adherence to legal requirements.</li>
+            <li><strong>Policy Review:</strong> All risk management policies, including this Risk Disclosure Policy, are reviewed and updated at least annually or in response to significant changes in the regulatory environment or business operations.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>4. Third-Party Risk Management</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li><strong>Due Diligence:</strong> IronBit conducts thorough due diligence on all third-party service providers, including liquidity providers, custodians, and technology vendors, to assess their security, reliability, and compliance posture.</li>
+            <li><strong>Contractual Safeguards:</strong> Agreements with third parties include provisions requiring adherence to security standards, data protection, and compliance with applicable laws and regulations.</li>
+            <li><strong>Ongoing Monitoring:</strong> The performance and risk profile of third-party providers are monitored on an ongoing basis, with contingency plans in place to address potential failures or disruptions.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>5. Incident Response and Business Continuity</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li><strong>Incident Response Plan:</strong> IronBit maintains a documented incident response plan to address security breaches, system failures, or other emergencies. The plan includes procedures for containment, investigation, notification, and remediation.</li>
+            <li><strong>Business Continuity Planning:</strong> Measures are in place to ensure the continuity of critical services in the event of operational disruptions, including data backups, redundant systems, and disaster recovery protocols.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>6. User Education and Support</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li><strong>Risk Awareness:</strong> IronBit provides users with educational materials and guidance on the risks associated with digital assets, safe security practices, and how to recognize and avoid scams or fraudulent activity.</li>
+            <li><strong>Support Services:</strong> A dedicated support team is available to assist users with security concerns, account recovery, and reporting of suspicious activity.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>7. Continuous Improvement</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li><strong>Monitoring and Review:</strong> Risk management measures are continuously monitored and evaluated for effectiveness. Feedback from users, regulatory developments, and emerging threats are incorporated into ongoing improvements of the Platform’s risk management framework.</li>
+          </ul>
+
+          <p class="page-content-text">
+            By implementing these measures, IronBit seeks to provide a secure, compliant, and resilient environment for digital asset custody and transactions. Users are encouraged to familiarize themselves with these controls and to actively participate in maintaining the security and integrity of their accounts and activities.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="page-title-h3 mb-3">Legal Disclaimers</h3>
+        <div class="space-y-4">
+          <p class="page-content-text">
+            The following legal disclaimers apply to all users of IronBit and form an integral part of the user agreement governing the use of the Platform. By accessing or utilizing any service or feature provided by IronBit, users expressly acknowledge and accept the limitations and exclusions of liability set forth below.
+          </p>
+
+          <p class="page-content-text"><strong>1. No Guarantee of Performance or Results</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>IronBit does not guarantee the uninterrupted, error-free, or secure operation of the Platform or any of its services. Access to the Platform may be subject to delays, interruptions, or failures beyond the control of IronBit.</li>
+            <li>The availability, value, and liquidity of digital assets are not guaranteed. IronBit does not warrant that any digital asset will retain value, remain supported, or be available for withdrawal or conversion at any time.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>2. Limitation of Liability</strong></p>
+          <p class="page-content-text">
+            To the maximum extent permitted by applicable law, IronBit, its affiliates, directors, officers, employees, agents, and contractors shall not be liable for any direct, indirect, incidental, consequential, special, punitive, or exemplary damages, including but not limited to:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>Loss of funds, profits, revenue, or data;</li>
+            <li>Loss or theft of digital assets due to unauthorized access, hacking, or cyberattacks;</li>
+            <li>Losses resulting from market volatility, price fluctuations, or changes in asset value;</li>
+            <li>Losses or damages arising from technical failures, system errors, or service interruptions;</li>
+            <li>Losses due to regulatory changes, legal restrictions, or government actions affecting digital assets or the Platform;</li>
+            <li>Losses or damages resulting from reliance on information, services, or products provided by third parties, including but not limited to liquidity providers, custodians, or technology vendors;</li>
+            <li>Losses resulting from user error, including but not limited to incorrect transaction details, loss of access credentials, or failure to comply with security recommendations.</li>
+          </ul>
+
+
+
+
+
+          <p class="page-content-text"><strong>3. No Investment, Legal, or Tax Advice</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>IronBit does not provide investment, legal, tax, or financial advice. All information and materials made available through the Platform are for informational purposes only and should not be construed as a recommendation or endorsement of any digital asset, transaction, or strategy.</li>
+            <li>Users are solely responsible for obtaining independent advice and making informed decisions regarding their use of the Platform and digital asset transactions.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>4. Exclusion of Certain Warranties</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>IronBit expressly disclaims all warranties, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, title, and non-infringement.</li>
+            <li>No oral or written information or advice provided by IronBit or its representatives shall create any warranty not expressly stated in this Policy or the user agreement.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>5. Third-Party Services and Content</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>The Platform may provide access to, or integrate with, third-party services, products, or content. IronBit does not control, endorse, or assume responsibility for the accuracy, reliability, or legality of any third-party information or services.</li>
+            <li>Any reliance on third-party services or content is at the user’s own risk, and IronBit disclaims all liability for losses or damages arising from third-party actions, omissions, or failures.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>6. Force Majeure</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>IronBit shall not be liable for any failure or delay in performing its obligations under the user agreement or this Policy due to circumstances beyond its reasonable control, including but not limited to natural disasters, war, civil unrest, regulatory actions, or technological failures.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>7. Binding Effect</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>These disclaimers are binding upon all users of IronBit and apply to the fullest extent permitted by law. Certain jurisdictions may not allow the exclusion or limitation of liability for certain types of damages; in such cases, IronBit’s liability shall be limited to the maximum extent permitted by applicable law.</li>
+          </ul>
+
+          <p class="page-content-text">
+            Users are strongly encouraged to review the full terms and conditions of the Platform for additional disclaimers, limitations of liability, and user obligations. By continuing to use IronBit, users confirm their understanding and acceptance of these legal disclaimers.
+          </p>
+        </div>
+      </div>
+
+
+
+
+
+
+
+      <div class="mb-8">
+        <h3 class="page-title-h3 mb-3">Changes to Risks and Policy</h3>
+        <div class="space-y-4">
+          <p class="page-content-text">
+            The risks associated with digital assets, blockchain technology, and the use of the IronBit platform are dynamic and may evolve over time due to changes in technology, market conditions, regulatory requirements, and other external factors. IronBit is committed to maintaining transparency and keeping users informed of any material changes that may affect the risk profile of its services.
+          </p>
+
+          <p class="page-content-text"><strong>1. Evolution of Risks</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>The nature, scope, and severity of risks described in this Policy may change as the digital asset ecosystem develops, new threats emerge, or regulatory frameworks are updated.</li>
+            <li>Users should be aware that additional risks not currently identified in this Policy may arise in the future, and that existing risks may be mitigated or exacerbated by changes in the operating environment.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>2. Policy Updates</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>IronBit reserves the right to amend, update, or revise this Risk Disclosure Policy at any time to reflect changes in applicable laws, regulations, industry standards, or the Platform’s services and features.</li>
+            <li>Material changes to this Policy will be communicated to users through appropriate channels, which may include email notifications, in-platform alerts, or updates posted on the IronBit website.</li>
+            <li>The effective date of the most recent version of this Policy will be indicated at the beginning of the document.</li>
+          </ul>
+
+          <p class="page-content-text"><strong>3. User Notification and Continued Use</strong></p>
+          <ul class="list-disc pl-5 space-y-2 page-content-text">
+            <li>Users are responsible for regularly reviewing this Policy to stay informed of any updates or changes.</li>
+            <li>Continued access to or use of the Platform following the publication of an updated Policy constitutes acceptance of the revised terms and disclosures.</li>
+            <li>If users do not agree with any changes to this Policy, they should discontinue use of the Platform and may contact IronBit for further clarification or to close their account.</li>
+          </ul>
+
+          <p class="page-content-text">
+            By maintaining an adaptive approach to risk disclosure and policy management, IronBit seeks to ensure that users are consistently informed and able to make responsible decisions regarding their engagement with digital assets and the Platform.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="page-title-h3 mb-3">User Acknowledgment</h3>
+        <div class="space-y-4">
+          <p class="page-content-text">
+            By accessing or using any service, feature, or product provided by IronBit, users expressly acknowledge, confirm, and agree to the following:
+          </p>
+
+          <ul class="list-decimal pl-5 space-y-4 page-content-text">
+            <li>
+              <strong>Review and Understanding of Risks</strong><br>
+              Users have carefully read, fully understood, and accept all risks described in this Risk Disclosure Policy, including but not limited to those related to digital asset custody, transactions, market volatility, cybersecurity, regulatory changes, and operational limitations.
+            </li>
+            <li>
+              <strong>Acceptance as Condition of Use</strong><br>
+              Acceptance of the risks outlined in this Policy is a mandatory condition for the use of IronBit. Users may be required to provide explicit acknowledgment of this Policy, such as by checking a box or providing a digital signature during the account registration or onboarding process.
+            </li>
+            <li>
+              <strong>Ongoing Responsibility:</strong><br>
+              Users acknowledge their ongoing responsibility to remain informed about the risks associated with digital assets and the IronBit platform, including any updates or amendments to this Policy. Continued use of the Platform following any changes to this Policy constitutes renewed acceptance of the updated terms and risk disclosures.
+            </li>
+            <li>
+              <strong>Binding Effect:</strong><br>
+              This acknowledgment is binding upon all users and forms an integral part of the user agreement between each user and IronBit. Users who do not agree with the terms of this Policy or any subsequent updates must discontinue use of the Platform and may contact IronBit for further clarification or to close their account.
+            </li>
+          </ul>
+
+          <p class="page-content-text">
+            By proceeding to access or use IronBit, users confirm their understanding and acceptance of the risks and responsibilities set forth in this Policy.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="page-title-h3 mb-3">Governing Law and Dispute Resolution</h3>
+        <div class="space-y-4">
+          <p class="page-content-text"><strong>1. Governing Law</strong></p>
+          <p class="page-content-text">
+            This Risk Disclosure Policy, together with all rights, obligations, and disputes arising from or relating to the use of IronBit, shall be governed by and construed in accordance with the laws of Poland, without regard to its conflict of law principles. The application of any mandatory consumer protection laws of the user’s jurisdiction is not excluded to the extent such exclusion is not permitted by law.
+          </p>
+
+          <p class="page-content-text"><strong>2. Dispute Resolution Procedures</strong></p>
+          <p class="page-content-text">
+            <strong class="italic">a. Good Faith Negotiation:</strong> The parties shall first attempt to resolve any dispute through good faith negotiations. Users are encouraged to contact IronBit to seek an amicable resolution.
+          </p>
+          <p class="page-content-text">
+            <strong class="italic">b. Mediation or Arbitration:</strong> If the dispute cannot be resolved through negotiation within [insert number] days, either party may refer the matter to mediation or binding arbitration in Poland, in accordance with the rules of [insert body], or such other procedure as may be agreed by the parties in writing.
+          </p>
+          <p class="page-content-text">
+            <strong class="italic">c. Jurisdiction and Venue:</strong> Subject to the above, the courts of Poland shall have exclusive jurisdiction over any unresolved disputes arising from or relating to this Policy, the user agreement, or the use of IronBit. Users expressly consent to the personal and exclusive jurisdiction of such courts.
+          </p>
+
+          <p class="page-content-text"><strong>3. Notice of Dispute</strong></p>
+          <p class="page-content-text">
+            Any notice of dispute must be provided in writing and delivered to IronBit at [insert registered address or designated contact], specifying the nature of the dispute, the relief sought, and any relevant supporting documentation.
+          </p>
+
+          <p class="page-content-text"><strong>4. Severability</strong></p>
+          <p class="page-content-text">
+            If any provision of this section is found to be invalid or unenforceable under applicable law, such provision shall be severed, and the remaining provisions shall remain in full force and effect.
+          </p>
+
+          <p class="page-content-text">
+            By using IronBit, users acknowledge and agree to the governing law and dispute resolution procedures set forth in this section.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="page-title-h3 mb-3">Contact and Clarification</h3>
+        <div class="space-y-4">
+          <p class="page-content-text">
+            Users who have questions, require clarification, or wish to report concerns regarding the risks described in this Risk Disclosure Policy are encouraged to contact IronBit using the information provided below. IronBit is committed to transparency and user support, and will make reasonable efforts to respond to all inquiries in a timely and comprehensive manner.
+          </p>
+
+          <p class="page-content-text">
+            <strong>Contact Information:</strong><br />
+            Email: <a href="compliance@ironbit.io"><strong>compliance@ironbit.io</strong></a>
+          </p>
+
+          <p class="page-content-text">
+            For all inquiries related to risk disclosures, users should include their full name, account information (if applicable), and a detailed description of the question or concern. IronBit may request additional information as necessary to address the inquiry effectively.
+          </p>
+
+          <p class="page-content-text">
+            If you believe you have identified a risk, vulnerability, or issue not addressed in this Policy, or if you require further explanation of any aspect of the risks associated with the Platform, please contact the Compliance Officer at the email address above.
+          </p>
+
+          <p class="page-content-text italic">
+            IronBit values user feedback and is dedicated to maintaining open channels of communication to ensure that all users are fully informed and supported in their use of the Platform.
+          </p>
+        </div>
+      </div>
     </article>
 
 
