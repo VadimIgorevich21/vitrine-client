@@ -40,8 +40,8 @@ export default {
     complete_kyc: 'Complete KYC',
   },
   verification_page: {
-    title: '"BTCBIT Sp.z.o.o." verification',
-    description: 'You\'re about to submit sensitive data to "BTCBIT Sp.z.o.o.". If you received this link from a suspicious source, please close this page and notify us immediately.',
+    title: '"IRONBIT Sp.z.o.o." verification',
+    description: 'You\'re about to submit sensitive data to "IRONBIT Sp.z.o.o.". If you received this link from a suspicious source, please close this page and notify us immediately.',
     continue: 'Continue',
     powered_by: 'Powered by',
     pending_title: 'Verification Incomplete',

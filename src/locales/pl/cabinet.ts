@@ -40,8 +40,8 @@ export default {
     complete_kyc: 'Ukończ KYC',
   },
   verification_page: {
-    title: 'Weryfikacja "BTCBIT Sp.z.o.o."',
-    description: 'Zamierzasz przesłać poufne dane do "BTCBIT Sp.z.o.o.". Jeśli otrzymałeś ten link z podejrzanego źródła, zamknij tę stronę i natychmiast nas poinformuj.',
+    title: 'Weryfikacja "IRONBIT Sp.z.o.o."',
+    description: 'Zamierzasz przesłać poufne dane do "IRONBIT Sp.z.o.o.". Jeśli otrzymałeś ten link z podejrzanego źródła, zamknij tę stronę i natychmiast nas poinformuj.',
     continue: 'Kontynuuj',
     powered_by: 'Obsługiwane przez',
     pending_title: 'Weryfikacja niekompletna',
