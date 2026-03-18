@@ -91,7 +91,7 @@
         />
         <span class="rate-label">{{ $t('orders.details.exchangeRate') }}:</span>
         <span class="rate-text">
-          1 {{ formStore.state.from_currency }} ≈ {{ formStore.currentRate.final_rate.toLocaleString('en-US', { maximumFractionDigits: 2 }) }} {{ formStore.state.to_currency }}
+          1 {{ formStore.state.from_currency }} ≈ {{ formStore.currentRate.unit_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }} {{ formStore.state.to_currency }}
         </span>
       </div>
       <div class="fee-text">
