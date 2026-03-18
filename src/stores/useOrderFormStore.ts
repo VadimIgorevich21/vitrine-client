@@ -167,8 +167,35 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     return await orderService.createOrder(payload);
   };
 
+  const applyDefaultNetwork = () => {
+    if (state.type !== 'buy' || !state.to_currency) return;
+
+    const mapping: Record<string, string> = {
+      'btc': 'btc',
+      'eth': 'erc',
+      'trx': 'trc',
+      'usdc': 'erc',
+      'usdt': 'trc'
+    };
+
+    const currencyLower = state.to_currency.toLowerCase();
+    if (mapping[currencyLower]) {
+      state.wallet_type = mapping[currencyLower];
+    }
+  };
+
   const initDefaultValues = () => {
     const saved = localStorage.getItem('order_draft');
+    
+    // Сбрасываем все поля перед инициализацией
+    state.amount_from = null;
+    state.amount_to = null;
+    state.payment_method = state.type === 'buy' ? 'visa_mastercard' : '';
+    state.wallet_type = '';
+    state.wallet_address = '';
+    state.user_requisites = '';
+    step.value = 1;
+
     if (saved) {
       Object.assign(state, JSON.parse(saved));
       localStorage.removeItem('order_draft');
@@ -179,17 +206,10 @@ export const useOrderFormStore = defineStore('orderForm', () => {
 
       const available = configStore.directions[state.from_currency] ?? [];
       state.to_currency = available[0] ?? '';
+      
+      // Авто-выбор сети после установки валюты
+      applyDefaultNetwork();
     }
-
-    // ВАЖНО: Сбрасываем поля оплаты при смене Buy/Sell или инициализации,
-    // чтобы старые данные не улетели в новый заказ
-    state.amount_from = null;
-    state.amount_to = null;
-    state.payment_method = state.type === 'buy' ? 'visa_mastercard' : '';
-    state.wallet_type = '';
-    state.wallet_address = '';
-    state.user_requisites = '';
-    step.value = 1;
   };
 
   const persist = () => localStorage.setItem('order_draft', JSON.stringify(state));
@@ -220,20 +240,8 @@ export const useOrderFormStore = defineStore('orderForm', () => {
   });
 
   // Auto-select network based on crypto currency
-  watch(() => state.to_currency, (newVal) => {
-    if (state.type !== 'buy') return;
-    
-    const mapping: Record<string, string> = {
-      'btc': 'btc',
-      'eth': 'erc',
-      'trx': 'trc',
-      'usdc': 'erc'
-    };
-
-    const currencyLower = newVal.toLowerCase();
-    if (mapping[currencyLower]) {
-      state.wallet_type = mapping[currencyLower];
-    }
+  watch(() => state.to_currency, () => {
+    applyDefaultNetwork();
   });
 
   return {
