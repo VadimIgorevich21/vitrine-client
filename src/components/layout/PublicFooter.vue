@@ -10,9 +10,9 @@ const { t } = useI18n()
 <template>
   <footer class="bg-black text-white py-16 px-4 sm:px-6 lg:px-8 mt-auto">
     <div class="default-container">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 mb-16">
         <!-- Column 1: Logo & Description -->
-        <div class="space-y-6">
+        <div class="col-span-2 md:col-span-1 space-y-6">
           <RouterLink to="/" class="flex items-center">
             <img :src="logo" alt="IronBit" class="h-8 w-auto" />
           </RouterLink>
@@ -22,7 +22,7 @@ const { t } = useI18n()
         </div>
 
         <!-- Column 2: Platform -->
-        <div>
+        <div class="col-span-1">
           <h3 class="font-semibold mb-6">{{ t('footer.platform') }}</h3>
           <ul class="space-y-4 text-sm text-gray-400">
             <li><a href="/#platform" class="hover:text-white transition-colors">{{ t('footer.buyCrypto') }}</a></li>
@@ -33,7 +33,7 @@ const { t } = useI18n()
         </div>
 
         <!-- Column 3: Legal -->
-        <div>
+        <div class="col-span-1">
           <h3 class="font-semibold mb-6">{{ t('footer.legal') }}</h3>
           <ul class="space-y-4 text-sm text-gray-400">
             <li><RouterLink to="/terms" class="hover:text-white transition-colors">{{ t('footer.terms') }}</RouterLink></li>
@@ -45,7 +45,7 @@ const { t } = useI18n()
         </div>
 
         <!-- Column 4: Company Details -->
-        <div>
+        <div class="col-span-2 md:col-span-1">
           <h3 class="font-semibold mb-6">{{ t('footer.companyDetails') }}</h3>
           <div class="space-y-1 text-sm text-gray-400">
             <p>IRONBIT Sp. z o.o.</p>
