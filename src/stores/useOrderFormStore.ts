@@ -63,6 +63,7 @@ export const useOrderFormStore = defineStore('orderForm', () => {
 
     if (commissionFromAmount > 0 && amountFrom >= commissionFromAmount && commissionPercent > 0) {
       fee = amountFrom * (commissionPercent / 100);
+      if (fee < minCommission) fee = minCommission;
     } else {
       fee = minCommission;
     }
@@ -129,7 +130,9 @@ export const useOrderFormStore = defineStore('orderForm', () => {
           if (denominator <= 0) {
             gross = grossWithFixed;
           } else {
-            gross = state.amount_to / denominator;
+            const grossWithPercent = state.amount_to / denominator;
+            // Ensure gross reflects at least the minimum commission
+            gross = Math.max(grossWithFixed, grossWithPercent);
           }
         }
       } else {
