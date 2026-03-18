@@ -48,7 +48,7 @@ const menuItems = [
 
 const footerLinks = [
   { name: 'terms', path: '/terms' },
-  { name: 'refund', path: '/refund' },
+  { name: 'refund', path: '/refund-policy' },
   { name: 'contact', path: '/contacts' }
 ]
 
