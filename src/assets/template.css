@@ -7,7 +7,7 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --text-primary: #F8FAFC;
+        --text-primary: #94A3B8;
         --text-secondary: #94A3B8;
         --bg-primary: #0F172A;
         --bg-secondary: #111827;
@@ -15,7 +15,7 @@
 }
 
 .dark {
-    --text-primary: #F8FAFC;
+    --text-primary: #94A3B8;
     --text-secondary: #94A3B8;
     --bg-primary: #0F172A;
     --bg-secondary: #111827;
