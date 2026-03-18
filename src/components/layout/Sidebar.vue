@@ -72,7 +72,7 @@ const handleLogout = async () => {
 
       <!-- Logo -->
       <div class="sidebar-logo mt-6 mb-10">
-        <RouterLink to="/" class="flex items-center">
+        <RouterLink to="/cabinet" class="flex items-center">
           <img :src="logoUrl" alt="IronBit Logo" />
         </RouterLink>
       </div>
