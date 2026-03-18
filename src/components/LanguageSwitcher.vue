@@ -24,7 +24,7 @@ function toggleDropdown() {
     if (rect) {
       const windowHeight = window.innerHeight
       const spaceBelow = windowHeight - rect.bottom
-      const menuHeight = 80
+      const menuHeight = 120
       dropUp.value = spaceBelow < menuHeight
     }
   }
@@ -104,7 +104,7 @@ onUnmounted(() =>
         >
           <span class="lang-switcher__item">
             <img :src="locales[lang].flag" :alt="locales[lang].label" class="lang-switcher__flag" />
-            {{ locales[lang].short }}
+            {{ locales[lang].label }}
           </span>
         </button>
       </div>
@@ -141,14 +141,13 @@ onUnmounted(() =>
 /* Dropdown */
 .lang-switcher__dropdown {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 60px;
+  right: 0;
+  min-width: 140px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
-  padding: 4px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 6px;
   display: flex;
   flex-direction: column;
   z-index: 100;
@@ -167,13 +166,14 @@ onUnmounted(() =>
 /* Опция */
 .lang-switcher__option {
   width: 100%;
-  padding: 4px 6px;
+  padding: 8px 12px;
   border: none;
   background: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background 0.15s ease;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 500;
   color: #374151;
 }
 
@@ -188,9 +188,9 @@ onUnmounted(() =>
 }
 
 .lang-switcher__flag {
-  width: 18px;
+  width: 22px;
   height: auto;
-  border-radius: 2px;
+  border-radius: 3px;
   object-fit: contain;
 }
 
@@ -203,11 +203,11 @@ onUnmounted(() =>
 .fade-slide-enter-from,
 .fade-slide-leave-to {
   opacity: 0;
-  transform: translateY(4px);
+  transform: translateY(10px);
 }
 
 .is-drop-up.fade-slide-enter-from,
 .is-drop-up.fade-slide-leave-to {
-  transform: translateY(-4px);
+  transform: translateY(-10px);
 }
 </style>

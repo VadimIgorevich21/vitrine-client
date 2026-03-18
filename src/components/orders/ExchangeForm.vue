@@ -2,15 +2,19 @@
   <div class="exchange-card">
     <!-- Tabs -->
     <div v-if="configStore.loading" class="loading-pulse-tabs mb-8"></div>
-    <div v-else-if="formStore.step === 1" class="tabs-container mb-6">
+    <div v-else-if="formStore.step === 123" class="tabs-container mb-6">
       <button
-        v-for="t in (['buy', 'sell'] as const)" :key="t"
+        v-for="t in (['buy'] as const)" :key="t"
         @click="t === 'buy' ? (formStore.state.type = t) : null"
         :class="['tab-button', formStore.state.type === t ? 'active' : 'inactive', { 'disabled': t === 'sell' }]"
         :disabled="t === 'sell'"
       >
         {{ t === 'buy' ? $t('orders.exchange.buyCrypto') : $t('orders.exchange.sellCrypto') }}
       </button>
+    </div>
+    <div v-else-if="formStore.step === 1" class="buy-header">
+        <h2 class="buy-title">Buy {{ formStore.state.to_currency }}</h2>
+        <div class="buy-header-spacer"></div>
     </div>
 
     <!-- Forms -->
@@ -127,5 +131,28 @@ onMounted(async () => {
     padding-bottom: 10px;
     font-size: 13px;
   }
+}
+
+/* Step 2 Elements */
+.buy-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 23px;
+  justify-content: center;
+}
+
+
+.buy-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 150%;
+  margin-left: 40px;
+}
+
+.buy-header-spacer {
+  width: 40px;
+  height: 40px;
 }
 </style>

@@ -104,7 +104,7 @@ const { t } = useI18n()
 
 /* Badge Styles */
 .innovate-badge {
-  width: 240px;
+  width: 200px;
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
