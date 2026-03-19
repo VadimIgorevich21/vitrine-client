@@ -101,7 +101,7 @@ export const useOrderFormStore = defineStore('orderForm', () => {
       }
       const multiplier = state.type === 'buy' ? 1 / rate.unit_price : rate.unit_price;
       const res = netAmount * multiplier;
-      state.amount_to = Number(res.toFixed(rate.precision));
+      state.amount_to = Number(res.toFixed(rate.sell_precision));
     } else {
       state.amount_to = null;
     }
