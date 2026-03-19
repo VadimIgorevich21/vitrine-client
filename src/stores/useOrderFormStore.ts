@@ -99,7 +99,8 @@ export const useOrderFormStore = defineStore('orderForm', () => {
         state.amount_to = null;
         return;
       }
-      const res = netAmount * rate.final_rate;
+      const multiplier = state.type === 'buy' ? 1 / rate.unit_price : rate.unit_price;
+      const res = netAmount * multiplier;
       state.amount_to = Number(res.toFixed(rate.precision));
     } else {
       state.amount_to = null;
@@ -108,13 +109,13 @@ export const useOrderFormStore = defineStore('orderForm', () => {
 
   const calculateFrom = () => {
     const rate = currentRate.value;
-    if (rate && state.amount_to !== null && rate.final_rate > 0) {
+    if (rate && state.amount_to !== null && rate.unit_price > 0) {
       const minCommission = Number(rate.min_commission ?? 0);
       const commissionPercent = Number(rate.commission_percent ?? 0);
       const commissionFromAmount = Number(rate.commission_from_amount ?? 0);
 
       const precision = state.type === 'buy' ? 2 : 8;
-      const rateValue = rate.final_rate;
+      const rateValue = state.type === 'buy' ? 1 / rate.unit_price : rate.unit_price;
 
       let gross: number;
 
