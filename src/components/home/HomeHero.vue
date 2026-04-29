@@ -107,9 +107,10 @@ const { t } = useI18n()
 
 .hero-subtitle-gradient2 {
   background:
-    linear-gradient(113.64deg, #c1b7f3 40.81%, #978FE3 76.61%),
-    linear-gradient(0deg, #FFFFFF, #FFFFFF);
+    linear-gradient(113.64deg, #3825ed 40.81%, #3825ed 76.61%),
+    linear-gradient(0deg, #3825ed, #3825ed);
 
+  line-height: 125%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
