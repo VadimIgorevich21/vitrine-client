@@ -19,6 +19,12 @@ const { t } = useI18n()
           <p class="text-sm text-gray-400 leading-relaxed footer-description">
             {{ t('footer.description') }}
           </p>
+
+          <!-- Payment Methods -->
+          <div class="flex items-center gap-3">
+            <img src="/img/payment-methods/visa1.png" alt="Visa" class="h-8 md:h-8 w-auto opacity-75 hover:opacity-100 transition-opacity" />
+            <img src="/img/payment-methods/ms2.png" alt="Mastercard" class="h-5 md:h-6 w-auto opacity-75 hover:opacity-100 transition-opacity" />
+          </div>
         </div>
 
         <!-- Column 2: Platform -->
@@ -60,8 +66,8 @@ const { t } = useI18n()
         </div>
       </div>
 
-      <!-- Bottom: Copyright -->
-      <div class="pt-8 border-t border-gray-800 text-xs text-gray-500">
+      <!-- Bottom: Copyright & Payment Methods -->
+      <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
         <p>{{ t('footer.copyright', { year: new Date().getFullYear() }) }}</p>
       </div>
     </div>
