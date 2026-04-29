@@ -52,6 +52,7 @@ const { t } = useI18n()
             <p>KRS: 0001013919</p>
             <p>NIP: 5252939713</p>
             <p>REGON: 524214646</p>
+            <p>License NR: RDWW665</p>
             <p class="mt-4">{{ t('footer.address') }}</p>
             <p>{{ t('footer.city') }}</p>
             <a href="mailto:info@ironbit.io" class="text-orange-400 hover:text-orange-300 transition-colors mt-2 block font-medium">info@ironbit.io</a>

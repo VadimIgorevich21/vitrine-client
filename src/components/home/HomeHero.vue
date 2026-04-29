@@ -25,6 +25,9 @@ const { t } = useI18n()
           <p class="hero-subtitle">
             {{ t('home.hero_subtitle') }}
           </p>
+          <p class="hero-subtitle hero-subtitle-gradient2">
+            {{ t('home.hero_subtitle2') }}
+          </p>
         </div>
 
         <!-- Right Side: Form Block -->
@@ -86,7 +89,7 @@ const { t } = useI18n()
 }
 
 .hero-subtitle {
-  max-width: 550px;
+  max-width: 552px;
   font-weight: 400;
   font-size: 20px;
   line-height: 150%;
@@ -95,6 +98,17 @@ const { t } = useI18n()
   background:
   linear-gradient(113.64deg, #FFFFFF 40.81%, #978FE3 76.61%),
   linear-gradient(0deg, #FFFFFF, #FFFFFF);
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle-gradient2 {
+  background:
+    linear-gradient(113.64deg, #c1b7f3 40.81%, #978FE3 76.61%),
+    linear-gradient(0deg, #FFFFFF, #FFFFFF);
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
