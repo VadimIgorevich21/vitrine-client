@@ -131,8 +131,8 @@ const handleLogout = async () => {
 
         <!-- Payment Methods -->
         <div class="flex items-center gap-3">
-          <img src="/img/payment-methods/visa1.png" alt="Visa" class="h-8 md:h-8 w-auto opacity-75 hover:opacity-100 transition-opacity" />
-          <img src="/img/payment-methods/ms2.png" alt="Mastercard" class="h-5 md:h-6 w-auto opacity-75 hover:opacity-100 transition-opacity" />
+          <img src="/img/payment-methods/visa5.png" alt="Visa" class="h-4 md:h-4 w-auto opacity-75 hover:opacity-100 transition-opacity" />
+          <img src="/img/payment-methods/mclogo-for-footer.svg" alt="Mastercard" class="h-4 md:h-4 w-auto opacity-75 hover:opacity-100 transition-opacity" />
         </div>
       </div>
     </div>
