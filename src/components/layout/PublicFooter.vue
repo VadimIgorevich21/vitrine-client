@@ -46,6 +46,7 @@ const { t } = useI18n()
             <li><RouterLink to="/privacy-policy" class="hover:text-white transition-colors">{{ t('footer.privacy') }}</RouterLink></li>
             <li><RouterLink to="/refund-policy" class="hover:text-white transition-colors">{{ t('footer.refundPolicy') }}</RouterLink></li>
             <li><RouterLink to="/risk-disclosure-policy" class="hover:text-white transition-colors">{{ t('footer.riskDisclosure') }}</RouterLink></li>
+            <li><RouterLink to="/risk-warning" class="hover:text-white transition-colors">{{ t('footer.riskWarning') }}</RouterLink></li>
             <li><RouterLink to="/aml-and-kyc-policy" class="hover:text-white transition-colors">{{ t('footer.amlKyc') }}</RouterLink></li>
           </ul>
         </div>
@@ -64,6 +65,18 @@ const { t } = useI18n()
             <a href="mailto:info@ironbit.io" class="text-orange-400 hover:text-orange-300 transition-colors mt-2 block font-medium">info@ironbit.io</a>
           </div>
         </div>
+      </div>
+
+      <!-- Bottom: Copyright & Payment Methods -->
+      <div class="pt-8 pb-8 border-t border-gray-800 text-xs text-gray-500">
+        <i18n-t keypath="footer.description2" tag="p" class="leading-relaxed">
+          <template #terms>
+            <RouterLink to="/terms" class="text-gray-400 hover:text-white transition-colors underline">{{ t('footer.description2Terms') }}</RouterLink>
+          </template>
+          <template #risk>
+            <RouterLink to="/risk-warning" class="text-gray-400 hover:text-white transition-colors underline">{{ t('footer.description2RiskWarning') }}</RouterLink>
+          </template>
+        </i18n-t>
       </div>
 
       <!-- Bottom: Copyright & Payment Methods -->

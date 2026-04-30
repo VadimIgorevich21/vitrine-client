@@ -17,4 +17,8 @@ export default {
   companyDetails: 'Company Details',
   address: 'ul. Żurawia 6/12',
   city: '00-503 Warszawa, Poland',
+  description2: '*Risk Warning: Digital asset prices are subject to high market risk and price volatility. The value of your investment may go down or up, and you may not get back the amount invested. You are solely responsible for your investment decisions and Ironbit is not liable for any losses you may incur. Past performance is not a reliable predictor of future performance. You should only invest in products you are familiar with and where you understand the risks. You should carefully consider your investment experience, financial situation, investment objectives and risk tolerance and consult an independent financial adviser prior to making any investment. This material should not be construed as financial advice. For more information, see our {terms} and {risk}.',
+  description2Terms: 'Terms of Service',
+  description2RiskWarning: 'Risk Warning',
+  riskWarning: 'Risk Warning',
 }
