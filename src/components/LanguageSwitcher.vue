@@ -210,4 +210,8 @@ onUnmounted(() =>
 .is-drop-up.fade-slide-leave-to {
   transform: translateY(-10px);
 }
+
+.cabinet-sidebar .lang-switcher__dropdown {
+  left: 0;
+}
 </style>

@@ -6,9 +6,8 @@ import bgImage from "@/assets/img/background.png";
 
 
 <template>
-  <div class="home-page min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900"
+  <div class="home-page home-page-bg min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900"
        :style="{ backgroundImage: `url(${bgImage})` }"
-       style="background-size:contain; background-repeat: no-repeat; background-color: #ffffff"
   >
     <HomeHeader />
     <main class="flex-1">
@@ -22,9 +21,17 @@ import bgImage from "@/assets/img/background.png";
 <style scoped>
 /* ── Page ──────────────────────────────────────────────── */
 .home-page {
+  background-size:contain;
+  background-color: #ffffff;
   background-position: center top;
   background-position: 0 -100px;
   background-repeat: no-repeat;
   font-family: 'Inter', system-ui, sans-serif;
+}
+
+@media (max-width: 1366px) {
+  .home-page {
+    background-size: auto;
+  }
 }
 </style>

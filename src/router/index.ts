@@ -23,6 +23,7 @@ import HomeLayout from "@/layouts/HomeLayout.vue";
 import RefundPolicyView from "@/views/public-pages/RefundPolicyView.vue";
 import KycPolicyView from "@/views/public-pages/KycPolicyView.vue";
 import RiskDisclosurePolicyView from "@/views/public-pages/RiskDisclosurePolicyView.vue";
+import RiskWarningView from "@/views/public-pages/RiskWarningView.vue";
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -80,6 +81,12 @@ const routes: RouteRecordRaw[] = [
         name: 'risk-disclosure-policy',
         component: RiskDisclosurePolicyView,
         meta: { title: 'Risk Disclosure Policy' },
+      },
+      {
+        path: 'risk-warning',
+        name: 'risk-warning',
+        component: RiskWarningView,
+        meta: { title: 'Risk Warning' },
       },
       {
         path: 'terms',

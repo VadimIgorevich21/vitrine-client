@@ -8,6 +8,7 @@ export default {
   hero_title_p1: 'Buy BTC with',
   hero_title_p2: 'the lowest fees',
   hero_subtitle: 'Experience the next generation of digital asset exchange. Buy and sell cryptocurrencies instantly with card payments, transparent pricing, and smart rate execution.',
+  hero_subtitle2: 'Risk Warning: Crypto-assets are highly volatile and carry a high risk of loss. You may lose all of the value of your investment. Invest only if you understand the risks involved.',
   instant_reg_title_p1: 'Instant Registration.',
   instant_reg_title_p2: 'Powerful Features.',
   instant_reg_subtitle: 'Just provide your email and password, no extra data required. Secure account setup in seconds.',

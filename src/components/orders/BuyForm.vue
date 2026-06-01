@@ -88,7 +88,7 @@
             :start-time="formStore.rateStore.lastUpdated"
           />
           <span class="rate-text">
-            1 {{ formStore.state.to_currency }} ≈ {{ formStore.currentRate.unit_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }} {{ formStore.state.from_currency }}
+            1 {{ formStore.state.to_currency }} ≈ {{ formStore.currentRate.unit_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: formStore.currentRate.buy_precision }) }} {{ formStore.state.from_currency }}
           </span>
         </div>
         <div class="fee-text" v-if="formStore.feeAmount !== null && formStore.feePercent !== null">

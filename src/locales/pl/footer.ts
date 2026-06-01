@@ -17,4 +17,6 @@ export default {
   companyDetails: 'Dane firmy',
   address: 'ul. Żurawia 6/12',
   city: '00-503 Warszawa, Polska',
+  riskWarning: 'Ostrzeżenie o ryzyku',
+  description2: '*Ostrzeżenie o ryzyku: Ceny aktywów cyfrowych podlegają wysokiemu ryzyku rynkowemu i zmienności cen. Wartość Twojej inwestycji może spaść lub wzrosnąć, a Ty możesz nie odzyskać zainwestowanej kwoty. Ponosisz wyłączną odpowiedzialność za swoje decyzje inwestycyjne, a Ironbit nie ponosi odpowiedzialności za jakiekolwiek straty, które możesz ponieść. Wyniki z przeszłości nie są wiarygodnym wskaźnikiem przyszłych wyników. Powinieneś inwestować tylko w produkty, które znasz i których ryzyko rozumiesz. Powinieneś dokładnie rozważyć swoje doświadczenie inwestycyjne, sytuację finansową, cele inwestycyjne i tolerancję na ryzyko oraz skonsultować się z niezależnym doradcą finansowym przed podjęciem jakichkolwiek decyzji inwestycyjnych. Ten materiał nie powinien być interpretowany jako porada finansowa. Aby uzyskać więcej informacji, zapoznaj się z naszymi {terms} i {risk}.',
 }

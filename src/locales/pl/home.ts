@@ -8,6 +8,7 @@ export default {
   hero_title_p1: 'Buy BTC with',
   hero_title_p2: 'the lowest fees',
   hero_subtitle: 'Poznaj nową generację wymiany aktywów cyfrowych. Kupuj i sprzedawaj kryptowaluty natychmiast za pomocą płatności kartą, przejrzystych cen i inteligentnej realizacji kursów.',
+  hero_subtitle2: 'Ostrzeżenie o ryzyku: Kryptowaluty są wysoce zmienne i wiążą się z wysokim ryzykiem straty. Możesz stracić całą wartość swojej inwestycji. Inwestuj tylko wtedy, gdy rozumiesz związane z tym ryzyko.',
   instant_reg_title_p1: 'Natychmiastowa Rejestracja.',
   instant_reg_title_p2: 'Potężne Funkcje.',
   instant_reg_subtitle: 'Wystarczy podać e-mail i hasło, żadne dodatkowe dane nie są wymagane. Bezpieczna konfiguracja konta w kilka sekund.',

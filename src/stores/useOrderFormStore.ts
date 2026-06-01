@@ -63,6 +63,7 @@ export const useOrderFormStore = defineStore('orderForm', () => {
 
     if (commissionFromAmount > 0 && amountFrom >= commissionFromAmount && commissionPercent > 0) {
       fee = amountFrom * (commissionPercent / 100);
+      if (fee < minCommission) fee = minCommission;
     } else {
       fee = minCommission;
     }
@@ -98,8 +99,9 @@ export const useOrderFormStore = defineStore('orderForm', () => {
         state.amount_to = null;
         return;
       }
-      const res = netAmount * rate.final_rate;
-      state.amount_to = Number(res.toFixed(rate.precision));
+      const multiplier = state.type === 'buy' ? 1 / rate.unit_price : rate.unit_price;
+      const res = netAmount * multiplier;
+      state.amount_to = Number(res.toFixed(rate.sell_precision));
     } else {
       state.amount_to = null;
     }
@@ -107,13 +109,13 @@ export const useOrderFormStore = defineStore('orderForm', () => {
 
   const calculateFrom = () => {
     const rate = currentRate.value;
-    if (rate && state.amount_to !== null && rate.final_rate > 0) {
+    if (rate && state.amount_to !== null && rate.unit_price > 0) {
       const minCommission = Number(rate.min_commission ?? 0);
       const commissionPercent = Number(rate.commission_percent ?? 0);
       const commissionFromAmount = Number(rate.commission_from_amount ?? 0);
 
       const precision = state.type === 'buy' ? 2 : 8;
-      const rateValue = rate.final_rate;
+      const rateValue = state.type === 'buy' ? 1 / rate.unit_price : rate.unit_price;
 
       let gross: number;
 
@@ -129,7 +131,9 @@ export const useOrderFormStore = defineStore('orderForm', () => {
           if (denominator <= 0) {
             gross = grossWithFixed;
           } else {
-            gross = state.amount_to / denominator;
+            const grossWithPercent = state.amount_to / denominator;
+            // Ensure gross reflects at least the minimum commission
+            gross = Math.max(grossWithFixed, grossWithPercent);
           }
         }
       } else {
@@ -164,8 +168,35 @@ export const useOrderFormStore = defineStore('orderForm', () => {
     return await orderService.createOrder(payload);
   };
 
+  const applyDefaultNetwork = () => {
+    if (state.type !== 'buy' || !state.to_currency) return;
+
+    const mapping: Record<string, string> = {
+      'btc': 'btc',
+      'eth': 'erc',
+      'trx': 'trc',
+      'usdc': 'erc',
+      'usdt': 'trc'
+    };
+
+    const currencyLower = state.to_currency.toLowerCase();
+    if (mapping[currencyLower]) {
+      state.wallet_type = mapping[currencyLower];
+    }
+  };
+
   const initDefaultValues = () => {
     const saved = localStorage.getItem('order_draft');
+    
+    // Сбрасываем все поля перед инициализацией
+    state.amount_from = null;
+    state.amount_to = null;
+    state.payment_method = state.type === 'buy' ? 'visa_mastercard' : '';
+    state.wallet_type = '';
+    state.wallet_address = '';
+    state.user_requisites = '';
+    step.value = 1;
+
     if (saved) {
       Object.assign(state, JSON.parse(saved));
       localStorage.removeItem('order_draft');
@@ -176,17 +207,10 @@ export const useOrderFormStore = defineStore('orderForm', () => {
 
       const available = configStore.directions[state.from_currency] ?? [];
       state.to_currency = available[0] ?? '';
+      
+      // Авто-выбор сети после установки валюты
+      applyDefaultNetwork();
     }
-
-    // ВАЖНО: Сбрасываем поля оплаты при смене Buy/Sell или инициализации,
-    // чтобы старые данные не улетели в новый заказ
-    state.amount_from = null;
-    state.amount_to = null;
-    state.payment_method = state.type === 'buy' ? 'visa_mastercard' : '';
-    state.wallet_type = '';
-    state.wallet_address = '';
-    state.user_requisites = '';
-    step.value = 1;
   };
 
   const persist = () => localStorage.setItem('order_draft', JSON.stringify(state));
@@ -217,20 +241,8 @@ export const useOrderFormStore = defineStore('orderForm', () => {
   });
 
   // Auto-select network based on crypto currency
-  watch(() => state.to_currency, (newVal) => {
-    if (state.type !== 'buy') return;
-    
-    const mapping: Record<string, string> = {
-      'btc': 'btc',
-      'eth': 'erc',
-      'trx': 'trc',
-      'usdc': 'erc'
-    };
-
-    const currencyLower = newVal.toLowerCase();
-    if (mapping[currencyLower]) {
-      state.wallet_type = mapping[currencyLower];
-    }
+  watch(() => state.to_currency, () => {
+    applyDefaultNetwork();
   });
 
   return {

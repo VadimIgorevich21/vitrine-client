@@ -128,6 +128,12 @@ const handleLogout = async () => {
             {{ t(`cabinet.sidebar.${link.name}`) }}
           </RouterLink>
         </div>
+
+        <!-- Payment Methods -->
+        <div class="flex items-center gap-3">
+          <img src="/img/payment-methods/visa5.png" alt="Visa" class="h-4 md:h-4 w-auto opacity-75 hover:opacity-100 transition-opacity" />
+          <img src="/img/payment-methods/mclogo-for-footer.svg" alt="Mastercard" class="h-4 md:h-4 w-auto opacity-75 hover:opacity-100 transition-opacity" />
+        </div>
       </div>
     </div>
   </aside>
