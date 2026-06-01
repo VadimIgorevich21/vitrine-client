@@ -49,7 +49,7 @@ const lastUpdated = '2025-02-20'
             Product complexity: The features and risks of crypto-assets, and any products with a crypto-asset underlying, can be difficult to understand. Be careful when buying crypto-assets, or related investment products, especially if you are unsure how their value is determined and what risks are involved.
           </p>
           <p class="page-content-text">
-            This warning and risk disclosure is provided to help you understand the potential risks associated with trading crypto assets. Trading crypto assets involves significant risks of financial loss. By using our services, you acknowledge that you have read, understood and accept these risks, and agree that Kriptomat disclaims liability to the fullest extent permitted by applicable law.
+            This warning and risk disclosure is provided to help you understand the potential risks associated with trading crypto assets. Trading crypto assets involves significant risks of financial loss. By using our services, you acknowledge that you have read, understood and accept these risks, and agree that Ironbit disclaims liability to the fullest extent permitted by applicable law.
           </p>
           <p class="page-content-text">
             The risks mentioned are illustrative and not exhaustive. Additional risks, including emerging threats, may arise. You are encouraged to educate yourself and remain informed. This notice complements our Terms of Use and other risk-related disclosures.
@@ -151,7 +151,7 @@ const lastUpdated = '2025-02-20'
           <h3 class="page-title-h3 mb-3">Service Availability</h3>
 
           <p class="page-content-text">
-            Ironbit does not guarantee uninterrupted service. Periods of downtime or congestion may limit access to buying, selling, or transferring assets. Kriptomat shall not be held liable for such occurrences.
+            Ironbit does not guarantee uninterrupted service. Periods of downtime or congestion may limit access to buying, selling, or transferring assets. Ironbit shall not be held liable for such occurrences.
           </p>
         </div>
       </div>
@@ -161,7 +161,7 @@ const lastUpdated = '2025-02-20'
           <h3 class="page-title-h3 mb-3">Final Disclaimer and Complaints</h3>
 
           <p class="page-content-text">
-            All users are encouraged to understand the risks involved and seek independent financial, legal, or tax advice when necessary. No information provided by Kriptomat constitutes investment or legal advice.
+            All users are encouraged to understand the risks involved and seek independent financial, legal, or tax advice when necessary. No information provided by Ironbit constitutes investment or legal advice.
           </p>
           <p class="page-content-text">
             If you have questions or concerns regarding our services or wish to file a complaint, please consult our Complaints Handling Policy available on our website.
