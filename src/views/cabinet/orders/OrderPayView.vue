@@ -430,18 +430,18 @@ const orderDataWatcher = () => {
                     <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
-                  
-                  <!-- Interactive CVV Popover -->
-                  <transition name="fade">
-                    <div v-if="showCvvHelp" class="cvv-popover" style="width: 160px; height: 100px; border-radius: 20px; padding: 0;">
-                      <img 
-                        src="/img/payment-methods/tooltip.png"
-                        alt="CVV Helper" 
-                        style="width: 160px; height: 100px; display: block;"
-                      />
-                    </div>
-                  </transition>
                 </div>
+
+                <!-- Interactive CVV Popover -->
+                <transition name="fade">
+                  <div v-if="showCvvHelp" class="cvv-popover" style="width: 160px; height: 100px;">
+                    <img
+                      src="/img/payment-methods/tooltip.png"
+                      alt="CVV Helper"
+                      style="width: 160px; height: 100px; display: block;"
+                    />
+                  </div>
+                </transition>
               </div>
               <span v-if="errors.cvv" class="error-msg">
                 {{ errors.cvv }}
@@ -752,9 +752,8 @@ const orderDataWatcher = () => {
 
 .cvv-popover {
   position: absolute;
-  bottom: 100%;
+  bottom: 57px;
   right: 0;
-  margin-bottom: 12px;
   z-index: 30;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   display: flex;
