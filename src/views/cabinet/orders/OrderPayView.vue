@@ -355,17 +355,18 @@ const orderDataWatcher = () => {
               
               <!-- Cards Logos -->
               <div class="flex items-center gap-1.5">
-                <!-- Visa SVG -->
-                <svg width="28" height="18" viewBox="0 0 36 24" fill="none" class="opacity-80 transition-opacity" :class="{ 'opacity-100 scale-105 filter drop-shadow-sm': cardBrand === 'visa' || !cardBrand, 'opacity-30': cardBrand && cardBrand !== 'visa' }">
-                  <rect width="36" height="24" rx="4" fill="#F8F9FA"/>
-                  <path d="M14.28 14.82l1.64-6.42h2.62l-1.64 6.42h-2.62zm7.14-6.24c-.45-.18-.81-.24-1.25-.24-1.38 0-2.36.72-2.37 1.77-.01.76.69 1.19 1.22 1.44.54.26.72.43.72.66 0 .36-.44.52-.84.52-.71 0-1.09-.11-1.67-.36l-.23-.11-.25.96c.26.12.75.23 1.25.24 1.46 0 2.41-.71 2.43-1.81.01-.6-.36-1.06-1.16-1.44-.48-.24-.77-.4-.77-.65 0-.22.25-.45.79-.45.64-.01.98.14 1.34.3l.16.08.23-.96zm3.58 3.86l-1.24-4.04h-1.64l2.5 5.86h1.27l2.25-5.86h-1.55l-1.59 4.04zm-14.77-4.04h-2.52c-.66 0-1.12.35-1.34.87L3.06 14.82h2.75l.55-1.5h3.36l.32 1.5h2.42l-2.23-6.42zm-2.07 3.96l1.39-3.79c-.01 0 .28-.77.34-.96l.18.86.8 3.89h-2.71z" fill="#1A1F71"/>
-                </svg>
-                <!-- Mastercard SVG -->
-                <svg width="28" height="18" viewBox="0 0 36 24" fill="none" class="opacity-80 transition-opacity" :class="{ 'opacity-100 scale-105 filter drop-shadow-sm': cardBrand === 'mastercard' || !cardBrand, 'opacity-30': cardBrand && cardBrand !== 'mastercard' }">
-                  <rect width="36" height="24" rx="4" fill="#F8F9FA"/>
-                  <circle cx="15.5" cy="12" r="7.5" fill="#EB001B"/>
-                  <circle cx="21.5" cy="12" r="7.5" fill="#F79E1B" fill-opacity="0.85"/>
-                </svg>
+                <img 
+                  src="/img/payment-methods/visa_logo.png" 
+                  alt="Visa" 
+                  class="h-[10px] w-auto object-contain opacity-80 transition-opacity" 
+                  :class="{ 'opacity-100 scale-105 filter drop-shadow-sm': cardBrand === 'visa' || !cardBrand, 'opacity-30': cardBrand && cardBrand !== 'visa' }"
+                />
+                <img 
+                  src="/img/payment-methods/mc_logo.png" 
+                  alt="Mastercard" 
+                  class="h-[16px] w-auto object-contain opacity-80 transition-opacity" 
+                  :class="{ 'opacity-100 scale-105 filter drop-shadow-sm': cardBrand === 'mastercard' || !cardBrand, 'opacity-30': cardBrand && cardBrand !== 'mastercard' }"
+                />
               </div>
             </div>
             <input
@@ -431,15 +432,11 @@ const orderDataWatcher = () => {
                   <!-- Interactive CVV Popover -->
                   <transition name="fade">
                     <div v-if="showCvvHelp" class="cvv-popover">
-                      <div class="cvv-card-back">
-                        <div class="magnetic-strip"></div>
-                        <div class="signature-strip-container">
-                          <div class="signature-strip">
-                            <div class="sig-lines"></div>
-                          </div>
-                          <div class="cvv-box">123</div>
-                        </div>
-                      </div>
+                      <img 
+                        src="/img/payment-methods/cvv_tooltip.png" 
+                        alt="CVV Helper" 
+                        class="w-[160px] h-[100px] object-contain rounded-md"
+                      />
                       <span class="cvv-popover-text">3 digits on the back of card</span>
                     </div>
                   </transition>
