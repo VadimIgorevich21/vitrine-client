@@ -358,13 +358,15 @@ const orderDataWatcher = () => {
                 <img 
                   src="/img/payment-methods/visa_logo.png" 
                   alt="Visa" 
-                  class="h-[10px] w-auto object-contain opacity-80 transition-opacity" 
+                  style="width: 31px; height: 10px; display: block;"
+                  class="object-contain opacity-80 transition-opacity" 
                   :class="{ 'opacity-100 scale-105 filter drop-shadow-sm': cardBrand === 'visa' || !cardBrand, 'opacity-30': cardBrand && cardBrand !== 'visa' }"
                 />
                 <img 
                   src="/img/payment-methods/mc_logo.png" 
                   alt="Mastercard" 
-                  class="h-[16px] w-auto object-contain opacity-80 transition-opacity" 
+                  style="width: 29px; height: 16px; display: block;"
+                  class="object-contain opacity-80 transition-opacity" 
                   :class="{ 'opacity-100 scale-105 filter drop-shadow-sm': cardBrand === 'mastercard' || !cardBrand, 'opacity-30': cardBrand && cardBrand !== 'mastercard' }"
                 />
               </div>
@@ -431,13 +433,12 @@ const orderDataWatcher = () => {
                   
                   <!-- Interactive CVV Popover -->
                   <transition name="fade">
-                    <div v-if="showCvvHelp" class="cvv-popover">
+                    <div v-if="showCvvHelp" class="cvv-popover" style="width: 160px; height: 100px; border-radius: 20px; padding: 0;">
                       <img 
-                        src="/img/payment-methods/cvv_tooltip.png" 
+                        src="/img/payment-methods/tooltip.png"
                         alt="CVV Helper" 
-                        class="w-[160px] h-[100px] object-contain rounded-md"
+                        style="width: 160px; height: 100px; display: block;"
                       />
-                      <span class="cvv-popover-text">3 digits on the back of card</span>
                     </div>
                   </transition>
                 </div>
@@ -755,96 +756,18 @@ const orderDataWatcher = () => {
   right: 0;
   margin-bottom: 12px;
   z-index: 30;
-  width: 176px;
-  background-color: var(--bg-primary);
-  border: 1px solid #F2F2F6;
-  border-radius: 12px;
-  padding: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 :deep(.dark) .cvv-popover {
-  border-color: #1F2937;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.cvv-card-back {
-  width: 144px;
-  height: 80px;
-  background-color: #1f2937;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 8px;
-}
-
-.magnetic-strip {
-  width: 100%;
-  height: 12px;
-  background-color: #000000;
-  margin-top: 12px;
-}
-
-.signature-strip-container {
-  display: flex;
-  align-items: center;
-  padding-left: 8px;
-  padding-right: 8px;
-  gap: 6px;
-}
-
-.signature-strip {
-  flex: 1;
-  height: 14px;
-  background-color: #e5e7eb;
-  border-radius: 2px;
-  position: relative;
-  overflow: hidden;
-}
-
-.sig-lines {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  justify-content: center;
-  padding-left: 4px;
-}
-
-.sig-lines::before,
-.sig-lines::after {
-  content: '';
-  width: 90%;
-  height: 1px;
-  background-color: #9ca3af;
-  opacity: 0.3;
-}
-
-.cvv-box {
-  border: 1px solid #FF6B00;
-  color: #FF6B00;
-  background-color: #ffffff;
-  font-size: 8px;
-  font-weight: 700;
-  padding: 1px 4px;
-  border-radius: 2px;
-  line-height: 1;
-  transform: scale(0.9);
-}
-
-.cvv-popover-text {
-  font-size: 10px;
-  color: var(--text-secondary);
-  font-weight: 500;
-  text-align: center;
-  margin-top: 8px;
+.cvv-tooltip-img {
+  width: 160px;
+  height: 100px;
+  display: block;
 }
 
 /* Tooltips */
