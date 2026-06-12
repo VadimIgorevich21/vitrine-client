@@ -293,26 +293,13 @@ const handleSubmit = async () => {
 
   try {
     const res = await formStore.submitOrder();
-    const { action, fields } = res.payment
-
-    const form = document.createElement('form')
-    form.method = 'POST'
-    form.action = action
-
-    Object.entries(fields).forEach(([key, value]) => {
-      const input = document.createElement('input')
-      input.type = 'hidden'
-      input.name = key
-      input.value = String(value)
-      form.appendChild(input)
-    })
-
-    document.body.appendChild(form)
-    form.submit()
-
-    toast.success(t("orders.exchange.orderCreated"));
+    const order = res.order;
     formStore.resetForm();
-    // router.push({ name: 'order-details', params: { id: res.data.id } });
+    router.push({
+      name: 'order-pay',
+      params: { id: order.id },
+      state: { order }
+    });
   } catch (err: any) {
     if (err.response?.status === 422) {
       apiErrors.value = err.response.data.errors;

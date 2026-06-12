@@ -74,5 +74,23 @@ export default {
     createNewExchange: 'Создать новый обмен',
     newExchangeTitle: 'Новая заявка на обмен',
     placeholderTable: 'Тут будет таблица заказов...',
+  },
+  securePayment: {
+    title: 'Безопасная оплата',
+    purchaseDetails: 'Детали покупки',
+    total: 'Итого:',
+    description: 'Описание:',
+    merchant: 'Продавец:',
+    creditDebitCard: 'Кредитная/дебетовая карта',
+    cardholderName: 'Имя держателя карты',
+    cardNumber: 'Номер карты',
+    expiryDate: 'Срок действия',
+    cvvCvc: 'CVV/CVC',
+    agreeTerms: 'Я согласен с Правилами и условиями и Политикой конфиденциальности',
+    pleaseAcceptTerms: 'Пожалуйста, примите правила и условия для продолжения',
+    pay: 'Оплатить {amount}',
+    cardholderPlaceholder: 'например, JOHN DOE',
+    expiryPlaceholder: 'ММ / ГГ',
+    loading: 'Обработка платежа...',
   }
 }

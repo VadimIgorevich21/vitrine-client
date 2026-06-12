@@ -74,5 +74,23 @@ export default {
     createNewExchange: 'Utwórz nową wymianę',
     newExchangeTitle: 'Nowe zlecenie wymiany',
     placeholderTable: 'Tu znajdzie się tabela transakcji...',
+  },
+  securePayment: {
+    title: 'Bezpieczna płatność',
+    purchaseDetails: 'Szczegóły zakupu',
+    total: 'Suma:',
+    description: 'Opis:',
+    merchant: 'Sprzedawca:',
+    creditDebitCard: 'Karta kredytowa/debetowa',
+    cardholderName: 'Imię i nazwisko właściciela karty',
+    cardNumber: 'Numer karty',
+    expiryDate: 'Data ważności',
+    cvvCvc: 'CVV/CVC',
+    agreeTerms: 'Zgadzam się z Regulaminem i Polityką Prywatności',
+    pleaseAcceptTerms: 'Proszę zaakceptować Regulamin, aby kontynuować',
+    pay: 'Zapłać {amount}',
+    cardholderPlaceholder: 'np. JOHN DOE',
+    expiryPlaceholder: 'MM / RR',
+    loading: 'Przetwarzanie płatności...',
   }
 }

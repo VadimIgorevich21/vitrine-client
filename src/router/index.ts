@@ -135,6 +135,12 @@ const routes: RouteRecordRaw[] = [
         meta: { title: 'Orders', requiresVerification: true },
       },
       {
+        path: 'orders/:id/pay',
+        name: 'order-pay',
+        component: () => import('@/views/cabinet/orders/OrderPayView.vue'),
+        meta: { title: 'Secure Payment', requiresVerification: true },
+      },
+      {
         path: 'verification',
         name: 'verification',
         component: () => import('@/views/VerificationView.vue'),

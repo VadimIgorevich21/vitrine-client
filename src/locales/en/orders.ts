@@ -74,5 +74,23 @@ export default {
     createNewExchange: 'Create new exchange',
     newExchangeTitle: 'New exchange order',
     placeholderTable: 'Transaction table will be here...',
+  },
+  securePayment: {
+    title: 'Secure Payment',
+    purchaseDetails: 'Purchase Details',
+    total: 'Total:',
+    description: 'Description:',
+    merchant: 'Merchant:',
+    creditDebitCard: 'Credit/Debit Card',
+    cardholderName: 'Cardholder Name',
+    cardNumber: 'Card Number',
+    expiryDate: 'Expiry Date',
+    cvvCvc: 'CVV/CVC',
+    agreeTerms: 'I agree to the Terms & Conditions and Privacy Policy',
+    pleaseAcceptTerms: 'Please accept the Terms and Conditions to proceed',
+    pay: 'Pay {amount}',
+    cardholderPlaceholder: 'e.g. JOHN DOE',
+    expiryPlaceholder: 'MM / YY',
+    loading: 'Processing payment...',
   }
 }
