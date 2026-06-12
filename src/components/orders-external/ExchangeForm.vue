@@ -20,10 +20,6 @@
     <!-- Forms -->
     <BuyForm v-if="formStore.state.type === 'buy'" />
     <SellForm v-else-if="formStore.state.type === 'sell'" />
-    <div>
-      <h1>ttttttttt</h1>
-      <test-payment-form></test-payment-form>
-    </div>
   </div>
 </template>
 
@@ -33,7 +29,6 @@ import { useOrderFormStore } from '@/stores/useOrderFormStore';
 import { useConfigStore } from '@/stores/syncConfigs';
 import BuyForm from './BuyForm.vue';
 import SellForm from './SellForm.vue';
-import TestPaymentForm from "@/components/orders/TestPaymentForm.vue";
 
 const formStore = useOrderFormStore();
 const configStore = useConfigStore();
