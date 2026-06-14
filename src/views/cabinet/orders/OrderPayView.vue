@@ -472,7 +472,9 @@ const orderDataWatcher = () => {
                   <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <span class="checkbox-text" v-html="t('orders.securePayment.agreeTermsHtml')"></span>
+              <span class="checkbox-text">
+                {{ t('orders.securePayment.agreeTermsText1') }} <a href="/terms" target="_blank" class="link-text">{{ t('orders.securePayment.termsLink') }}</a> {{ t('orders.securePayment.agreeTermsText2') }} <a href="/privacy-policy" target="_blank" class="link-text">{{ t('orders.securePayment.privacyLink') }}</a>
+              </span>
             </label>
           </div>
 
@@ -676,7 +678,7 @@ const orderDataWatcher = () => {
 
 .checkbox-label {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   cursor: pointer;
   user-select: none;
