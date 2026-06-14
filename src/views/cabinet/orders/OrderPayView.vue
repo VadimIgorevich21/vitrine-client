@@ -29,6 +29,7 @@ const showTooltip = ref(false);
 const showCvvHelp = ref(false);
 const errors = ref<Record<string, string>>({});
 const payError = ref('');
+const apiErrors = ref<any>(null);
 
 // Fetch order details
 const fetchOrderDetails = async () => {
@@ -204,9 +205,10 @@ const handlePayClick = async () => {
 
   processing.value = true;
   payError.value = '';
+  apiErrors.value = null;
 
   try {
-    const cleanCard = cardNumber.value.replace(/\D/g, '');
+    // const cleanCard = cardNumber.value.replace(/\D/g, '');
     const expiryParts = expiryDate.value.split('/');
     const expmonth = (expiryParts[0] || '').trim();
     const expyear = '20' + (expiryParts[1] || '').trim();
@@ -229,7 +231,7 @@ const handlePayClick = async () => {
     };
 
     const payload = {
-      // PAN: cleanCard,
+      PAN: cleanCard,
       expmonth,
       expyear,
       cardholder: cardholder.value.trim(),
@@ -276,14 +278,16 @@ const handlePayClick = async () => {
   } catch (err: any) {
     console.error('Payment execution failed:', err);
     if (err.response?.data?.errors) {
+      apiErrors.value = err.response.data.errors;
+      toast.error(t("orders.exchange.checkInput"));
+
+      // Also map standard validation errors to input fields to highlight them
       const serverErrs = err.response.data.errors;
       const mappedErrs: Record<string, string> = {};
-
       if (serverErrs.PAN) mappedErrs.cardNumber = serverErrs.PAN[0];
       if (serverErrs.cardholder) mappedErrs.cardholder = serverErrs.cardholder[0];
       if (serverErrs.expmonth || serverErrs.expyear) mappedErrs.expiryDate = (serverErrs.expmonth?.[0] || serverErrs.expyear?.[0]);
       if (serverErrs.securecode) mappedErrs.cvv = serverErrs.securecode[0];
-
       errors.value = mappedErrs;
     } else {
       payError.value = err.response?.data?.message || t('orders.securePayment.transactionFailed');
@@ -497,7 +501,12 @@ const orderDataWatcher = () => {
           </div>
 
           <!-- Pay error display -->
-          <div v-if="payError" class="error-box mb-4">
+          <div v-if="apiErrors" class="error-box mb-4">
+            <ul class="error-list">
+              <li v-for="(err, field) in apiErrors" :key="field">{{ err[0] }}</li>
+            </ul>
+          </div>
+          <div v-else-if="payError" class="error-box mb-4">
             {{ payError }}
           </div>
 
@@ -906,6 +915,15 @@ const orderDataWatcher = () => {
   font-weight: 500;
   text-align: center;
   border: 1px solid #fee2e2;
+}
+
+.error-list {
+  list-style-type: disc;
+  padding-left: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #dc2626;
+  text-align: left;
 }
 
 @media (max-width: 500px) {
