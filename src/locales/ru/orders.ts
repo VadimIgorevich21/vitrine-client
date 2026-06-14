@@ -95,7 +95,7 @@ export default {
     pay: 'Оплатить {amount}',
     cardholderPlaceholder: 'например, JOHN DOE',
     expiryPlaceholder: 'ММ / ГГ',
-    loading: 'Обработка платежа...',
+    loading: 'Обработка...',
     loadingOrderDetails: 'Загрузка деталей заказа...',
     cryptoPurchase: 'Покупка криптовалюты ({amount} {currency})',
     redirecting3ds: 'Перенаправление для подтверждения (3D Secure)...',

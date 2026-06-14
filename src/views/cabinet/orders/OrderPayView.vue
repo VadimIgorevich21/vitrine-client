@@ -498,7 +498,7 @@ const orderDataWatcher = () => {
               class="primary-btn"
               :class="[ agreed ? 'btn-active' : 'btn-inactive' ]"
             >
-              <div v-if="processing" class="btn-spinner"></div>
+              <span v-if="processing">{{ t('orders.securePayment.loading') }}</span>
               <span v-else>{{ t('orders.securePayment.pay', { amount: formattedTotal }) }}</span>
             </button>
           </div>

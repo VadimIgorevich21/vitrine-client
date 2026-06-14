@@ -95,7 +95,7 @@ export default {
     pay: 'Zapłać {amount}',
     cardholderPlaceholder: 'np. JOHN DOE',
     expiryPlaceholder: 'MM / RR',
-    loading: 'Przetwarzanie płatności...',
+    loading: 'Przetwarzanie...',
     loadingOrderDetails: 'Ładowanie szczegółów zamówienia...',
     cryptoPurchase: 'Zakup kryptowaluty ({amount} {currency})',
     redirecting3ds: 'Przekierowanie do weryfikacji (3D Secure)...',
