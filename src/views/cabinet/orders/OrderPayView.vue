@@ -111,7 +111,7 @@ const handleCardNumberInput = (e: Event) => {
   const target = e.target as HTMLInputElement;
   let val = target.value.replace(/\D/g, '');
   if (val.length > 16) val = val.substring(0, 16);
-  
+
   const matches = val.match(/.{1,4}/g);
   cardNumber.value = matches ? matches.join(' ') : val;
   if (errors.value.cardNumber) errors.value.cardNumber = '';
@@ -141,7 +141,7 @@ const handleCvvInput = (e: Event) => {
 // Validation
 const validateForm = () => {
   const errs: Record<string, string> = {};
-  
+
   if (!cardholder.value.trim()) {
     errs.cardholder = t('orders.securePayment.validation.required');
   } else if (cardholder.value.trim().split(' ').length < 2) {
@@ -211,12 +211,30 @@ const handlePayClick = async () => {
     const expmonth = (expiryParts[0] || '').trim();
     const expyear = '20' + (expiryParts[1] || '').trim();
 
+    const deviceData = {
+      browserJavascriptEnabled: true,
+      browserJavaEnabled: navigator.javaEnabled
+        ? navigator.javaEnabled()
+        : false,
+      browserLanguage: navigator.language,
+      browserColorDepth: window.screen.colorDepth,
+      browserScreenHeight: window.screen.height,
+      browserScreenWidth: window.screen.width,
+      browserTZ: new Date().getTimezoneOffset(),
+      browserTZName: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      browserUserAgent: navigator.userAgent,
+      challengeWindowSize: '05',
+      challengeWindowWidth: window.innerWidth,
+      challengeWindowHeight: window.innerHeight,
+    };
+
     const payload = {
-      PAN: cleanCard,
+      // PAN: cleanCard,
       expmonth,
       expyear,
       cardholder: cardholder.value.trim(),
       securecode: cvv.value,
+      deviceData,
     };
 
     const response = await apiClient.post(`/orders/${order.value.id}/pay-card`, payload);
@@ -225,7 +243,7 @@ const handlePayClick = async () => {
     // Check if 3DS is required
     if (result.status === '3DS' || result.url || result.acsUrl || result.PaReq) {
       toast.info(t('orders.securePayment.redirecting3ds'));
-      
+
       const acsUrl = result.url || result.acsUrl;
       const form = document.createElement('form');
       form.method = 'POST';
@@ -260,7 +278,7 @@ const handlePayClick = async () => {
     if (err.response?.data?.errors) {
       const serverErrs = err.response.data.errors;
       const mappedErrs: Record<string, string> = {};
-      
+
       if (serverErrs.PAN) mappedErrs.cardNumber = serverErrs.PAN[0];
       if (serverErrs.cardholder) mappedErrs.cardholder = serverErrs.cardholder[0];
       if (serverErrs.expmonth || serverErrs.expyear) mappedErrs.expiryDate = (serverErrs.expmonth?.[0] || serverErrs.expyear?.[0]);
@@ -289,7 +307,7 @@ const orderDataWatcher = () => {
 <template>
   <div class="cabinet-page-with-exchange-form flex items-center justify-center py-10 w-full">
     <div class="max-w-2xl w-full flex flex-col items-center">
-      
+
       <!-- Loading Order Details State -->
       <div v-if="loading" class="flex flex-col items-center justify-center py-20">
         <div class="loader-spinner mb-4"></div>
@@ -298,7 +316,7 @@ const orderDataWatcher = () => {
 
       <!-- Payment Main Card -->
       <div v-else-if="order" class="exchange-card" @vue:mounted="orderDataWatcher">
-        
+
         <!-- Step Header -->
         <div class="step-header mb-6">
           <button @click="goBack" class="back-btn" type="button">
@@ -313,7 +331,7 @@ const orderDataWatcher = () => {
         <!-- Purchase Details Block -->
         <div class="summary-section mb-6">
           <h3 class="summary-details-title mb-2">{{ t('orders.securePayment.purchaseDetails') }}</h3>
-          
+
           <div class="summary-total-title mb-3">
             {{ t('orders.securePayment.total') }} {{ formattedTotal }}
           </div>
@@ -362,21 +380,21 @@ const orderDataWatcher = () => {
               <label class="input-label mb-0">
                 {{ t('orders.securePayment.cardNumber') }}
               </label>
-              
+
               <!-- Cards Logos -->
               <div class="flex items-center gap-1.5">
-                <img 
-                  src="/img/payment-methods/visa_logo.png" 
-                  alt="Visa" 
+                <img
+                  src="/img/payment-methods/visa_logo.png"
+                  alt="Visa"
                   style="width: 31px; height: 10px; display: block;"
-                  class="object-contain opacity-80 transition-opacity" 
+                  class="object-contain opacity-80 transition-opacity"
                   :class="{ 'opacity-100 scale-105 filter drop-shadow-sm': cardBrand === 'visa' || !cardBrand, 'opacity-30': cardBrand && cardBrand !== 'visa' }"
                 />
-                <img 
-                  src="/img/payment-methods/mc_logo.png" 
-                  alt="Mastercard" 
+                <img
+                  src="/img/payment-methods/mc_logo.png"
+                  alt="Mastercard"
                   style="width: 29px; height: 16px; display: block;"
-                  class="object-contain opacity-80 transition-opacity" 
+                  class="object-contain opacity-80 transition-opacity"
                   :class="{ 'opacity-100 scale-105 filter drop-shadow-sm': cardBrand === 'mastercard' || !cardBrand, 'opacity-30': cardBrand && cardBrand !== 'mastercard' }"
                 />
               </div>
@@ -428,9 +446,9 @@ const orderDataWatcher = () => {
                   class="card-input text-center pr-10"
                   :class="{ 'error': errors.cvv }"
                 />
-                
+
                 <!-- Info Trigger -->
-                <div 
+                <div
                   class="absolute right-3 cursor-pointer flex items-center justify-center"
                   @mouseenter="showCvvHelp = true"
                   @mouseleave="showCvvHelp = false"
