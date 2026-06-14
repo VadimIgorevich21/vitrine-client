@@ -208,7 +208,7 @@ const handlePayClick = async () => {
   apiErrors.value = null;
 
   try {
-    // const cleanCard = cardNumber.value.replace(/\D/g, '');
+    const cleanCard = cardNumber.value.replace(/\D/g, '');
     const expiryParts = expiryDate.value.split('/');
     const expmonth = (expiryParts[0] || '').trim();
     const expyear = '20' + (expiryParts[1] || '').trim();
@@ -243,10 +243,12 @@ const handlePayClick = async () => {
     const result = response.data;
 
     // Check if 3DS is required
-    if (result.status === '3DS' || result.url || result.acsUrl || result.PaReq) {
+    if (result.status === 'wait' || result.PaReq) {
       toast.info(t('orders.securePayment.redirecting3ds'));
 
-      const acsUrl = result.url || result.acsUrl;
+      const acsUrl = result.ACSURL;
+      const termUrl = result.termUrl;
+      // const termUrl = "https://vitrine-admin.ironbit.io/third-party-payment-callback";
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = acsUrl;
@@ -254,7 +256,7 @@ const handlePayClick = async () => {
       const fields = {
         PaReq: result.PaReq,
         MD: result.MD,
-        TermUrl: result.TermUrl || result.termUrl || window.location.origin + '/third-party-payment-callback',
+        TermUrl: termUrl,
       };
 
       Object.entries(fields).forEach(([key, value]) => {
