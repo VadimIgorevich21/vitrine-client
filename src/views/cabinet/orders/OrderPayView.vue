@@ -5,11 +5,13 @@ import { useI18n } from 'vue-i18n';
 import { useToast } from 'vue-toastification';
 import { orderService } from '@/services/orderService';
 import { apiClient } from '@/services/api';
+import { useRateStore } from '@/stores/useRateStore';
 
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 const toast = useToast();
+const rateStore = useRateStore();
 
 const loading = ref(true);
 const processing = ref(false);
@@ -50,6 +52,7 @@ const fetchOrderDetails = async () => {
 
 onMounted(() => {
   fetchOrderDetails();
+  rateStore.fetchRates();
 });
 
 // Computed values for displays
@@ -80,6 +83,13 @@ const formattedTotal = computed(() => {
     maximumFractionDigits: 2,
   });
   return `${formatted} ${fiatCurrency.value}`;
+});
+
+const roundedCryptoAmount = computed(() => {
+  const rate = rateStore.getRate(fiatCurrency.value, cryptoCurrency.value);
+  const precision = rate?.sell_precision ?? rate?.precision ?? 8;
+  const amountNum = Number(cryptoAmount.value ?? 0);
+  return isNaN(amountNum) ? 0 : Number(amountNum.toFixed(precision));
 });
 
 const cardBrand = computed(() => {
@@ -312,7 +322,7 @@ const orderDataWatcher = () => {
             <div class="details-row">
               <div class="details-line">
                 <span class="details-label">{{ t('orders.securePayment.description') }}</span>
-                <span class="details-value">{{ t('orders.securePayment.cryptoPurchase', { amount: cryptoAmount, currency: cryptoCurrency }) }}</span>
+                <span class="details-value">{{ t('orders.securePayment.cryptoPurchase', { amount: roundedCryptoAmount, currency: cryptoCurrency }) }}</span>
               </div>
               <div class="details-line">
                 <span class="details-label">{{ t('orders.securePayment.merchant') }}</span>
