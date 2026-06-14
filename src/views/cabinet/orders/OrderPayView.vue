@@ -302,13 +302,13 @@ const orderDataWatcher = () => {
 
         <!-- Purchase Details Block -->
         <div class="summary-section mb-6">
-          <h3 class="input-label mb-2">{{ t('orders.securePayment.purchaseDetails') }}</h3>
+          <h3 class="summary-details-title mb-2">{{ t('orders.securePayment.purchaseDetails') }}</h3>
           
-          <div class="purchase-title mb-3">
+          <div class="summary-total-title mb-3">
             {{ t('orders.securePayment.total') }} {{ formattedTotal }}
           </div>
 
-          <div class="border-t border-dashed border-[#F2F2F6] pt-3 mt-1">
+          <div>
             <div class="details-row">
               <div class="details-line">
                 <span class="details-label">{{ t('orders.securePayment.description') }}</span>
@@ -322,11 +322,11 @@ const orderDataWatcher = () => {
           </div>
         </div>
 
-        <div class="border-t border-[#F2F2F6] my-6"></div>
+        <div class="border-t border-[#F2F2F6] mb-6"></div>
 
         <!-- Card input form -->
         <form @submit.prevent="handlePayClick" class="fields-section">
-          <h3 class="input-label mb-4">{{ t('orders.securePayment.creditDebitCard') }}</h3>
+          <h3 class="summary-details-title mb-4">{{ t('orders.securePayment.creditDebitCard') }}</h3>
 
           <!-- Cardholder Input -->
           <div class="field-container mb-4">
@@ -566,9 +566,9 @@ const orderDataWatcher = () => {
   padding-top: 14px;
 }
 
-.purchase-title {
-  font-size: 20px;
-  font-weight: 700;
+.summary-total-title {
+  font-size: 18px;
+  font-weight: 600;
   color: var(--text-primary);
   margin-top: 4px;
 }
@@ -581,14 +581,29 @@ const orderDataWatcher = () => {
 }
 
 .details-line {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /*display: flex;
+  justify-content: left; */
 }
+
+.summary-details-title {
+  color: #929AAA;
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.purchase-details-total {
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0;
+  color: var(--text-primary);
+}
+
 
 .details-label {
   color: #929AAA;
   font-weight: 500;
+  margin-right: 5px;
 }
 
 .details-value {
