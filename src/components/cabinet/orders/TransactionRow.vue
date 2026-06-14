@@ -4,7 +4,9 @@ import { useI18n } from 'vue-i18n';
 import { useToast } from "vue-toastification";
 import { orderService } from '@/services/orderService';
 import OrderStatus from './OrderStatus.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const props = defineProps<{
   order: any;
 }>();
@@ -87,23 +89,6 @@ const submitPaymentForm = (payment: any) => {
   return true;
 };
 
-const handleRegeneratePayment = async () => {
-  if (isRegenerating.value) return;
-  
-  isRegenerating.value = true;
-  try {
-    const response = await orderService.regeneratePayment(props.order.id);
-    if (!submitPaymentForm(response.payment)) {
-      isRegenerating.value = false;
-      toast.error(t('orders.actions.errorOccurred'));
-    }
-  } catch (error) {
-    console.error('Failed to regenerate payment:', error);
-    isRegenerating.value = false;
-    toast.error(t('orders.actions.errorOccurred'));
-  }
-};
-
 const handleCancelOrder = () => {
   showCancelModal.value = true;
 };
@@ -178,14 +163,17 @@ const confirmCancel = async () => {
 
       <!-- Actions -->
       <div class="col-actions">
-        <button 
-          v-if="order.actions?.includes('regeneratePayment')" 
+        <button
+          v-if="order.actions?.includes('regeneratePayment')"
           class="pay-btn"
-          :disabled="isRegenerating"
-          @click.stop="handleRegeneratePayment"
+          @click.stop="
+            router.push({
+              name: 'order-pay',
+              params: { id: order.id },
+            })
+          "
         >
-          <div v-if="isRegenerating" class="mini-spinner"></div>
-          <span v-else>{{ t('orders.actions.pay') }}</span>
+          {{ t('orders.actions.pay') }}
         </button>
         <button 
           v-else-if="order.actions?.includes('cancel')"
