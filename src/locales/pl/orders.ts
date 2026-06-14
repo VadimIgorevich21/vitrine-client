@@ -87,10 +87,25 @@ export default {
     expiryDate: 'Data ważności',
     cvvCvc: 'CVV/CVC',
     agreeTerms: 'Zgadzam się z Regulaminem i Polityką Prywatności',
+    agreeTermsHtml: 'Zgadzam się z <a href="/terms" target="_blank" class="link-text">Regulaminem</a> i <a href="/privacy-policy" target="_blank" class="link-text">Polityką Prywatności</a>',
     pleaseAcceptTerms: 'Proszę zaakceptować Regulamin, aby kontynuować',
     pay: 'Zapłać {amount}',
     cardholderPlaceholder: 'np. JOHN DOE',
     expiryPlaceholder: 'MM / RR',
     loading: 'Przetwarzanie płatności...',
+    loadingOrderDetails: 'Ładowanie szczegółów zamówienia...',
+    cryptoPurchase: 'Zakup kryptowaluty ({amount} {currency})',
+    redirecting3ds: 'Przekierowanie do weryfikacji (3D Secure)...',
+    paymentDeclined: 'Płatność odrzucona przez bank.',
+    transactionFailed: 'Transakcja nie powiodła się. Spróbuj ponownie.',
+    validation: {
+      required: 'Wymagane',
+      cardholderName: 'Wpisz imię i nazwisko',
+      card16Digits: 'Karta musi mieć 16 cyfr',
+      invalid: 'Nieprawidłowe',
+      invalidMonth: 'Nieprawidłowy miesiąc',
+      expiredCard: 'Karta wygasła',
+      cvv3Digits: 'Musi mieć 3 cyfry',
+    }
   }
 }

@@ -133,24 +133,24 @@ const validateForm = () => {
   const errs: Record<string, string> = {};
   
   if (!cardholder.value.trim()) {
-    errs.cardholder = 'Required';
+    errs.cardholder = t('orders.securePayment.validation.required');
   } else if (cardholder.value.trim().split(' ').length < 2) {
-    errs.cardholder = 'Enter first and last name';
+    errs.cardholder = t('orders.securePayment.validation.cardholderName');
   }
 
   const cleanCard = cardNumber.value.replace(/\D/g, '');
   if (!cleanCard) {
-    errs.cardNumber = 'Required';
+    errs.cardNumber = t('orders.securePayment.validation.required');
   } else if (cleanCard.length < 16) {
-    errs.cardNumber = 'Card must be 16 digits';
+    errs.cardNumber = t('orders.securePayment.validation.card16Digits');
   }
 
   if (!expiryDate.value) {
-    errs.expiryDate = 'Required';
+    errs.expiryDate = t('orders.securePayment.validation.required');
   } else {
     const parts = expiryDate.value.split('/');
     if (parts.length !== 2) {
-      errs.expiryDate = 'Invalid';
+      errs.expiryDate = t('orders.securePayment.validation.invalid');
     } else {
       const monthStr = (parts[0] || '').trim();
       const yearStr = (parts[1] || '').trim();
@@ -161,17 +161,17 @@ const validateForm = () => {
       const currentMonth = now.getMonth() + 1;
 
       if (isNaN(month) || month < 1 || month > 12) {
-        errs.expiryDate = 'Invalid month';
+        errs.expiryDate = t('orders.securePayment.validation.invalidMonth');
       } else if (isNaN(year) || year < currentYear || (year === currentYear && month < currentMonth)) {
-        errs.expiryDate = 'Expired card';
+        errs.expiryDate = t('orders.securePayment.validation.expiredCard');
       }
     }
   }
 
   if (!cvv.value) {
-    errs.cvv = 'Required';
+    errs.cvv = t('orders.securePayment.validation.required');
   } else if (cvv.value.length < 3) {
-    errs.cvv = 'Must be 3 digits';
+    errs.cvv = t('orders.securePayment.validation.cvv3Digits');
   }
 
   errors.value = errs;
@@ -214,7 +214,7 @@ const handlePayClick = async () => {
 
     // Check if 3DS is required
     if (result.status === '3DS' || result.url || result.acsUrl || result.PaReq) {
-      toast.info('Redirecting for verification (3D Secure)...');
+      toast.info(t('orders.securePayment.redirecting3ds'));
       
       const acsUrl = result.url || result.acsUrl;
       const form = document.createElement('form');
@@ -242,7 +242,7 @@ const handlePayClick = async () => {
     } else if (result.status === 'OK' || result.status === 'success' || !result.errorcode) {
       router.push('/cabinet/orders');
     } else {
-      payError.value = result.errortext || 'Payment declined by the bank.';
+      payError.value = result.errortext || t('orders.securePayment.paymentDeclined');
       toast.error(payError.value);
     }
   } catch (err: any) {
@@ -258,7 +258,7 @@ const handlePayClick = async () => {
 
       errors.value = mappedErrs;
     } else {
-      payError.value = err.response?.data?.message || 'Transaction failed. Please try again.';
+      payError.value = err.response?.data?.message || t('orders.securePayment.transactionFailed');
       toast.error(payError.value);
     }
   } finally {
@@ -283,7 +283,7 @@ const orderDataWatcher = () => {
       <!-- Loading Order Details State -->
       <div v-if="loading" class="flex flex-col items-center justify-center py-20">
         <div class="loader-spinner mb-4"></div>
-        <p class="text-gray-500 text-sm">Loading order details...</p>
+        <p class="text-gray-500 text-sm">{{ t('orders.securePayment.loadingOrderDetails') }}</p>
       </div>
 
       <!-- Payment Main Card -->
@@ -312,7 +312,7 @@ const orderDataWatcher = () => {
             <div class="details-row">
               <div class="details-line">
                 <span class="details-label">{{ t('orders.securePayment.description') }}</span>
-                <span class="details-value">Crypto purchase ({{ cryptoAmount }} {{ cryptoCurrency }})</span>
+                <span class="details-value">{{ t('orders.securePayment.cryptoPurchase', { amount: cryptoAmount, currency: cryptoCurrency }) }}</span>
               </div>
               <div class="details-line">
                 <span class="details-label">{{ t('orders.securePayment.merchant') }}</span>
@@ -462,9 +462,7 @@ const orderDataWatcher = () => {
                   <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <span class="checkbox-text">
-                I agree to the <a href="/terms" target="_blank" class="link-text">Terms & Conditions</a> and <a href="/privacy-policy" target="_blank" class="link-text">Privacy Policy</a>
-              </span>
+              <span class="checkbox-text" v-html="t('orders.securePayment.agreeTermsHtml')"></span>
             </label>
           </div>
 

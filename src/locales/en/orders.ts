@@ -87,10 +87,25 @@ export default {
     expiryDate: 'Expiry Date',
     cvvCvc: 'CVV/CVC',
     agreeTerms: 'I agree to the Terms & Conditions and Privacy Policy',
+    agreeTermsHtml: 'I agree to the <a href="/terms" target="_blank" class="link-text">Terms & Conditions</a> and <a href="/privacy-policy" target="_blank" class="link-text">Privacy Policy</a>',
     pleaseAcceptTerms: 'Please accept the Terms and Conditions to proceed',
     pay: 'Pay {amount}',
     cardholderPlaceholder: 'e.g. JOHN DOE',
     expiryPlaceholder: 'MM / YY',
     loading: 'Processing payment...',
+    loadingOrderDetails: 'Loading order details...',
+    cryptoPurchase: 'Crypto purchase ({amount} {currency})',
+    redirecting3ds: 'Redirecting for verification (3D Secure)...',
+    paymentDeclined: 'Payment declined by the bank.',
+    transactionFailed: 'Transaction failed. Please try again.',
+    validation: {
+      required: 'Required',
+      cardholderName: 'Enter first and last name',
+      card16Digits: 'Card must be 16 digits',
+      invalid: 'Invalid',
+      invalidMonth: 'Invalid month',
+      expiredCard: 'Expired card',
+      cvv3Digits: 'Must be 3 digits',
+    }
   }
 }

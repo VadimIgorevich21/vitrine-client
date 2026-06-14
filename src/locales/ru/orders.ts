@@ -87,10 +87,25 @@ export default {
     expiryDate: 'Срок действия',
     cvvCvc: 'CVV/CVC',
     agreeTerms: 'Я согласен с Правилами и условиями и Политикой конфиденциальности',
+    agreeTermsHtml: 'Я согласен с <a href="/terms" target="_blank" class="link-text">Правилами и условиями</a> и <a href="/privacy-policy" target="_blank" class="link-text">Политикой конфиденциальности</a>',
     pleaseAcceptTerms: 'Пожалуйста, примите правила и условия для продолжения',
     pay: 'Оплатить {amount}',
     cardholderPlaceholder: 'например, JOHN DOE',
     expiryPlaceholder: 'ММ / ГГ',
     loading: 'Обработка платежа...',
+    loadingOrderDetails: 'Загрузка деталей заказа...',
+    cryptoPurchase: 'Покупка криптовалюты ({amount} {currency})',
+    redirecting3ds: 'Перенаправление для подтверждения (3D Secure)...',
+    paymentDeclined: 'Платеж отклонен банком.',
+    transactionFailed: 'Транзакция не удалась. Пожалуйста, попробуйте еще раз.',
+    validation: {
+      required: 'Обязательное поле',
+      cardholderName: 'Введите имя и фамилию',
+      card16Digits: 'Номер карты должен состоять из 16 цифр',
+      invalid: 'Неверно',
+      invalidMonth: 'Неверный месяц',
+      expiredCard: 'Срок действия карты истек',
+      cvv3Digits: 'Должно быть 3 цифры',
+    }
   }
 }
