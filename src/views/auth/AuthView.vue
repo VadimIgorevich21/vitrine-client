@@ -17,6 +17,7 @@ const authStore = useAuthStore();
 const otpEmail = ref("");
 const otpDigits = ref<string[]>(["", "", "", "", "", ""]);
 const otpSent = ref(false);
+const legalAgreed = ref(false);
 
 const OTP_LENGTH = 6;
 const digitRefs = ref<HTMLInputElement[]>([]);
@@ -165,7 +166,7 @@ function goGoogle() {
         />
       </div>
 
-      <BaseButton :loading="loading" :disabled="!otpEmail.trim()" @click="sendOtp">
+      <BaseButton :loading="loading" :disabled="!otpEmail.trim() || !legalAgreed" @click="sendOtp">
         {{ t("login.otpSendCode") }}
       </BaseButton>
 
@@ -180,7 +181,7 @@ function goGoogle() {
       <button
         type="button"
         class="auth-btn-google"
-        :disabled="loading"
+        :disabled="loading || !legalAgreed"
         @click="goGoogle"
       >
         <svg class="auth-btn-google__icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -198,13 +199,27 @@ function goGoogle() {
 
       <!-- Legal Disclaimer -->
       <div class="auth-legal">
-        {{ t("login.legalPrefix") }}
-        <router-link to="/terms" target="_blank" class="auth-legal__link">{{ t("login.legalTerms") }}</router-link>,
-        <router-link to="/aml-and-kyc-policy" target="_blank" class="auth-legal__link">{{ t("login.legalAml") }}</router-link>,
-        <router-link to="/refund-policy" target="_blank" class="auth-legal__link">{{ t("login.legalRefund") }}</router-link>,
-        <router-link to="/risk-disclosure-policy" target="_blank" class="auth-legal__link">{{ t("login.legalRisk") }}</router-link>
-        {{ t("login.legalAnd") }}
-        <router-link to="/privacy-policy" target="_blank" class="auth-legal__link">{{ t("login.legalPrivacy") }}</router-link>.
+        <label class="auth-legal__checkbox-label">
+          <input
+            type="checkbox"
+            v-model="legalAgreed"
+            class="auth-legal__hidden-checkbox"
+          />
+          <div class="auth-legal__checkbox-box" :class="{ 'auth-legal__checkbox-box--checked': legalAgreed }">
+            <svg v-if="legalAgreed" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="auth-legal__text">
+            {{ t("login.legalPrefix") }}
+            <router-link to="/terms" target="_blank" class="auth-legal__link">{{ t("login.legalTerms") }}</router-link>,
+            <router-link to="/aml-and-kyc-policy" target="_blank" class="auth-legal__link">{{ t("login.legalAml") }}</router-link>,
+            <router-link to="/refund-policy" target="_blank" class="auth-legal__link">{{ t("login.legalRefund") }}</router-link>,
+            <router-link to="/risk-disclosure-policy" target="_blank" class="auth-legal__link">{{ t("login.legalRisk") }}</router-link>
+            {{ t("login.legalAnd") }}
+            <router-link to="/privacy-policy" target="_blank" class="auth-legal__link">{{ t("login.legalPrivacy") }}</router-link>.
+          </span>
+        </label>
       </div>
     </div>
 
@@ -596,7 +611,48 @@ function goGoogle() {
   font-size: 12px;
   line-height: 1.5;
   color: #9CA3AF;
-  text-align: center;
+}
+
+.auth-legal__checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.auth-legal__hidden-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.auth-legal__checkbox-box {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  border-radius: 4px;
+  border: 1.5px solid #D1D5DB;
+  background: #fff;
+  transition: all 0.2s ease;
+  margin-top: 1px;
+}
+
+.auth-legal__checkbox-box--checked {
+  background-color: #F97316;
+  border-color: #F97316;
+  color: #fff;
+}
+
+.auth-legal__text {
+  text-align: left;
+  line-height: 1.5;
 }
 
 .auth-legal__link {
